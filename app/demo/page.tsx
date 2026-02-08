@@ -45,7 +45,7 @@ export default function DemoPage() {
           {/* Screenshot */}
           <div style={{ marginBottom: 24, borderRadius: 8, overflow: 'hidden', border: '1px solid ' + border }}>
             <img 
-              src="/Jeep-Screenshot.png" 
+              src="/Jeep-Screenshot.jpg" 
               alt="Jeep Gladiator listing"
               style={{ width: '100%', display: 'block' }}
             />
@@ -104,7 +104,7 @@ export default function DemoPage() {
           {/* Screenshot */}
           <div style={{ marginBottom: 24, borderRadius: 8, overflow: 'hidden', border: '1px solid ' + border }}>
             <img 
-              src="/apartment-screenshot.png" 
+              src="/apartment-screenshot.jpg" 
               alt="Carlton apartment listing"
               style={{ width: '100%', display: 'block' }}
             />
@@ -164,7 +164,7 @@ export default function DemoPage() {
           {/* Screenshot */}
           <div style={{ marginBottom: 24, borderRadius: 8, overflow: 'hidden', border: '1px solid ' + border }}>
             <img 
-              src="/console-screenshot.png" 
+              src="/console-screenshot.jpg" 
               alt="Nintendo 64 listing"
               style={{ width: '100%', display: 'block' }}
             />
@@ -230,7 +230,7 @@ export default function DemoPage() {
           <a href="mailto:hello@listinglens.app" style={{ margin: '0 12px' }}>Contact</a>
         </div>
         <p style={{ fontSize: 13 }}>
-          © 2025 Listing Lens. Your screenshot is deleted after 30 seconds.
+          © 2026 Listing Lens. Your screenshot is deleted after 30 seconds.
         </p>
       </footer>
 
