@@ -60,7 +60,7 @@ export default function DemoPage() {
               ⚠️ What you CAN'T see (Critical Research):
             </h3>
             <ul style={{ margin: 0, paddingLeft: 20, fontSize: 14, lineHeight: 1.8, color: '#78350f' }}>
-              <li><strong>Check for modifications:</strong> If this vehicle has been lifted or modified (check with seller), VIC requires VSI engineering certificate for lifts >50mm. Ask: "Do you have VSI cert?" Uncertified = uninsurable.</li>
+              <li><strong>Check for modifications:</strong> If this vehicle has been lifted or modified (check with seller), VIC requires VSI engineering certificate for lifts &gt;50mm. Ask: "Do you have VSI cert?" Uncertified = uninsurable.</li>
               <li><strong>Verify recall status:</strong> Check your specific VIN at vehiclerecalls.gov.au before purchase. Ask seller: "Have you checked for recalls and are they all completed?" Past Gladiator recalls have included bumper compliance issues.</li>
               <li><strong>On-road costs not shown:</strong> Advertised $51,950 excludes stamp duty (~$2,900 in VIC), registration transfer (~$250), RWC (~$200). Calculate YOUR total based on YOUR state.</li>
               <li><strong>Aftermarket considerations:</strong> If modifications present (larger tires, suspension, etc.), typical costs: 35" tires $400-$600 each vs $200-$300 stock, more frequent replacement.</li>
@@ -230,7 +230,7 @@ export default function DemoPage() {
           <a href="mailto:hello@listinglens.app" style={{ margin: '0 12px' }}>Contact</a>
         </div>
         <p style={{ fontSize: 13 }}>
-          © 2026 Listing Lens. Your screenshot is deleted after 30 seconds.
+          © 2025 Listing Lens. Your screenshot is deleted after 30 seconds.
         </p>
       </footer>
 
