@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Listing Lens — Know before you buy</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ============================================================
+   "CALM AUTHORITY" PALETTE
+   Warm cream backgrounds · Slate text · Teal trust · Amber action
+   ============================================================ */
+:root {
+  /* Backgrounds */
+  --bg-cream: #FAFAF7;
+  --bg-soft: #F5F4F0;
+  --bg-cloud: #EBE9E4;
+
+  /* Text */
+  --text-primary: #1E293B;
+  --text-secondary: #64748B;
+  --text-muted: #94A3B8;
+
+  /* Teal — trust, intelligence, calm */
+  --teal: #0D9488;
+  --teal-hot: #14B8A6;
+  --teal-light: #5EEAD4;
+  --teal-pale: #CCFBF1;
+  --teal-deep: #0F766E;
+  --teal-dark: #134E4A;
+
+  /* Amber — value, warmth, action */
+  --amber: #F59E0B;
+  --amber-deep: #D97706;
+  --amber-pale: #FEF3C7;
+
+  /* Functional */
+  --white: #fff;
+  --border: rgba(30,41,59,0.08);
+  --light-gray: var(--bg-cloud);
+
+  --font: 'Outfit', system-ui, -apple-system, sans-serif;
+}
+
+html {
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  font-size: 12px;
+  line-height: 1.3;
+  background: var(--bg-cream);
+}
+body { margin: 0; overflow-x: hidden; color: var(--text-primary); }
+
+/* ============================================================
+   HERO — Headline-driven, clear value prop
+   ============================================================ */
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-cream);
+}
+
+/* Subtle ambient glows */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -15%; right: -15%;
+  width: 55%; height: 55%;
+  background: radial-gradient(ellipse, rgba(204,251,241,0.5) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 15%; left: -10%;
+  width: 40%; height: 40%;
+  background: radial-gradient(ellipse, rgba(254,243,199,0.35) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2rem 2rem 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Brand mark */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 3rem;
+}
+.brand-icon {
+  width: 40px; height: 40px;
+  border-radius: 11px;
+  background: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 2px 8px rgba(13,148,136,0.2);
+}
+.brand-text {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+/* Headline */
+.headline {
+  font-size: clamp(2.8rem, 8vw, 4.5rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 1.2rem;
+}
+.headline-em { color: var(--teal); }
+
+.subline {
+  font-size: clamp(1.05rem, 3vw, 1.25rem);
+  line-height: 1.65;
+  color: var(--text-secondary);
+  max-width: 420px;
+  margin-bottom: 2.5rem;
+}
+.subline strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Upload zone */
+.upload-zone {
+  border: 2px dashed var(--teal-light);
+  border-radius: 16px;
+  background: rgba(204,251,241,0.12);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 2rem;
+}
+.upload-zone:hover {
+  border-color: var(--teal);
+  background: rgba(204,251,241,0.25);
+}
+.upload-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 10px rgba(13,148,136,0.25);
+}
+.upload-icon svg { width: 26px; height: 26px; fill: white; }
+.upload-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--teal-deep);
+}
+.upload-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Trust strip */
+.trust-strip {
+  display: flex;
+  justify-content: center;
+  gap: 1.8rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.trust-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--teal-light);
+}
+
+/* ============================================================
+   DEMOS — teal bg + waves
+   ============================================================ */
+.demos-container {
+  position: relative;
+  background: var(--teal);
+  padding-bottom: 5.2vw;
+}
+.top-wave { position: absolute; left: 0; right: 0; bottom: 100%; display: block; }
+.main-wave { fill: var(--teal); }
+.sub-wave { fill: var(--teal-hot); }
+.content-padding { padding: 2em 0; }
+
+.demo-title {
+  color: var(--white); margin: 0; font-size: 2rem;
+  text-align: center; font-weight: 400;
+}
+.demo-title strong { font-weight: 700; }
+
+.demos {
+  display: grid; gap: 3rem; justify-items: center;
+  justify-content: center; padding: 0; margin: 3rem auto;
+  --demo-size: 80px;
+  grid-template-columns: repeat(auto-fit, var(--demo-size));
+  list-style: none;
+}
+@media (min-width: 740px) { .demos { --demo-size: 100px; gap: 6rem; } }
+
+.demo-container { transition: scale 0.4s ease-in-out; cursor: pointer; text-align: center; }
+.demo-container:hover { scale: 1.05; }
+.demo-icon-container { border-radius: 50%; overflow: hidden; width: var(--demo-size); height: var(--demo-size); }
+.demo-icon {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.15);
+  font-size: calc(var(--demo-size) * 0.45); border-radius: 50%;
+}
+.demo-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.demo-size {
+  background: var(--teal-deep); border-radius: 1000px;
+  color: var(--white); width: max-content;
+  padding: 0.5rem 1.2rem; margin: 0.7rem auto 0; font-size: 0.95rem;
+}
+
+/* ============================================================
+   WAVES
+   ============================================================ */
+.bottom-wave { position: relative; }
+.info-wave { fill: var(--bg-cream); }
+.footer-wave-fill { fill: var(--bg-cloud); }
+
+/* ============================================================
+   INFO SECTIONS
+   ============================================================ */
+.info { position: relative; background: var(--bg-cream); padding: 5em 2em; }
+@media (min-width: 1200px) { .info { padding: 5em 0; } }
+.info-container { max-width: 1000px; margin: 0 auto; }
+
+.info-content {
+  display: grid; align-items: center;
+  grid-template-columns: 1fr; gap: 1.5em;
+  grid-template-areas: "text" "img";
+}
+@media (min-width: 712px) {
+  .info-content { grid-template-columns: 1fr 1fr; grid-template-areas: "text img"; }
+  .info:nth-child(2n) .info-content { grid-template-areas: "img text"; }
+}
+
+.info-text-wrapper {
+  display: flex; flex-flow: column wrap;
+  max-width: 27em; justify-self: center; grid-area: text;
+}
+@media (min-width: 712px) {
+  .info-text-wrapper { justify-self: start; }
+  .info:nth-child(2n) .info-text-wrapper { text-align: right; justify-self: end; }
+}
+
+.info-title { color: var(--teal-hot); font-size: 3em; margin: 0; font-weight: 800; }
+.info-caption { font-size: 1.5em; line-height: 1.75; margin: 1em 0 0.5em; color: var(--text-secondary); }
+.info-img-wrapper { grid-area: img; }
+
+/* Illustrations */
+.info-illustration { width: 100%; max-width: 500px; border-radius: 16px; overflow: hidden; margin: 0 auto; position: relative; }
+
+/* 1: What's Hidden */
+.illus-hidden {
+  aspect-ratio: 4/3.5; background: linear-gradient(135deg, #F0FDFA, #E6FFFA);
+  display: flex; align-items: center; justify-content: center;
+}
+.illus-hidden-big {
+  width: 70%; aspect-ratio: 1;
+  background: rgba(13,148,136,0.08); border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+}
+.illus-hidden-big::after { content: '🔍'; font-size: 64px; }
+.illus-hidden-small {
+  position: absolute; bottom: -8%; left: -4%;
+  width: 40%; aspect-ratio: 1;
+  background: #DC2626; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1.4rem; font-weight: 700;
+  box-shadow: 0 4px 20px rgba(220,38,38,0.35);
+}
+
+/* 2: One Screenshot — grid */
+.illus-screenshot {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr); gap: 8px; padding: 4px;
+}
+.illus-card {
+  aspect-ratio: 1; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; font-size: 22px;
+}
+.illus-card:nth-child(1)  { background: rgba(20,184,166,0.25); }
+.illus-card:nth-child(2)  { background: rgba(20,184,166,0.35); }
+.illus-card:nth-child(3)  { background: rgba(20,184,166,0.45); }
+.illus-card:nth-child(4)  { background: rgba(20,184,166,0.55); }
+.illus-card:nth-child(5)  { background: rgba(20,184,166,0.40); }
+.illus-card:nth-child(6)  { background: rgba(20,184,166,0.50); }
+.illus-card:nth-child(7)  { background: rgba(20,184,166,0.60); }
+.illus-card:nth-child(8)  { background: rgba(20,184,166,0.70); }
+.illus-card:nth-child(9)  { background: rgba(20,184,166,0.55); }
+.illus-card:nth-child(10) { background: rgba(20,184,166,0.65); }
+.illus-card:nth-child(11) { background: rgba(20,184,166,0.75); }
+.illus-card:nth-child(12) { background: rgba(20,184,166,0.85); }
+
+/* 3: Buy Smarter — checklist */
+.illus-secure {
+  aspect-ratio: 4/3;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #F0FDFA, #E6FFFA);
+  border-radius: 16px;
+}
+.illus-checklist {
+  display: flex; flex-direction: column; gap: 12px;
+  width: 75%; max-width: 280px;
+}
+.illus-check-item {
+  background: white; border-radius: 10px;
+  padding: 14px 18px; font-size: 1.1rem;
+  font-weight: 500; color: var(--text-secondary);
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.illus-check-item--highlight {
+  background: var(--teal-hot); color: white;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(13,148,136,0.3);
+}
+.illus-tick { font-weight: 700; color: var(--teal); font-size: 1.2rem; flex-shrink: 0; }
+.illus-check-item--highlight .illus-tick { color: white; }
+
+/* 4: Your Data, Gone — cloud + no circle */
+.illus-privacy {
+  aspect-ratio: 4/3;
+  display: flex; align-items: center; justify-content: center;
+}
+.illus-cloud {
+  width: 80%; aspect-ratio: 5/3;
+  background: rgba(13,148,136,0.08); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.illus-no-circle {
+  width: 90px; height: 90px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Scroll reveal */
+.slide-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.slide-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer { background: var(--bg-cream); padding-top: 5em; }
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq {
+  padding: 4rem 1.5rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.faq-title {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  color: var(--text-primary);
+}
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 1.3rem 0;
+  font-family: var(--font);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.faq-question:hover { color: var(--teal); }
+.faq-chevron {
+  width: 20px; height: 20px; flex-shrink: 0;
+  transition: transform 0.25s ease;
+  stroke: var(--text-muted);
+}
+.faq-item.open .faq-chevron { transform: rotate(180deg); stroke: var(--teal); }
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+.faq-item.open .faq-answer { max-height: 300px; }
+.faq-answer-inner {
+  padding: 0 0 1.3rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   TEASER CARD (post free-scan conversion moment)
+   ============================================================ */
+.teaser-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 150;
+  background: rgba(30,41,59,0.5); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center;
+  padding: 24px;
+}
+.teaser-overlay.visible { display: flex; }
+.teaser-card {
+  background: var(--white);
+  border-radius: 20px;
+  width: 100%; max-width: 420px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.2);
+  overflow: hidden;
+  animation: teaserIn 0.3s ease;
+}
+@keyframes teaserIn { from { opacity:0; transform: translateY(16px) scale(0.97); } to { opacity:1; transform: none; } }
+.teaser-top {
+  padding: 2rem 1.8rem 1.5rem;
+  text-align: center;
+}
+.teaser-badge {
+  display: inline-flex;
+  align-items: center; gap: 6px;
+  background: #FEF2F2;
+  color: #DC2626;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+.teaser-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+.teaser-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.teaser-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.teaser-stat {
+  padding: 1rem;
+  text-align: center;
+  border-right: 1px solid var(--border);
+}
+.teaser-stat:last-child { border-right: none; }
+.teaser-stat-num {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--teal);
+}
+.teaser-stat-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+.teaser-cta-area {
+  padding: 1.5rem 1.8rem 2rem;
+  text-align: center;
+}
+.teaser-cta {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--teal);
+  color: white;
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.teaser-cta:hover { background: var(--teal-deep); }
+.teaser-cta-sub {
+  margin-top: 0.6rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.teaser-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--border);
+  background: white;
+  font-size: 16px; cursor: pointer;
+  color: var(--text-secondary);
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ============================================================
+   ENHANCED FOOTER
+   ============================================================ */
+.footer-container { position: relative; background: var(--bg-cloud); }
+.footer-padding { padding: 3rem 2rem 2rem; max-width: 1000px; margin: 0 auto; }
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+@media (min-width: 600px) {
+  .footer-grid { grid-template-columns: 2fr 1fr 1fr; gap: 3rem; }
+}
+.footer-brand { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem; }
+.footer-brand-icon {
+  width: 28px; height: 28px; border-radius: 7px;
+  background: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+.footer-brand-name { font-weight: 700; font-size: 1rem; color: var(--text-primary); }
+.footer-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+.footer-col-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.8rem; }
+.footer-col a { display: block; font-size: 0.9rem; color: var(--text-secondary); text-decoration: none; padding: 0.3rem 0; }
+.footer-col a:hover { color: var(--teal); }
+.footer-bottom {
+  border-top: 1px solid rgba(30,41,59,0.1);
+  padding-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+.footer-copy { font-size: 0.8rem; color: var(--text-muted); }
+.footer-aus { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.3rem; }
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(30,41,59,0.5); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px; opacity: 0; pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
+.modal {
+  background: var(--bg-soft); border-radius: 20px;
+  width: 100%; max-width: 640px; max-height: 85vh; overflow-y: auto;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.2);
+  transform: translateY(16px) scale(0.97); transition: transform 0.25s ease;
+}
+.modal-overlay.open .modal { transform: translateY(0) scale(1); }
+.modal-top { position: sticky; top: 0; z-index: 10; display: flex; justify-content: flex-end; padding: 16px 20px 0; }
+.modal-close {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--border); background: white;
+  font-size: 18px; cursor: pointer; color: var(--text-secondary);
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-close:hover { background: var(--bg-soft); }
+.modal-body { padding: 0 24px 32px; }
+
+/* Reports */
+.report { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: white; }
+.report-header { padding: 24px 28px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 14px; }
+.report-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--bg-soft); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.report-meta h2 { font-size: 17px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
+.report-meta p { font-size: 12px; color: var(--text-muted); }
+.intel-block { padding: 20px 28px; border-bottom: 1px solid var(--border); }
+.intel-block:last-child { border-bottom: none; }
+.intel-block-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.badge { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; }
+.badge--amber { background: var(--teal-pale); color: var(--teal); border: 1px solid var(--teal-light); }
+.badge--red { background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; }
+.badge--blue { background: var(--teal-pale); color: var(--teal-deep); border: 1px solid #A7F3D0; }
+.intel-block h3 { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.intel-list { list-style: none; }
+.intel-list li { font-size: 13px; line-height: 1.6; color: var(--text-secondary); padding: 7px 0; border-bottom: 1px solid var(--bg-soft); display: flex; gap: 8px; }
+.intel-list li:last-child { border-bottom: none; }
+.intel-list li::before { content: '\2192'; color: var(--bg-cloud); flex-shrink: 0; }
+.intel-list li strong { color: var(--text-primary); }
+.intel-prose { font-size: 13px; line-height: 1.65; color: var(--text-secondary); }
+.intel-prose strong { color: var(--text-primary); font-weight: 600; }
+.intel-source { font-size: 11px; color: var(--text-muted); margin-top: 10px; font-style: italic; }
+.report-verdict { padding: 20px 28px; background: var(--teal-pale); border-top: 1px solid var(--teal-light); font-size: 13px; font-weight: 600; color: var(--teal-deep); line-height: 1.55; }
+.report-verdict--warn { background: #FEF2F2; border-top-color: #FECACA; color: #DC2626; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HERO — Headline-driven
+     ============================================================ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="brand">
+      <div class="brand-icon">🔎</div>
+      <span class="brand-text">Listing Lens</span>
+    </div>
+
+    <h1 class="headline">
+      Know before<br>
+      <span class="headline-em">you buy.</span>
+    </h1>
+
+    <p class="subline">Screenshot any marketplace listing. Get the <strong>hidden costs, red flags, and questions to ask</strong> — before you hand over a cent.</p>
+
+    <div class="upload-zone" id="dropTarget">
+      <div class="upload-icon">
+        <svg viewBox="0 0 24 24"><path d="M19 7v3h-2V7h-3V5h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5a2 2 0 00-2 2v12c0 1.1.9 2 2 2h12a2 2 0 002-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z"/></svg>
+      </div>
+      <span class="upload-text">Upload any marketplace screenshot</span>
+      <span class="upload-hint">Drop, paste, or tap to browse</span>
+    </div>
+
+    <div class="trust-strip">
+      <div class="trust-item"><div class="trust-dot"></div>15 seconds</div>
+      <div class="trust-item"><div class="trust-dot"></div>No sign-up</div>
+      <div class="trust-item"><div class="trust-dot"></div>Data deleted after</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     DEMOS
+     ============================================================ -->
+<div class="demos-container">
+  <svg viewBox="0 0 1920 140" class="top-wave" preserveAspectRatio="none">
+    <path d="M1920 0l-107 28c-106 29-320 85-533 93-213 7-427-36-640-50s-427 0-533 7L0 85v171h1920z" class="sub-wave"/>
+    <path d="M0 129l64-26c64-27 192-81 320-75 128 5 256 69 384 64 128-6 256-80 384-91s256 43 384 70c128 26 256 26 320 26h64v96H0z" class="main-wave"/>
+  </svg>
+  <div class="content-padding">
+    <p class="demo-title"><strong>Real listings.</strong> Real reports.</p>
+    <ul class="demos">
+      <li><div class="demo-container" onclick="openModal('property')"><div class="demo-icon-container"><div class="demo-icon"><img src="https://listinglens.app/apartment-screenshot.jpg" alt="Melbourne apartment listing"></div></div><div class="demo-size">$1.8M</div></div></li>
+      <li><div class="demo-container" onclick="openModal('vehicle')"><div class="demo-icon-container"><div class="demo-icon"><img src="https://listinglens.app/Jeep-screenshot.jpg" alt="Jeep Gladiator listing"></div></div><div class="demo-size">$51,950</div></div></li>
+      <li><div class="demo-container" onclick="openModal('electronics')"><div class="demo-icon-container"><div class="demo-icon"><img src="https://listinglens.app/console-screenshot.jpg" alt="Nintendo 64 listing"></div></div><div class="demo-size">US $88</div></div></li>
+      <li><div class="demo-container" onclick="openModal('jewellery')"><div class="demo-icon-container"><div class="demo-icon">💎</div></div><div class="demo-size">$4,200</div></div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Wave to content -->
+<div class="bottom-wave">
+  <svg viewBox="0 0 1920 79" preserveAspectRatio="none" style="display:block;width:100%;">
+    <path d="M0 59l64-11c64-11 192-34 320-43s256-5 384 4 256 23 384 34 256 21 384 14 256-30 320-41l64-11v94H0z" class="info-wave"/>
+  </svg>
+</div>
+
+<!-- ============================================================
+     INFO SECTIONS
+     ============================================================ -->
+<section class="info">
+  <div class="info-container"><div class="slide-on-scroll"><div class="info-content">
+    <div class="info-text-wrapper">
+      <h2 class="info-title">What's Hidden</h2>
+      <p class="info-caption">Every listing leaves something out. We surface the recalls, the true costs, the red flags, and the questions sellers hope you won't ask.</p>
+    </div>
+    <div class="info-img-wrapper">
+      <div class="info-illustration illus-hidden">
+        <div class="illus-hidden-big"></div>
+        <div class="illus-hidden-small">🚩 5 critical</div>
+      </div>
+    </div>
+  </div></div></div>
+</section>
+
+<section class="info">
+  <div class="info-container"><div class="slide-on-scroll"><div class="info-content">
+    <div class="info-text-wrapper">
+      <h2 class="info-title">Any Marketplace</h2>
+      <p class="info-caption">Carsales, Realestate, eBay, Facebook Marketplace, Gumtree — or any marketplace, anywhere in the world. Screenshot it and we'll scan it instantly. See what we found, then unlock the full report for just $5 in your currency.</p>
+    </div>
+    <div class="info-img-wrapper">
+      <div class="info-illustration illus-screenshot">
+        <div class="illus-card">📸</div><div class="illus-card">🏠</div><div class="illus-card">🚗</div><div class="illus-card">🎮</div>
+        <div class="illus-card">💍</div><div class="illus-card">⌚</div><div class="illus-card">👟</div><div class="illus-card">💻</div>
+        <div class="illus-card">🛋️</div><div class="illus-card">📱</div><div class="illus-card">🎸</div><div class="illus-card">🚲</div>
+      </div>
+    </div>
+  </div></div></div>
+</section>
+
+<section class="info">
+  <div class="info-container"><div class="slide-on-scroll"><div class="info-content">
+    <div class="info-text-wrapper">
+      <h2 class="info-title">Buy Smarter</h2>
+      <p class="info-caption">The questions to ask, the costs to expect, the issues to check. Know what you're getting into before you spend a cent.</p>
+    </div>
+    <div class="info-img-wrapper">
+      <div class="info-illustration illus-secure">
+        <div class="illus-checklist">
+          <div class="illus-check-item"><span class="illus-tick">✓</span> Questions to ask</div>
+          <div class="illus-check-item"><span class="illus-tick">✓</span> Costs to expect</div>
+          <div class="illus-check-item"><span class="illus-tick">✓</span> Issues to check</div>
+          <div class="illus-check-item illus-check-item--highlight"><span class="illus-tick">✓</span> Ready to buy</div>
+        </div>
+      </div>
+    </div>
+  </div></div></div>
+</section>
+
+<section class="info">
+  <div class="info-container"><div class="slide-on-scroll"><div class="info-content">
+    <div class="info-text-wrapper">
+      <h2 class="info-title">Your Data, Gone</h2>
+      <p class="info-caption">Your screenshot is analysed, your report is delivered, then everything is deleted. No accounts. No history. No tracking. We go out of our way to forget you.</p>
+    </div>
+    <div class="info-img-wrapper">
+      <div class="info-illustration illus-privacy">
+        <div class="illus-cloud">
+          <div class="illus-no-circle">
+            <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#DC2626" stroke-width="2.5" stroke-linecap="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></div></div>
+</section>
+
+<!-- ============================================================
+     FAQ
+     ============================================================ -->
+<section class="faq">
+  <h2 class="faq-title">Questions? Answered.</h2>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      What marketplaces does this work with?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer"><div class="faq-answer-inner">All of them. Carsales, Realestate.com.au, eBay, Facebook Marketplace, Gumtree, Amazon, Craigslist, Autotrader, Rightmove, Carousell — if it's a listing with a price, we can analyse it. Just screenshot it.</div></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      What does a report include?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer"><div class="faq-answer-inner">Hidden costs the listing doesn't mention, red flags and inconsistencies, region-specific recalls and regulations, questions you should ask the seller, market context so you know if the price is fair, and a clear verdict. Tap any of the demo listings above to see a real example.</div></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      How fast is it?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer"><div class="faq-answer-inner">The free scan takes about 3 seconds. The full paid report takes 15–30 seconds depending on the listing complexity. You'll have your report before you finish your coffee.</div></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      How much does it cost?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer"><div class="faq-answer-inner">The initial scan is free — you'll see what we found before paying anything. If you want the full report, it's $5 in your local currency. No subscriptions, no hidden fees, no upsells.</div></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      Is my data stored?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer"><div class="faq-answer-inner">No. Your screenshots are deleted immediately after your report is generated. We don't create accounts, we don't use cookies or tracking, and we don't store any personal information. Once you close the page, everything is gone. We go out of our way to forget you.</div></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      What if the report misses something?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer"><div class="faq-answer-inner">Our reports are AI-generated buyer intelligence — think of them as a very thorough second pair of eyes, not a professional inspection. They're designed to help you ask better questions and spot things you might miss. Always do your own due diligence before making a purchase.</div></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      Does it work outside Australia?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer"><div class="faq-answer-inner">Yes. Listing Lens works with marketplace listings from anywhere in the world. You tell us your country, and we tailor the report to your region — local recalls, consumer laws, import duties, and market pricing specific to where you are.</div></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TEASER CARD (post free-scan overlay)
+     ============================================================ -->
+<div class="teaser-overlay" id="teaserOverlay">
+  <div class="teaser-card" style="position:relative;">
+    <button class="teaser-close" onclick="closeTeaser()">&times;</button>
+    <div class="teaser-top">
+      <div class="teaser-badge">🚩 Issues detected</div>
+      <div class="teaser-title" id="teaserTitle">2021 Jeep Gladiator Overland</div>
+      <div class="teaser-subtitle" id="teaserSubtitle">We scanned this listing in 3 seconds. Here's what we found.</div>
+    </div>
+    <div class="teaser-stats">
+      <div class="teaser-stat">
+        <div class="teaser-stat-num" id="teaserCritical">5</div>
+        <div class="teaser-stat-label">Critical issues</div>
+      </div>
+      <div class="teaser-stat">
+        <div class="teaser-stat-num" id="teaserHidden">3</div>
+        <div class="teaser-stat-label">Hidden costs</div>
+      </div>
+      <div class="teaser-stat">
+        <div class="teaser-stat-num" id="teaserQuestions">2</div>
+        <div class="teaser-stat-label">Questions to ask</div>
+      </div>
+    </div>
+    <div class="teaser-cta-area">
+      <button class="teaser-cta" onclick="closeTeaser()">Get full report — $5</button>
+      <div class="teaser-cta-sub">Powered by Airwallex · Secure payment · Data deleted after</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="footer-container">
+    <svg viewBox="0 0 1920 79" preserveAspectRatio="none" style="position:absolute;left:0;right:0;bottom:100%;display:block;width:100%;">
+      <path d="M0 59l64-11c64-11 192-34 320-43s256-5 384 4 256 23 384 34 256 21 384 14 256-30 320-41l64-11v94H0z" class="footer-wave-fill"/>
+    </svg>
+    <div class="footer-padding">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <div class="footer-brand-icon">🔎</div>
+            <span class="footer-brand-name">Listing Lens</span>
+          </div>
+          <p class="footer-desc">AI-powered buyer intelligence for marketplace listings. Know before you buy — know the hidden costs, red flags, and questions to ask.</p>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Product</div>
+          <a href="#top">Scan a listing</a>
+          <a href="#demos">See examples</a>
+          <a href="#faq">How it works</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Legal</div>
+          <a href="/terms">Terms & Privacy</a>
+          <a href="mailto:hello@listinglens.app">Contact us</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 Listing Lens Labs Pty Ltd</span>
+        <span class="footer-aus">🇦🇺 Made in Australia</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-top"><button class="modal-close" onclick="closeModal()">&times;</button></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- REPORT TEMPLATES -->
+<template id="tpl-property">
+  <div class="report">
+    <div class="report-header"><div class="report-icon">🏠</div><div class="report-meta"><h2>Carlton Apartment — 3 Bed / 2 Bath / 3 Car</h2><p>Realestate.com.au · $1.8M–$1.95M · 230m²</p></div></div>
+    <div class="intel-block"><div class="intel-block-header"><span class="badge badge--amber">Critical</span><h3>Undisclosed Costs</h3></div>
+      <ul class="intel-list">
+        <li><span><strong>Repayment calculation unclear.</strong> $17,322/month shown with no loan term or rate. At 6.5% over 30yrs on $1.8M = ~$11,850/month.</span></li>
+        <li><span><strong>Body corp fees hidden.</strong> For 230m² premium Carlton apartment, expect $15K–$25K/year minimum.</span></li>
+        <li><span><strong>Ongoing costs missing.</strong> Council rates (~$5K/yr), water (~$1.5K/yr), building insurance — none disclosed.</span></li>
+        <li><span><strong>Price gap is a signal.</strong> $150K range suggests vendor uncertainty or soft market.</span></li>
+        <li><span><strong>Size affects resale.</strong> 230m² is unusually large for an apartment — buyer pool may be narrow.</span></li>
+      </ul>
+    </div>
+    <div class="intel-block"><div class="intel-block-header"><span class="badge badge--blue">Suburb Intel</span><h3>Living in Carlton</h3></div>
+      <div class="intel-prose"><strong>Lifestyle:</strong> Inner-city, walking distance to CBD, vibrant café precinct.<br><br><strong>Noise:</strong> High foot traffic, bars open late. Check building insulation.<br><br><strong>Transport:</strong> Tram routes 1 &amp; 96, ~15 min to CBD.<br><br><strong>Schools:</strong> Zoned for Carlton Primary, near University High School.</div>
+      <p class="intel-source">Sources: Domain suburb profile, r/melbourne, council data</p>
+    </div>
+    <div class="report-verdict">💰 Ask: (1) Actual body corp fees? (2) Special levies planned? (3) Loan term behind $17K/month? (4) Recent comparable sales at this size?</div>
+  </div>
+</template>
+
+<template id="tpl-vehicle">
+  <div class="report">
+    <div class="report-header"><div class="report-icon">🚗</div><div class="report-meta"><h2>2021 Jeep Gladiator Overland</h2><p>Carsales.com.au · $51,950 · Private Sale · 51,000 km</p></div></div>
+    <div class="intel-block"><div class="intel-block-header"><span class="badge badge--amber">Critical</span><h3>Hidden Research Required</h3></div>
+      <ul class="intel-list">
+        <li><span><strong>Modification check.</strong> VIC requires VSI engineering cert for lifts over 50mm.</span></li>
+        <li><span><strong>Recall status.</strong> Check VIN at vehiclerecalls.gov.au.</span></li>
+        <li><span><strong>On-road costs hidden.</strong> $51,950 excludes stamp duty (~$2,900), rego transfer (~$250), roadworthy (~$200).</span></li>
+        <li><span><strong>Insurance risk.</strong> Modified vehicles frequently refused or attract 50–100% premium increases.</span></li>
+        <li><span><strong>Resale impact.</strong> Modified 4WDs have smaller buyer pool. Banks often refuse finance.</span></li>
+      </ul>
+    </div>
+    <div class="intel-block"><div class="intel-block-header"><span class="badge badge--blue">Community</span><h3>What Owners Say</h3></div>
+      <div class="intel-prose"><strong>Praise:</strong> Off-road capability, truck bed versatility.<br><br><strong>Complaints:</strong> Harsh highway ride, road noise, 13–15L/100km real-world.<br><br><strong>Known issues:</strong> Fuel pump recalls, airbag sensor faults, transmission hesitation.</div>
+      <p class="intel-source">Sources: Australian 4x4 forums, ProductReview.com.au</p>
+    </div>
+    <div class="report-verdict">💰 Verify engineering certs, get insurance quotes with mod details, confirm bank will finance.</div>
+  </div>
+</template>
+
+<template id="tpl-electronics">
+  <div class="report">
+    <div class="report-header"><div class="report-icon">🎮</div><div class="report-meta"><h2>Nintendo 64 Console</h2><p>eBay.com · US $88.00 + $108.64 shipping · Used</p></div></div>
+    <div class="intel-block"><div class="intel-block-header"><span class="badge badge--red">Compatibility</span><h3>Critical Issues Found</h3></div>
+      <ul class="intel-list">
+        <li><span><strong>Region incompatible.</strong> US console outputs NTSC. Australian TVs use PAL.</span></li>
+        <li><span><strong>True landed cost.</strong> US $88 + $108.64 shipping = ~AU $280–$300.</span></li>
+        <li><span><strong>No games included.</strong> N64 games run AU $30–$100 each.</span></li>
+        <li><span><strong>Controller wear unknown.</strong> "Working" doesn't confirm joystick condition.</span></li>
+        <li><span><strong>Returns cost ~$100.</strong> You pay return shipping to the USA.</span></li>
+        <li><span><strong>Buy local instead.</strong> PAL consoles with games: $120–$200 on FB Marketplace.</span></li>
+      </ul>
+    </div>
+    <div class="report-verdict report-verdict--warn">⚠️ ~AU $300 for incompatible console vs $120–$200 locally for PAL with games.</div>
+  </div>
+</template>
+
+<template id="tpl-jewellery">
+  <div class="report">
+    <div class="report-header"><div class="report-icon">💎</div><div class="report-meta"><h2>18K White Gold Diamond Ring — 1.2ct</h2><p>Facebook Marketplace · $4,200 · Private Seller</p></div></div>
+    <div class="intel-block"><div class="intel-block-header"><span class="badge badge--amber">Critical</span><h3>Verification Required</h3></div>
+      <ul class="intel-list">
+        <li><span><strong>No certification shown.</strong> No GIA, AGS, or independent grading report.</span></li>
+        <li><span><strong>Price vs retail gap.</strong> Certified 1.2ct retails $8K–$15K. $4,200 is a red flag.</span></li>
+        <li><span><strong>No return policy.</strong> Private sale = no buyer protection.</span></li>
+        <li><span><strong>Resizing costs.</strong> 18K white gold: $80–$200+.</span></li>
+        <li><span><strong>Independent appraisal needed.</strong> Budget $80–$150. Non-negotiable.</span></li>
+      </ul>
+    </div>
+    <div class="intel-block"><div class="intel-block-header"><span class="badge badge--blue">Market Context</span><h3>What to Know</h3></div>
+      <div class="intel-prose"><strong>Common scams:</strong> Synthetic sold as natural, inflated carat weight.<br><br><strong>Negotiation leverage:</strong> No cert = no proof. Resistance to verification = walk away.<br><br><strong>Safer alternatives:</strong> Certified pre-owned from established jewellers.</div>
+      <p class="intel-source">Sources: GIA pricing guides, Australian jeweller forums</p>
+    </div>
+    <div class="report-verdict">💰 Non-negotiable: (1) Ask for GIA/AGS cert. (2) Meet at independent jeweller. (3) If refused, walk away.</div>
+  </div>
+</template>
+
+<script>
+// Scroll reveal
+var els=document.querySelectorAll('.slide-on-scroll');
+var obs=new IntersectionObserver(function(e){e.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.2});
+els.forEach(function(e){obs.observe(e)});
+
+// Modal
+function openModal(id){var t=document.getElementById('tpl-'+id),b=document.getElementById('modalBody');b.innerHTML='';b.appendChild(t.content.cloneNode(true));document.getElementById('modalOverlay').classList.add('open');document.body.style.overflow='hidden'}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow=''}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+
+// Upload zone
+var dt=document.getElementById('dropTarget');
+dt.addEventListener('click',function(){var i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=function(){showTeaser()};i.click()});
+dt.addEventListener('dragover',function(e){e.preventDefault();dt.style.borderColor='var(--teal)';dt.style.background='rgba(204,251,241,0.25)'});
+dt.addEventListener('dragleave',function(){dt.style.borderColor='';dt.style.background=''});
+dt.addEventListener('drop',function(e){e.preventDefault();dt.style.borderColor='';dt.style.background='';showTeaser()});
+
+// Teaser card
+function showTeaser(){document.getElementById('teaserOverlay').classList.add('visible');document.body.style.overflow='hidden'}
+function closeTeaser(){document.getElementById('teaserOverlay').classList.remove('visible');document.body.style.overflow=''}
+
+// FAQ accordion
+function toggleFaq(btn){var item=btn.parentElement;var wasOpen=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(function(el){el.classList.remove('open')});if(!wasOpen)item.classList.add('open')}
+</script>
+</body>
+</html>
