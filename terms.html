@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listing Lens — Terms & Privacy</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-cream: #FAFAF7;
+  --bg-soft: #F5F4F0;
+  --bg-cloud: #EBE9E4;
+  --text-primary: #1E293B;
+  --text-secondary: #64748B;
+  --text-muted: #94A3B8;
+  --teal: #0D9488;
+  --teal-hot: #14B8A6;
+  --teal-light: #5EEAD4;
+  --teal-pale: #CCFBF1;
+  --teal-deep: #0F766E;
+  --red: #DC2626;
+  --red-pale: #FEF2F2;
+  --amber-pale: #FEF3C7;
+  --white: #fff;
+  --border: rgba(30,41,59,0.08);
+  --font: 'Outfit', system-ui, -apple-system, sans-serif;
+}
+
+html {
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  font-size: 15px;
+  line-height: 1.7;
+  background: var(--bg-cream);
+  color: var(--text-primary);
+}
+body { margin: 0; }
+
+/* Top bar */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+  position: sticky; top: 0; z-index: 10;
+}
+.topbar-brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+.topbar-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.topbar-name { font-size: 1rem; font-weight: 700; color: var(--text-primary); }
+.topbar-back {
+  font-size: 0.85rem; color: var(--teal); text-decoration: none; font-weight: 600;
+}
+.topbar-back:hover { color: var(--teal-deep); }
+
+/* Layout */
+.page { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+.page-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+.page-updated {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+}
+
+/* TLDR box */
+.tldr {
+  background: var(--teal-pale);
+  border: 1px solid var(--teal-light);
+  border-radius: 14px;
+  padding: 1.5rem 1.8rem;
+  margin-bottom: 3rem;
+}
+.tldr-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--teal-deep);
+  margin-bottom: 0.8rem;
+}
+.tldr-list {
+  list-style: none;
+}
+.tldr-list li {
+  font-size: 0.95rem;
+  color: var(--teal-deep);
+  padding: 0.3rem 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  line-height: 1.5;
+}
+.tldr-list li::before {
+  content: '✓';
+  font-weight: 700;
+  color: var(--teal);
+  flex-shrink: 0;
+}
+
+/* Section nav */
+.section-nav {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.section-nav a {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: var(--bg-soft);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+.section-nav a:hover {
+  background: var(--teal-pale);
+  color: var(--teal-deep);
+}
+
+/* Content sections */
+.legal-section {
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--border);
+}
+.legal-section:last-child { border-bottom: none; }
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.subsection {
+  margin-bottom: 2rem;
+}
+.subsection-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  color: var(--text-primary);
+}
+
+p { margin-bottom: 1rem; color: var(--text-secondary); }
+p strong { color: var(--text-primary); font-weight: 600; }
+
+/* Styled lists */
+.legal-list {
+  list-style: none;
+  margin-bottom: 1.2rem;
+  padding-left: 0;
+}
+.legal-list li {
+  color: var(--text-secondary);
+  padding: 0.4rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+.legal-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.85rem;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--teal-light);
+}
+
+/* Callout boxes */
+.callout {
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.callout-privacy {
+  background: var(--teal-pale);
+  border: 1px solid var(--teal-light);
+}
+.callout-warning {
+  background: var(--red-pale);
+  border: 1px solid #FECACA;
+}
+.callout-info {
+  background: var(--amber-pale);
+  border: 1px solid #FDE68A;
+}
+.callout p { margin-bottom: 0; }
+.callout p strong { color: var(--teal-deep); }
+.callout-warning p strong { color: var(--red); }
+.callout-info p strong { color: #92400E; }
+
+/* Data table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+.data-table th {
+  text-align: left;
+  padding: 0.8rem 1rem;
+  background: var(--bg-soft);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border);
+}
+.data-table td {
+  padding: 0.8rem 1rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.data-table tr:last-child td { border-bottom: none; }
+
+/* Footer */
+.legal-footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
+.legal-footer a { color: var(--text-muted); text-decoration: none; }
+.legal-footer a:hover { color: var(--teal); }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <a href="/" class="topbar-brand">
+    <div class="topbar-icon">🔎</div>
+    <span class="topbar-name">Listing Lens</span>
+  </a>
+  <a href="/" class="topbar-back">← Back to home</a>
+</div>
+
+<div class="page">
+
+  <h1 class="page-title">Terms & Privacy</h1>
+  <p class="page-updated">Last updated: 9 February 2026 · Effective immediately</p>
+
+  <!-- TLDR -->
+  <div class="tldr">
+    <div class="tldr-title">The short version</div>
+    <ul class="tldr-list">
+      <li>We don't store your screenshots or reports after delivery</li>
+      <li>We don't create accounts, profiles, or track you across sessions</li>
+      <li>We don't sell, share, or monetise any data</li>
+      <li>Payments are handled by Airwallex — we never see your card details</li>
+      <li>Reports are AI-generated information, not professional advice</li>
+      <li>Prohibited content results in immediate blocking with no refund</li>
+    </ul>
+  </div>
+
+  <!-- Section nav -->
+  <div class="section-nav">
+    <a href="#privacy">Privacy</a>
+    <a href="#data">What We Collect</a>
+    <a href="#terms">Terms of Use</a>
+    <a href="#payments">Payments</a>
+    <a href="#content">Prohibited Content</a>
+    <a href="#ai">AI Disclaimer</a>
+    <a href="#rights">Your Rights</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- ============================================================
+       PRIVACY POLICY
+       ============================================================ -->
+  <div class="legal-section" id="privacy">
+    <h2 class="section-title">Privacy Policy</h2>
+
+    <p>Listing Lens is built on a simple principle: <strong>we don't want your data.</strong> This isn't a marketing claim — it's the architecture of the product. We've deliberately engineered this service to collect the absolute minimum information required to function.</p>
+
+    <p>This policy complies with the <strong>Australian Privacy Act 1988</strong> and the <strong>Australian Privacy Principles (APPs)</strong>. We are bound by these principles and take them seriously.</p>
+
+    <div class="callout callout-privacy">
+      <p><strong>Our position is unusual:</strong> Most privacy policies explain what data a company collects. Ours mostly explains what we don't collect, because the list of things we do collect is very short.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       WHAT WE COLLECT
+       ============================================================ -->
+  <div class="legal-section" id="data">
+    <h2 class="section-title">What We Collect (and Don't)</h2>
+
+    <div class="subsection">
+      <h3 class="subsection-title">What we collect</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Data</th><th>Why</th><th>How long</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Your uploaded screenshots</strong></td>
+            <td>To generate your report</td>
+            <td>Deleted immediately after your report is delivered. Not stored, not backed up, not recoverable.</td>
+          </tr>
+          <tr>
+            <td><strong>IP address</strong></td>
+            <td>Required by our hosting infrastructure (Netlify) and for abuse prevention</td>
+            <td>Server logs retained by Netlify per their privacy policy. We do not access or process these unless investigating abuse.</td>
+          </tr>
+          <tr>
+            <td><strong>Payment information</strong></td>
+            <td>To process your $5 payment</td>
+            <td>Handled entirely by Airwallex, an Australian-founded, PCI-DSS compliant payment processor. We never receive, see, or store your card number, expiry, or CVV. See <a href="https://www.airwallex.com/au/privacy-policy" style="color:var(--teal)">Airwallex's privacy policy</a>.</td>
+          </tr>
+          <tr>
+            <td><strong>Airwallex transaction ID</strong></td>
+            <td>To confirm payment and link it to your report session</td>
+            <td>Retained in Airwallex's systems for financial compliance. We store a session reference only for the duration of your active session.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">What we do NOT collect</h3>
+      <ul class="legal-list">
+        <li>Names, email addresses, or any contact information</li>
+        <li>User accounts, passwords, or login credentials</li>
+        <li>Cookies for tracking, advertising, or analytics</li>
+        <li>Device fingerprints or unique identifiers</li>
+        <li>Location data beyond what's in your IP address</li>
+        <li>Browsing history, referral sources, or click tracking</li>
+        <li>Any form of advertising identifier</li>
+        <li>Third-party analytics (no Google Analytics, no Facebook Pixel, no tracking scripts)</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">How your screenshots are processed</h3>
+      <p>When you upload a screenshot, the following happens:</p>
+      <ul class="legal-list">
+        <li>Your image is sent to our serverless function running on Netlify</li>
+        <li>The image is transmitted to Anthropic's Claude API for analysis</li>
+        <li>Claude generates a report based on the visible content of your screenshot</li>
+        <li>The report is returned to your browser</li>
+        <li>The image is immediately deleted from our systems — it is not written to any persistent storage at any point</li>
+        <li>The report exists only in your browser session — once you close the page, it's gone</li>
+      </ul>
+      <p>Your screenshots are processed by <strong>Anthropic's Claude API</strong>, which is subject to <a href="https://www.anthropic.com/privacy" style="color:var(--teal)">Anthropic's privacy policy</a>. Under Anthropic's API terms, data submitted via the API is not used to train their models.</p>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">Third-party services</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Service</th><th>Purpose</th><th>Data shared</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Netlify</strong></td>
+            <td>Website hosting and serverless functions</td>
+            <td>IP address (standard web hosting). <a href="https://www.netlify.com/privacy/" style="color:var(--teal)">Their policy</a></td>
+          </tr>
+          <tr>
+            <td><strong>Airwallex</strong></td>
+            <td>Payment processing</td>
+            <td>Payment details (card, billing). We never see this data. <a href="https://www.airwallex.com/au/privacy-policy" style="color:var(--teal)">Their policy</a></td>
+          </tr>
+          <tr>
+            <td><strong>Anthropic (Claude)</strong></td>
+            <td>AI analysis of your screenshots</td>
+            <td>Your uploaded screenshots (transiently, for analysis only). <a href="https://www.anthropic.com/privacy" style="color:var(--teal)">Their policy</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>We use <strong>no advertising networks, no analytics platforms, and no social media tracking pixels.</strong></p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TERMS OF USE
+       ============================================================ -->
+  <div class="legal-section" id="terms">
+    <h2 class="section-title">Terms of Use</h2>
+
+    <div class="subsection">
+      <h3 class="subsection-title">The service</h3>
+      <p>Listing Lens is a marketplace listing analysis tool. You upload a screenshot of a listing from any online marketplace. We use artificial intelligence to analyse the visible content and generate a buyer intelligence report highlighting potential issues, hidden costs, and questions to consider.</p>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">How it works</h3>
+      <ul class="legal-list">
+        <li><strong>Free scan:</strong> Upload one screenshot. Our AI identifies the listing and provides a summary of what it found — the category, estimated issue count, and what the full report would cover. This is free and costs you nothing.</li>
+        <li><strong>Paid report ($5 AUD):</strong> If the scan shows value, you can pay $5 to unlock a full report. After payment, you're taken to a temporary workspace where you upload up to two screenshots of the same listing. Our AI cross-references both images and generates a detailed buyer intelligence report.</li>
+        <li><strong>Delivery:</strong> Your report is displayed in your browser. You can save it as a PDF or copy it. Once you leave the page, the report and your screenshots are permanently deleted.</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">Your responsibilities</h3>
+      <ul class="legal-list">
+        <li>You must only upload screenshots of genuine marketplace listings</li>
+        <li>You must not upload prohibited content (see below)</li>
+        <li>You must be at least 18 years old or have parental consent to use this service</li>
+        <li>You are responsible for saving your report before leaving the page — we cannot retrieve it afterwards</li>
+        <li>You accept that reports are generated by AI and may contain inaccuracies</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">Availability</h3>
+      <p>We aim to keep Listing Lens available at all times but make no guarantees of uptime. The service may be unavailable during maintenance, outages from our hosting or AI providers, or periods of high demand. We are not liable for any losses arising from service unavailability.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PAYMENTS
+       ============================================================ -->
+  <div class="legal-section" id="payments">
+    <h2 class="section-title">Payments & Refunds</h2>
+
+    <div class="subsection">
+      <h3 class="subsection-title">Pricing</h3>
+      <p>A full buyer intelligence report costs <strong>$5 in your local currency</strong> — that's $5 AUD, $5 USD, £5 GBP, €5 EUR, $5 SGD, and so on. This is a one-time payment — there are no subscriptions, recurring charges, or hidden fees.</p>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">Payment processing</h3>
+      <p>All payments are processed by <strong>Airwallex</strong>, an Australian-founded, PCI-DSS compliant payment processor trusted by companies like Canva and SHEIN. Your card details are entered directly into Airwallex's secure payment form. We never receive, transmit, or store your card number, expiry date, or security code. Prices are displayed in your local currency — $5 in whatever currency you use.</p>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">Refunds</h3>
+      <p>We understand that AI-generated reports may not always meet expectations. Our refund policy is straightforward:</p>
+      <ul class="legal-list">
+        <li><strong>Report not delivered:</strong> If you pay and no report is generated due to a technical error, you will receive a full refund automatically</li>
+        <li><strong>Report delivered:</strong> Once a report has been successfully generated and displayed, the $5 fee is considered earned. We are unable to offer refunds for delivered reports, as the AI processing cost has been incurred</li>
+        <li><strong>Prohibited content:</strong> If your upload is flagged and blocked for prohibited content, no refund will be issued (see Prohibited Content below)</li>
+      </ul>
+      <p>Under the <strong>Australian Consumer Law</strong>, you have rights to a remedy if services are not provided with due care and skill, or are not fit for purpose. If you believe your statutory rights have been breached, please contact us.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PROHIBITED CONTENT
+       ============================================================ -->
+  <div class="legal-section" id="content">
+    <h2 class="section-title">Prohibited Content</h2>
+
+    <div class="callout callout-warning">
+      <p><strong>Zero tolerance.</strong> Uploading prohibited content will result in immediate session termination and blocking. No refund will be issued. In serious cases, we will report the matter to the Australian Federal Police and/or relevant authorities.</p>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">You must NOT upload</h3>
+      <ul class="legal-list">
+        <li><strong>Child sexual abuse material (CSAM)</strong> — any imagery involving minors in any sexual or exploitative context. This is a criminal offence under Australian law and will be reported immediately</li>
+        <li><strong>Pornographic or sexually explicit content</strong> — of any kind, involving any persons</li>
+        <li><strong>Violent, graphic, or gore content</strong></li>
+        <li><strong>Content promoting terrorism, extremism, or hate</strong></li>
+        <li><strong>Content depicting or promoting illegal activity</strong> including drug manufacturing, weapons trading, or fraud</li>
+        <li><strong>Content designed to harass, doxx, or threaten any individual</strong></li>
+        <li><strong>Content that infringes copyright</strong> beyond the scope of a marketplace listing screenshot</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">How we detect prohibited content</h3>
+      <p>Uploaded images are screened by our AI before analysis begins. If prohibited content is detected:</p>
+      <ul class="legal-list">
+        <li>The upload is immediately rejected and the image is not processed</li>
+        <li>Your session is terminated</li>
+        <li>Your IP address may be logged for abuse prevention purposes</li>
+        <li>No refund is issued if payment has been made</li>
+        <li>For CSAM or content involving minors, we will report the incident — including available IP data — to the Australian Federal Police, the Australian Centre to Counter Child Exploitation (ACCCE), and any other relevant authority</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">By uploading, you confirm</h3>
+      <p>By uploading any image to Listing Lens, you confirm that the image is a screenshot of a genuine marketplace listing, that it does not contain prohibited content, and that you accept the consequences outlined above if it does.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       AI DISCLAIMER
+       ============================================================ -->
+  <div class="legal-section" id="ai">
+    <h2 class="section-title">AI-Generated Content Disclaimer</h2>
+
+    <div class="callout callout-info">
+      <p><strong>Reports are informational only.</strong> They are not professional advice and should not be treated as such. Always do your own due diligence before making a purchase.</p>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">What our reports are</h3>
+      <ul class="legal-list">
+        <li>AI-generated analysis based on visible content in your uploaded screenshots</li>
+        <li>General information intended to help you ask better questions and identify potential issues</li>
+        <li>A starting point for your own research, not a replacement for it</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">What our reports are NOT</h3>
+      <ul class="legal-list">
+        <li><strong>Not financial advice.</strong> We are not licensed financial advisors. Do not make purchasing decisions based solely on our reports</li>
+        <li><strong>Not legal advice.</strong> We are not solicitors. Reports may reference laws or regulations but this is general information only</li>
+        <li><strong>Not a professional inspection.</strong> Our AI analyses photos and text — it cannot physically inspect a property, vehicle, or item</li>
+        <li><strong>Not guaranteed to be accurate.</strong> AI can make errors. Information may be outdated, incorrect, or incomplete. Market data and pricing may not reflect current conditions</li>
+        <li><strong>Not a valuation.</strong> Any price commentary is based on general market information and should not be relied upon as a formal valuation</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">Limitation of liability</h3>
+      <p>To the maximum extent permitted by Australian law, Listing Lens is not liable for any loss, damage, or expense arising from the use of or reliance on our reports. This includes but is not limited to financial loss from purchase decisions, missed defects or issues not identified in the report, and inaccurate information generated by the AI.</p>
+      <p>Nothing in these terms excludes or limits any rights you have under the <strong>Australian Consumer Law</strong> that cannot be excluded or limited by law.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       YOUR RIGHTS
+       ============================================================ -->
+  <div class="legal-section" id="rights">
+    <h2 class="section-title">Your Rights</h2>
+
+    <div class="subsection">
+      <h3 class="subsection-title">Under the Australian Privacy Act</h3>
+      <p>Under the Australian Privacy Principles, you have the right to:</p>
+      <ul class="legal-list">
+        <li><strong>Know what personal information we hold about you.</strong> In practice, we hold almost nothing — no accounts, no profiles, no stored images</li>
+        <li><strong>Request access to your personal information.</strong> You can contact us and we will confirm what (if any) data we hold</li>
+        <li><strong>Request correction of inaccurate information.</strong> Given we don't maintain records, this is unlikely to be relevant</li>
+        <li><strong>Request deletion of your data.</strong> Your screenshots and reports are automatically deleted after each session. If you believe any data persists, contact us and we will investigate</li>
+        <li><strong>Complain to the Office of the Australian Information Commissioner (OAIC)</strong> if you believe we've breached the Privacy Act. You can contact the OAIC at <a href="https://www.oaic.gov.au" style="color:var(--teal)">oaic.gov.au</a></li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">Data deletion — it's automatic</h3>
+      <p>Unlike most services where you need to request data deletion, <strong>Listing Lens deletes your data automatically.</strong> You don't need to ask. There is no "delete my account" process because there are no accounts to delete.</p>
+      <ul class="legal-list">
+        <li>Uploaded screenshots are deleted immediately after report generation</li>
+        <li>Generated reports exist only in your browser session</li>
+        <li>When you close the page, everything is gone</li>
+        <li>There is no way for us to recover your screenshots or report after the session ends</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">Data breach notification</h3>
+      <p>In the unlikely event of a data breach affecting personal information, we will comply with the <strong>Notifiable Data Breaches (NDB) scheme</strong> under Part IIIC of the Privacy Act. However, given that we do not store personal information beyond the duration of a session, the scope for a meaningful data breach is extremely limited.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       CHANGES & CONTACT
+       ============================================================ -->
+  <div class="legal-section" id="contact">
+    <h2 class="section-title">Changes & Contact</h2>
+
+    <div class="subsection">
+      <h3 class="subsection-title">Changes to these terms</h3>
+      <p>We may update these terms from time to time. Changes will be posted on this page with an updated "Last updated" date. Since we don't collect email addresses, we cannot notify you directly — we encourage you to check this page periodically if you use the service regularly.</p>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">Governing law</h3>
+      <p>These terms are governed by the laws of the <strong>Commonwealth of Australia</strong>. Any disputes will be subject to the jurisdiction of the courts of Australia.</p>
+    </div>
+
+    <div class="subsection">
+      <h3 class="subsection-title">Contact us</h3>
+      <p>If you have questions about these terms, our privacy practices, or need to exercise your rights under the Privacy Act, you can reach us at:</p>
+      <p><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="addddfc4dbccced4edc1c4ded9c4c3cac1c8c3de83ccdddd">[email&#160;protected]</a></p>
+      <p>We aim to respond to all enquiries within 30 days, as required under the Australian Privacy Principles.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="legal-
