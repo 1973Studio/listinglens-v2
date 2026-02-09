@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Listing Lens — Your Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-cream: #FAFAF7;
+  --bg-soft: #F5F4F0;
+  --bg-cloud: #EBE9E4;
+  --text-primary: #1E293B;
+  --text-secondary: #64748B;
+  --text-muted: #94A3B8;
+  --teal: #0D9488;
+  --teal-hot: #14B8A6;
+  --teal-light: #5EEAD4;
+  --teal-pale: #CCFBF1;
+  --teal-deep: #0F766E;
+  --teal-dark: #134E4A;
+  --amber: #F59E0B;
+  --amber-pale: #FEF3C7;
+  --red: #DC2626;
+  --red-pale: #FEF2F2;
+  --white: #fff;
+  --border: rgba(30,41,59,0.08);
+  --font: 'Outfit', system-ui, -apple-system, sans-serif;
+}
+
+html {
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.5;
+  background: var(--bg-cream);
+}
+body { margin: 0; color: var(--text-primary); min-height: 100svh; }
+
+/* ============================================================
+   TOP BAR
+   ============================================================ */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.topbar-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.topbar-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.topbar-status {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--teal);
+  font-weight: 600;
+}
+.topbar-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--teal-hot);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+.dashboard {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* Ephemeral banner */
+.ephemeral-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  background: var(--amber-pale);
+  border: 1px solid #FDE68A;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 2rem;
+}
+.ephemeral-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.ephemeral-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+.ephemeral-text strong { color: var(--text-primary); }
+
+/* Welcome */
+.welcome {
+  margin-bottom: 2.5rem;
+}
+.welcome h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+.welcome p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Step indicator */
+.steps {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.step-bar {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--bg-cloud);
+  transition: background 0.3s ease;
+}
+.step-bar.active { background: var(--teal); }
+.step-bar.complete { background: var(--teal-light); }
+
+/* ============================================================
+   COUNTRY SELECTOR
+   ============================================================ */
+.country-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--white);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s ease;
+}
+.country-card.complete { border-color: var(--teal-light); }
+.country-card-header {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.country-card-left {
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.country-card-number {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--bg-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 700; color: var(--text-muted);
+  flex-shrink: 0;
+}
+.country-card.complete .country-card-number {
+  background: var(--teal-pale); color: var(--teal);
+}
+.country-card-title { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+.country-card-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+.country-card-body { padding: 1.5rem; }
+
+.country-select-wrapper {
+  position: relative;
+}
+.country-select {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  padding-left: 3.2rem;
+  border: 2px solid var(--bg-cloud);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--bg-cream);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+}
+.country-select:focus {
+  outline: none;
+  border-color: var(--teal-light);
+  background-color: rgba(204,251,241,0.1);
+}
+.country-select optgroup {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: normal;
+  padding-top: 0.5rem;
+}
+.country-select option {
+  font-weight: 500;
+  color: var(--text-primary);
+  padding: 0.3rem 0;
+}
+.country-flag {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.3rem;
+  pointer-events: none;
+}
+.country-helper {
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+.country-helper svg {
+  width: 14px; height: 14px; flex-shrink: 0; margin-top: 2px;
+  stroke: var(--teal-light); fill: none; stroke-width: 2;
+}
+
+/* ============================================================
+   CATEGORY SELECTOR
+   ============================================================ */
+.category-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--white);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s ease;
+}
+.category-card.complete { border-color: var(--teal-light); }
+.category-card-header {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.category-card-left {
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.category-card-number {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--bg-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 700; color: var(--text-muted);
+  flex-shrink: 0;
+}
+.category-card.complete .category-card-number {
+  background: var(--teal-pale); color: var(--teal);
+}
+.category-card-title { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+.category-card-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+.category-card-body { padding: 1.5rem; }
+
+.category-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+@media (min-width: 480px) {
+  .category-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+.category-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.2rem 0.5rem;
+  border: 2px solid var(--bg-cloud);
+  border-radius: 12px;
+  background: var(--bg-cream);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all 0.15s ease;
+}
+.category-btn:hover {
+  border-color: var(--teal-light);
+  background: rgba(204,251,241,0.15);
+}
+.category-btn.selected {
+  border-color: var(--teal);
+  background: var(--teal-pale);
+}
+.category-btn-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.category-btn-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+.category-btn.selected .category-btn-label {
+  color: var(--teal-deep);
+}
+
+/* ============================================================
+   UPLOAD CARDS
+   ============================================================ */
+.upload-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.upload-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--white);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+.upload-card.complete {
+  border-color: var(--teal-light);
+}
+.upload-card.locked {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.upload-card-header {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.upload-card-left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.upload-card-number {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--bg-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.upload-card.complete .upload-card-number {
+  background: var(--teal-pale);
+  color: var(--teal);
+}
+.upload-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.upload-card-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.upload-card-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.badge-required { background: var(--teal-pale); color: var(--teal-deep); }
+.badge-recommended { background: var(--amber-pale); color: #92400E; }
+.badge-done { background: var(--teal-pale); color: var(--teal); }
+
+.upload-card-body {
+  padding: 1.5rem;
+}
+
+/* Drop zone inside card */
+.card-drop {
+  border: 2px dashed var(--bg-cloud);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--bg-cream);
+}
+.card-drop:hover {
+  border-color: var(--teal-light);
+  background: rgba(204,251,241,0.15);
+}
+.card-drop-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--bg-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+}
+.card-drop-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.card-drop-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Uploaded preview */
+.card-preview {
+  display: none;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+.card-preview img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+.card-preview-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 0.8rem 1rem;
+  background: linear-gradient(transparent, rgba(0,0,0,0.6));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-preview-name {
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.card-preview-change {
+  color: white;
+  font-size: 0.75rem;
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+
+/* What we're looking for helper */
+.card-helper {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--bg-cream);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.card-helper-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+}
+.card-helper-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.card-helper-list li {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.card-helper-list li::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--teal-light);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   GENERATE BUTTON
+   ============================================================ */
+.generate-section {
+  margin-bottom: 2rem;
+}
+.generate-btn {
+  width: 100%;
+  padding: 1.1rem;
+  border: none;
+  border-radius: 14px;
+  background: var(--teal);
+  color: white;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 12px rgba(13,148,136,0.25);
+}
+.generate-btn:hover {
+  background: var(--teal-deep);
+  box-shadow: 0 4px 20px rgba(13,148,136,0.35);
+}
+.generate-btn:disabled {
+  background: var(--bg-cloud);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.generate-btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+.generate-note {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.8rem;
+}
+
+/* ============================================================
+   REPORT OUTPUT (hidden until generated)
+   ============================================================ */
+.report-output {
+  display: none;
+  margin-bottom: 2rem;
+}
+.report-output.visible { display: block; }
+
+.report-output-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+.report-output-header h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+.report-done-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: var(--teal-pale);
+  color: var(--teal);
+}
+
+/* Reuse report styles from main site */
+.report { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: white; }
+.report-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+.report-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--bg-soft); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.report-meta h3 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.report-meta p { font-size: 11px; color: var(--text-muted); }
+.intel-block { padding: 18px 24px; border-bottom: 1px solid var(--border); }
+.intel-block:last-child { border-bottom: none; }
+.intel-block h4 { font-size: 13px; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.badge { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 7px; border-radius: 4px; }
+.badge--critical { background: var(--red-pale); color: var(--red); border: 1px solid #FECACA; }
+.badge--info { background: var(--teal-pale); color: var(--teal-deep); border: 1px solid var(--teal-light); }
+.intel-list { list-style: none; }
+.intel-list li { font-size: 12px; line-height: 1.6; color: var(--text-secondary); padding: 6px 0; border-bottom: 1px solid var(--bg-soft); display: flex; gap: 8px; }
+.intel-list li:last-child { border-bottom: none; }
+.intel-list li::before { content: '→'; color: var(--bg-cloud); flex-shrink: 0; }
+.intel-list li strong { color: var(--text-primary); }
+.report-verdict { padding: 18px 24px; background: var(--teal-pale); border-top: 1px solid var(--teal-light); font-size: 12px; font-weight: 600; color: var(--teal-deep); line-height: 1.55; }
+
+/* Download / actions */
+.report-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+.action-btn {
+  flex: 1;
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+.action-btn:hover { border-color: var(--teal-light); color: var(--teal); }
+.action-btn--primary {
+  background: var(--teal);
+  color: white;
+  border-color: var(--teal);
+}
+.action-btn--primary:hover { background: var(--teal-deep); }
+
+/* Data deletion notice */
+.deletion-notice {
+  margin-top: 2rem;
+  padding: 1rem 1.2rem;
+  background: var(--red-pale);
+  border: 1px solid #FECACA;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.deletion-notice strong { color: var(--red); }
+
+/* ============================================================
+   LOADING STATE
+   ============================================================ */
+.loading-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(250,250,247,0.92);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+.loading-overlay.visible { display: flex; }
+.loading-spinner {
+  width: 48px; height: 48px;
+  border: 4px solid var(--bg-cloud);
+  border-top-color: var(--teal);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.loading-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Footer */
+.dash-footer {
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <a href="/" class="topbar-brand" style="text-decoration:none;">
+    <div class="topbar-icon">🔎</div>
+    <span class="topbar-name">Listing Lens</span>
+  </a>
+  <div class="topbar-status">
+    <div class="topbar-dot"></div>
+    Session active
+  </div>
+</div>
+
+<div class="dashboard">
+
+  <!-- Ephemeral warning -->
+  <div class="ephemeral-banner">
+    <span class="ephemeral-icon">⏱️</span>
+    <div class="ephemeral-text">
+      <strong>This is your temporary workspace.</strong> 
+      Everything here lives in your browser only — once your report is generated and downloaded, 
+      all images and data are permanently deleted. Nothing is saved.
+    </div>
+  </div>
+
+  <!-- Welcome -->
+  <div class="welcome">
+    <h1>Let's build your report.</h1>
+    <p>Tell us where you are, then upload two screenshots of the same listing — the more we see, the more we find. Your location helps us check local recalls, laws, and costs specific to your region.</p>
+  </div>
+
+  <!-- Progress steps (5: country, category, img1, img2, generate) -->
+  <div class="steps" id="stepBars">
+    <div class="step-bar" id="step0"></div>
+    <div class="step-bar" id="step1"></div>
+    <div class="step-bar" id="step2"></div>
+    <div class="step-bar" id="step3"></div>
+    <div class="step-bar" id="step4"></div>
+  </div>
+
+  <!-- COUNTRY SELECTOR -->
+  <div class="country-card" id="countryCard">
+    <div class="country-card-header">
+      <div class="country-card-left">
+        <div class="country-card-number">1</div>
+        <div>
+          <div class="country-card-title">Where are you?</div>
+          <div class="country-card-subtitle">So we can check local recalls, laws &amp; costs</div>
+        </div>
+      </div>
+      <span class="upload-card-badge badge-required" id="badgeCountry">Required</span>
+    </div>
+    <div class="country-card-body">
+      <div class="country-select-wrapper">
+        <span class="country-flag" id="selectedFlag">🌍</span>
+        <select class="country-select" id="countrySelect" onchange="handleCountry(this)">
+          <option value="">Select your country</option>
+          <optgroup label="Asia Pacific">
+            <option value="AU" data-flag="🇦🇺">🇦🇺 Australia</option>
+            <option value="NZ" data-flag="🇳🇿">🇳🇿 New Zealand</option>
+            <option value="SG" data-flag="🇸🇬">🇸🇬 Singapore</option>
+            <option value="HK" data-flag="🇭🇰">🇭🇰 Hong Kong</option>
+            <option value="JP" data-flag="🇯🇵">🇯🇵 Japan</option>
+            <option value="KR" data-flag="🇰🇷">🇰🇷 South Korea</option>
+            <option value="TW" data-flag="🇹🇼">🇹🇼 Taiwan</option>
+            <option value="MY" data-flag="🇲🇾">🇲🇾 Malaysia</option>
+            <option value="TH" data-flag="🇹🇭">🇹🇭 Thailand</option>
+            <option value="PH" data-flag="🇵🇭">🇵🇭 Philippines</option>
+            <option value="ID" data-flag="🇮🇩">🇮🇩 Indonesia</option>
+            <option value="VN" data-flag="🇻🇳">🇻🇳 Vietnam</option>
+            <option value="IN" data-flag="🇮🇳">🇮🇳 India</option>
+            <option value="BD" data-flag="🇧🇩">🇧🇩 Bangladesh</option>
+            <option value="LK" data-flag="🇱🇰">🇱🇰 Sri Lanka</option>
+            <option value="PK" data-flag="🇵🇰">🇵🇰 Pakistan</option>
+          </optgroup>
+          <optgroup label="Europe">
+            <option value="GB" data-flag="🇬🇧">🇬🇧 United Kingdom</option>
+            <option value="IE" data-flag="🇮🇪">🇮🇪 Ireland</option>
+            <option value="DE" data-flag="🇩🇪">🇩🇪 Germany</option>
+            <option value="FR" data-flag="🇫🇷">🇫🇷 France</option>
+            <option value="NL" data-flag="🇳🇱">🇳🇱 Netherlands</option>
+            <option value="BE" data-flag="🇧🇪">🇧🇪 Belgium</option>
+            <option value="IT" data-flag="🇮🇹">🇮🇹 Italy</option>
+            <option value="ES" data-flag="🇪🇸">🇪🇸 Spain</option>
+            <option value="PT" data-flag="🇵🇹">🇵🇹 Portugal</option>
+            <option value="AT" data-flag="🇦🇹">🇦🇹 Austria</option>
+            <option value="CH" data-flag="🇨🇭">🇨🇭 Switzerland</option>
+            <option value="SE" data-flag="🇸🇪">🇸🇪 Sweden</option>
+            <option value="NO" data-flag="🇳🇴">🇳🇴 Norway</option>
+            <option value="DK" data-flag="🇩🇰">🇩🇰 Denmark</option>
+            <option value="FI" data-flag="🇫🇮">🇫🇮 Finland</option>
+            <option value="PL" data-flag="🇵🇱">🇵🇱 Poland</option>
+            <option value="CZ" data-flag="🇨🇿">🇨🇿 Czech Republic</option>
+            <option value="RO" data-flag="🇷🇴">🇷🇴 Romania</option>
+          </optgroup>
+          <optgroup label="Middle East & Africa">
+            <option value="AE" data-flag="🇦🇪">🇦🇪 UAE</option>
+            <option value="SA" data-flag="🇸🇦">🇸🇦 Saudi Arabia</option>
+            <option value="IL" data-flag="🇮🇱">🇮🇱 Israel</option>
+            <option value="EG" data-flag="🇪🇬">🇪🇬 Egypt</option>
+            <option value="ZA" data-flag="🇿🇦">🇿🇦 South Africa</option>
+            <option value="NG" data-flag="🇳🇬">🇳🇬 Nigeria</option>
+            <option value="KE" data-flag="🇰🇪">🇰🇪 Kenya</option>
+            <option value="GH" data-flag="🇬🇭">🇬🇭 Ghana</option>
+          </optgroup>
+          <optgroup label="Americas">
+            <option value="CA" data-flag="🇨🇦">🇨🇦 Canada</option>
+            <option value="MX" data-flag="🇲🇽">🇲🇽 Mexico</option>
+            <option value="BR" data-flag="🇧🇷">🇧🇷 Brazil</option>
+            <option value="AR" data-flag="🇦🇷">🇦🇷 Argentina</option>
+            <option value="CL" data-flag="🇨🇱">🇨🇱 Chile</option>
+            <option value="CO" data-flag="🇨🇴">🇨🇴 Colombia</option>
+            <option value="US" data-flag="🇺🇸">🇺🇸 United States</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option value="OTHER" data-flag="🌍">🌍 My country is not listed</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="country-helper">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <span>This helps us find region-specific recalls, consumer laws, import duties, and local market pricing. We don't store your location after the report is generated.</span>
+      </div>
+      <div id="otherCountryWrap" style="display:none; margin-top:0.8rem;">
+        <input type="text" id="otherCountryInput" placeholder="Type your country name" style="width:100%;padding:0.9rem 1.2rem;border:2px solid var(--bg-cloud);border-radius:12px;font-family:inherit;font-size:1rem;font-weight:500;color:var(--text-primary);background:var(--bg-cream);outline:none;transition:border-color 0.2s ease;" onfocus="this.style.borderColor='var(--teal-light)'" onblur="this.style.borderColor='var(--bg-cloud)'">
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORY SELECTOR -->
+  <div class="category-card" id="categoryCard">
+    <div class="category-card-header">
+      <div class="category-card-left">
+        <div class="category-card-number">2</div>
+        <div>
+          <div class="category-card-title">What are you buying?</div>
+          <div class="category-card-subtitle">Helps us tailor the analysis</div>
+        </div>
+      </div>
+      <span class="upload-card-badge badge-required" id="badgeCategory">Required</span>
+    </div>
+    <div class="category-card-body">
+      <div class="category-grid">
+        <button class="category-btn" onclick="selectCategory(this,'vehicles')">
+          <span class="category-btn-icon">🚗</span>
+          <span class="category-btn-label">Vehicles</span>
+        </button>
+        <button class="category-btn" onclick="selectCategory(this,'property')">
+          <span class="category-btn-icon">🏠</span>
+          <span class="category-btn-label">Property</span>
+        </button>
+        <button class="category-btn" onclick="selectCategory(this,'electronics')">
+          <span class="category-btn-icon">📱</span>
+          <span class="category-btn-label">Electronics</span>
+        </button>
+        <button class="category-btn" onclick="selectCategory(this,'fashion')">
+          <span class="category-btn-icon">👕</span>
+          <span class="category-btn-label">Fashion</span>
+        </button>
+        <button class="category-btn" onclick="selectCategory(this,'jewellery')">
+          <span class="category-btn-icon">⌚</span>
+          <span class="category-btn-label">Watches &amp; Jewellery</span>
+        </button>
+        <button class="category-btn" onclick="selectCategory(this,'other')">
+          <span class="category-btn-icon">📦</span>
+          <span class="category-btn-label">Everything Else</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPLOAD CARDS -->
+  <div class="upload-cards">
+
+    <!-- Card 1: The listing overview -->
+    <div class="upload-card" id="card1">
+      <div class="upload-card-header">
+        <div class="upload-card-left">
+          <div class="upload-card-number">3</div>
+          <div>
+            <div class="upload-card-title">The listing overview</div>
+            <div class="upload-card-subtitle">The main image and price</div>
+          </div>
+        </div>
+        <span class="upload-card-badge badge-required" id="badge1">Required</span>
+      </div>
+      <div class="upload-card-body">
+        <div class="card-drop" id="drop1" onclick="triggerUpload(1)">
+          <div class="card-drop-icon">📸</div>
+          <span class="card-drop-text">Upload the screenshot you showed us</span>
+          <span class="card-drop-hint">Tap to browse · the same image from before</span>
+        </div>
+        <div class="card-preview" id="preview1">
+          <img id="img1" src="" alt="Screenshot 1">
+          <div class="card-preview-overlay">
+            <span class="card-preview-name" id="name1"></span>
+            <button class="card-preview-change" onclick="triggerUpload(1)">Change</button>
+          </div>
+        </div>
+        <div class="card-helper">
+          <div class="card-helper-title">What we're looking for</div>
+          <ul class="card-helper-list">
+            <li>Main photo of the item</li>
+            <li>Price or asking price</li>
+            <li>Title and headline details</li>
+            <li>Seller name or location</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: The details -->
+    <div class="upload-card" id="card2">
+      <div class="upload-card-header">
+        <div class="upload-card-left">
+          <div class="upload-card-number">4</div>
+          <div>
+            <div class="upload-card-title">The fine print</div>
+            <div class="upload-card-subtitle">Scroll down and screenshot the details</div>
+          </div>
+        </div>
+        <span class="upload-card-badge badge-recommended" id="badge2">Recommended</span>
+      </div>
+      <div class="upload-card-body">
+        <div class="card-drop" id="drop2" onclick="triggerUpload(2)">
+          <div class="card-drop-icon">📋</div>
+          <span class="card-drop-text">Upload the second screenshot</span>
+          <span class="card-drop-hint">Scroll down in the listing and capture the details</span>
+        </div>
+        <div class="card-preview" id="preview2">
+          <img id="img2" src="" alt="Screenshot 2">
+          <div class="card-preview-overlay">
+            <span class="card-preview-name" id="name2"></span>
+            <button class="card-preview-change" onclick="triggerUpload(2)">Change</button>
+          </div>
+        </div>
+        <div class="card-helper">
+          <div class="card-helper-title">What we're looking for</div>
+          <ul class="card-helper-list">
+            <li>Description text and specifications</li>
+            <li>Features list or inclusions</li>
+            <li>Condition notes, history, modifications</li>
+            <li>Terms, fees, or fine print</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Generate button -->
+  <div class="generate-section">
+    <button class="generate-btn" id="generateBtn" disabled onclick="generateReport()">
+      <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+      Generate my report
+    </button>
+    <p class="generate-note">Takes about 15–30 seconds. Both images are analysed together.</p>
+  </div>
+
+  <!-- Report output (hidden initially) -->
+  <div class="report-output" id="reportOutput">
+    <div class="report-output-header">
+      <h2>Your Report</h2>
+      <span class="report-done-badge">Complete</span>
+    </div>
+
+    <div id="reportContent">
+      <!-- Report gets inserted here by JS -->
+    </div>
+
+    <div class="report-actions">
+      <button class="action-btn action-btn--primary">Save as PDF</button>
+      <button class="action-btn">Copy to clipboard</button>
+    </div>
+
+    <div class="deletion-notice">
+      <span>🗑️</span>
+      <div>
+        <strong>Your data will be deleted.</strong> 
+        Once you leave this page, both screenshots and your report are permanently removed. 
+        Save or download your report now if you want to keep it.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Loading overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Building your report...</div>
+  <div class="loading-sub">Cross-referencing both screenshots now</div>
+</div>
+
+<!-- Footer -->
+<div class="dash-footer">
+  <a href="/privacy" style="color:var(--text-muted);text-decoration:none;">Privacy Policy</a> · 
+  <a href="/terms" style="color:var(--text-muted);text-decoration:none;">Terms</a> · 
+  © 2026 Listing Lens
+</div>
+
+<!-- Hidden file inputs -->
+<input type="file" id="fileInput1" accept="image/*" style="display:none" onchange="handleUpload(1, this)">
+<input type="file" id="fileInput2" accept="image/*" style="display:none" onchange="handleUpload(2, this)">
+
+<script>
+var uploaded = [false, false];
+var countrySelected = false;
+var categorySelected = false;
+var selectedCategoryName = '';
+
+function handleCountry(sel) {
+  if (!sel.value) return;
+
+  var otherWrap = document.getElementById('otherCountryWrap');
+  if (sel.value === 'OTHER') {
+    otherWrap.style.display = 'block';
+    document.getElementById('otherCountryInput').focus();
+  } else {
+    otherWrap.style.display = 'none';
+  }
+
+  countrySelected = true;
+
+  var opt = sel.options[sel.selectedIndex];
+  var flag = opt.getAttribute('data-flag') || '🌍';
+  document.getElementById('selectedFlag').textContent = flag;
+
+  var card = document.getElementById('countryCard');
+  card.classList.add('complete');
+  var badge = document.getElementById('badgeCountry');
+  badge.textContent = 'Done';
+  badge.className = 'upload-card-badge badge-done';
+
+  updateProgress();
+}
+
+function selectCategory(btn, cat) {
+  document.querySelectorAll('.category-btn').forEach(function(b){ b.classList.remove('selected'); });
+  btn.classList.add('selected');
+  categorySelected = true;
+  selectedCategoryName = btn.querySelector('.category-btn-label').textContent;
+
+  var card = document.getElementById('categoryCard');
+  card.classList.add('complete');
+  var badge = document.getElementById('badgeCategory');
+  badge.textContent = 'Done';
+  badge.className = 'upload-card-badge badge-done';
+
+  updateProgress();
+}
+
+function triggerUpload(n) {
+  document.getElementById('fileInput' + n).click();
+}
+
+function handleUpload(n, input) {
+  if (!input.files || !input.files[0]) return;
+  var file = input.files[0];
+  var reader = new FileReader();
+
+  reader.onload = function(e) {
+    var img = document.getElementById('img' + n);
+    img.src = e.target.result;
+    document.getElementById('preview' + n).style.display = 'block';
+    document.getElementById('drop' + n).style.display = 'none';
+    document.getElementById('name' + n).textContent = file.name;
+
+    var card = document.getElementById('card' + n);
+    card.classList.add('complete');
+    var badge = document.getElementById('badge' + n);
+    badge.textContent = 'Done';
+    badge.className = 'upload-card-badge badge-done';
+
+    uploaded[n - 1] = true;
+    updateProgress();
+  };
+  reader.readAsDataURL(file);
+}
+
+function updateProgress() {
+  var s0 = document.getElementById('step0');
+  var s1 = document.getElementById('step1');
+  var s2 = document.getElementById('step2');
+  var s3 = document.getElementById('step3');
+  var btn = document.getElementById('generateBtn');
+
+  if (countrySelected) s0.className = 'step-bar complete';
+  if (categorySelected) s1.className = 'step-bar complete';
+  if (uploaded[0]) s2.className = 'step-bar complete';
+  if (uploaded[1]) s3.className = 'step-bar complete';
+
+  // Enable generate if country + category + at least image 1
+  btn.disabled = !(countrySelected && categorySelected && uploaded[0]);
+
+  // All complete visual
+  if (countrySelected && categorySelected && uploaded[0] && uploaded[1]) {
+    s0.className = 'step-bar active';
+    s1.className = 'step-bar active';
+    s2.className = 'step-bar active';
+    s3.className = 'step-bar active';
+  }
+}
+
+function generateReport() {
+  var country = document.getElementById('countrySelect');
+  var countryCode = country.value;
+  var countryName;
+
+  if (countryCode === 'OTHER') {
+    countryName = document.getElementById('otherCountryInput').value.trim() || 'your region';
+  } else {
+    countryName = country.options[country.selectedIndex].text.replace(/^[^\w]*/,'').trim();
+  }
+
+  document.getElementById('loadingOverlay').classList.add('visible');
+  document.getElementById('step4').className = 'step-bar active';
+
+  document.querySelector('.loading-sub').textContent =
+    'Analysing ' + selectedCategoryName.toLowerCase() + ' listing · Checking ' + countryName + ' recalls & regulations';
+
+  setTimeout(function() {
+    document.getElementById('loadingOverlay').classList.remove('visible');
+
+    var output = document.getElementById('reportOutput');
+    output.classList.add('visible');
+
+    document.getElementById('reportContent').innerHTML = '<div class="report">' +
+      '<div class="report-header"><div class="report-icon">🔎</div><div class="report-meta"><h3>Analysis Complete</h3><p>' + selectedCategoryName + ' · ' + countryName + ' · Based on ' + (uploaded[1] ? '2 screenshots' : '1 screenshot') + ' · Generated just now</p></div></div>' +
+      '<div class="intel-block"><h4><span class="badge badge--critical">Critical</span> Issues Found</h4>' +
+      '<ul class="intel-list">' +
+      '<li><span><strong>Your full report would appear here.</strong> In production, this is generated by AI analysis of your uploaded screenshots.</span></li>' +
+      '<li><span><strong>Category-specific analysis for ' + selectedCategoryName + '</strong> tailored to ' + countryName + ' including local recalls, consumer protection laws, and market pricing.</span></li>' +
+      '</ul></div>' +
+      '<div class="report-verdict">This is a preview of the report layout. The real version includes ' + selectedCategoryName.toLowerCase() + '-specific checks, hidden costs, questions to ask, and community insights for ' + countryName + '.</div>' +
+      '</div>';
+
+    output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    document.querySelector('.country-card').style.display = 'none';
+    document.querySelector('.category-card').style.display = 'none';
+    document.querySelector('.upload-cards').style.display = 'none';
+    document.querySelector('.generate-section').style.display = 'none';
+  }, 3000);
+}
+</script>
+</body>
+</html>
