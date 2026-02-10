@@ -156,6 +156,25 @@ body { margin: 0; overflow-x: hidden; }
 }
 
 /* ============================================================
+   LISTING SCREENSHOTS — the actual listing being analysed
+   ============================================================ */
+.listing-screenshots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 2rem;
+}
+.listing-screenshots img {
+  width: 100%;
+  border-radius: 10px;
+  border: 1.5px solid var(--gray-100);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+@media (max-width: 480px) {
+  .listing-screenshots { grid-template-columns: 1fr; gap: 10px; }
+}
+
+/* ============================================================
    REAL REPORT — inline, no modal needed
    ============================================================ */
 .report-showcase {
@@ -513,6 +532,11 @@ body { margin: 0; overflow-x: hidden; }
     <p class="section-eyebrow">real listing. real report.</p>
     <h2 class="section-title">this is what $5 gets you</h2>
     <p class="section-desc">we found this 2015 Jeep Wrangler on Carsales. here's everything the listing didn't tell you.</p>
+
+    <div class="listing-screenshots">
+      <img src="https://listinglens.app/jeep-2026-1.png" alt="2015 Jeep Wrangler Unlimited listing screenshot — main photo and pricing" loading="lazy">
+      <img src="https://listinglens.app/jeep-2026-2.png" alt="2015 Jeep Wrangler Unlimited listing screenshot — vehicle details" loading="lazy">
+    </div>
 
     <div class="report-showcase">
       <div class="report-card">
