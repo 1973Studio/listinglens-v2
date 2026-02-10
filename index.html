@@ -3,23 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<meta name="description" content="Screenshot any vehicle listing. We'll tell you what it's really worth, what's wrong with it, and exactly what to ask the seller. $5 per report.">
+<meta property="og:title" content="Listing Lens — Don't buy blind">
+<meta property="og:description" content="Screenshot any vehicle listing. We'll tell you what's really wrong with it, what it's actually worth, and what to ask the seller. $5.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://listinglens.app">
+<meta property="og:site_name" content="Listing Lens">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Listing Lens — Don't buy blind">
+<meta name="twitter:description" content="Screenshot any vehicle listing. We'll tell you what's really wrong with it, what it's actually worth, and what to ask the seller. $5.">
 <title>Listing Lens — Don't buy blind</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <script>
-// All functions defined early so Cloudflare injections can't break them
-function openModal(id) {
-  var t = document.getElementById('tpl-' + id);
-  var b = document.getElementById('modalBody');
-  b.innerHTML = '';
-  b.appendChild(t.content.cloneNode(true));
-  document.getElementById('modalOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
 function showTeaser() {
   document.getElementById('teaserOverlay').classList.add('visible');
   document.body.style.overflow = 'hidden';
@@ -39,782 +35,753 @@ function toggleFaq(btn) {
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  /* Backgrounds */
-  --bg-cream: #FFFFFF;
-  --bg-soft: #F9FAFB;
-  --bg-cloud: #F1F5F9;
-  /* Text */
-  --text-primary: #0F172A;
-  --text-secondary: #64748B;
-  --text-muted: #94A3B8;
-  /* Accent — Emerald */
-  --teal: #10B981;
-  --teal-hot: #34D399;
-  --teal-light: #6EE7B7;
-  --teal-pale: #D1FAE5;
-  --teal-deep: #059669;
-  --teal-dark: #064E3B;
-  /* Functional */
-  --white: #fff;
-  --border: #E5E7EB;
+  --white: #FFFFFF;
+  --snow: #F9FAFB;
+  --gray-50: #F1F5F9;
+  --gray-100: #E5E7EB;
+  --gray-200: #D1D5DB;
+  --slate-900: #0F172A;
+  --slate-700: #334155;
+  --slate-500: #64748B;
+  --slate-400: #94A3B8;
+  --emerald: #10B981;
+  --emerald-light: #6EE7B7;
+  --emerald-pale: #D1FAE5;
+  --emerald-deep: #059669;
+  --emerald-dark: #064E3B;
+  --red: #DC2626;
+  --red-pale: #FEF2F2;
+  --red-border: #FECACA;
+  --amber: #F59E0B;
+  --amber-pale: #FEF3C7;
+  --amber-border: #FDE68A;
   --font: 'DM Sans', system-ui, -apple-system, sans-serif;
 }
 
 html {
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
-  font-size: 14px;
-  line-height: 1.4;
-  background: var(--bg-cream);
+  font-size: 15px;
+  line-height: 1.5;
+  background: var(--white);
+  color: var(--slate-900);
 }
-body { margin: 0; overflow-x: hidden; color: var(--text-primary); }
+body { margin: 0; overflow-x: hidden; }
+
+.container { max-width: 680px; margin: 0 auto; padding: 0 2rem; }
+.section { padding: 6rem 0; }
+.section--soft { background: var(--snow); }
+.section--dark { background: var(--slate-900); color: var(--white); }
+
+/* ============================================================
+   BRAND
+   ============================================================ */
+.brand {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 1.5rem 2rem;
+}
+.brand-icon {
+  width: 36px; height: 36px; border-radius: 9px;
+  background: var(--slate-900);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+}
+.brand-text { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.04em; }
 
 /* ============================================================
    HERO
    ============================================================ */
-.hero {
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-  background: var(--bg-cream);
+.hero { padding: 4rem 0 5rem; }
+.hero-headline {
+  font-size: clamp(3.2rem, 10vw, 5.5rem);
+  font-weight: 700; letter-spacing: -0.045em;
+  line-height: 1; margin-bottom: 1.5rem;
 }
-.hero::before {
-  content: '';
-  position: absolute;
-  top: -15%; right: -15%;
-  width: 55%; height: 55%;
-  background: radial-gradient(ellipse, rgba(209,250,229,0.5) 0%, transparent 70%);
-  pointer-events: none;
+.hero-headline em { font-style: normal; color: var(--emerald); }
+.hero-sub {
+  font-size: 1.2rem; line-height: 1.7;
+  color: var(--slate-500); max-width: 460px; margin-bottom: 3rem;
 }
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: 15%; left: -10%;
-  width: 40%; height: 40%;
-  background: radial-gradient(ellipse, rgba(209,250,229,0.25) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero-inner {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 2rem 2rem 1.5rem;
-  position: relative;
-  z-index: 1;
-}
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 3rem;
-}
-.brand-icon {
-  width: 42px; height: 42px;
-  border-radius: 11px;
-  background: var(--text-primary);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 21px;
-  box-shadow: 0 2px 8px rgba(15,23,42,0.15);
-}
-.brand-text {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
-}
-.headline {
-  font-size: clamp(3rem, 9vw, 4.8rem);
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  margin-bottom: 1.2rem;
-}
-.headline-em { color: var(--teal); }
-.subline {
-  font-size: clamp(1.1rem, 3vw, 1.3rem);
-  line-height: 1.65;
-  color: var(--text-secondary);
-  max-width: 440px;
-  margin-bottom: 2.5rem;
-}
-.subline strong { color: var(--text-primary); font-weight: 600; }
+.hero-sub strong { color: var(--slate-700); font-weight: 600; }
+
+/* Upload */
 .upload-zone {
-  border: 1.5px dashed #D1D5DB;
-  border-radius: 12px;
-  background: var(--bg-soft);
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin-bottom: 2rem;
+  border: 1.5px dashed var(--gray-200); border-radius: 12px;
+  background: var(--snow); padding: 2.2rem 1.5rem;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0.5rem; cursor: pointer; transition: all 0.2s ease;
 }
-.upload-zone:hover {
-  border-color: var(--teal);
-  background: #F0FDF4;
-}
+.upload-zone:hover { border-color: var(--emerald); background: #F0FDF4; }
 .upload-icon {
-  width: 52px; height: 52px;
-  border-radius: 14px;
-  background: var(--text-primary);
+  width: 48px; height: 48px; border-radius: 12px;
+  background: var(--slate-900);
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 10px rgba(15,23,42,0.15);
 }
-.upload-icon svg { width: 26px; height: 26px; fill: white; }
-.upload-text { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); }
-.upload-hint { font-size: 0.9rem; color: var(--text-muted); }
+.upload-icon svg { width: 24px; height: 24px; fill: white; }
+.upload-text { font-size: 1rem; font-weight: 600; margin-top: 0.3rem; }
+.upload-hint { font-size: 0.85rem; color: var(--slate-400); }
 .trust-strip {
-  display: flex;
-  justify-content: center;
-  gap: 1.8rem;
-  flex-wrap: wrap;
+  display: flex; justify-content: center; gap: 2rem;
+  flex-wrap: wrap; margin-top: 1.5rem;
 }
 .trust-item {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  font-weight: 500;
+  display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.8rem; color: var(--slate-400); font-weight: 500;
 }
-.trust-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--teal-light);
+.trust-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald); }
+
+/* Vehicle badge */
+.vehicle-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.35rem 0.9rem; border-radius: 100px;
+  background: var(--emerald-pale); color: var(--emerald-dark);
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; margin-bottom: 1.5rem;
 }
 
 /* ============================================================
-   CATEGORIES
+   SECTION TITLES
    ============================================================ */
-.categories {
-  background: var(--bg-cream);
-  padding: 0 2rem 4rem;
+.section-eyebrow {
+  font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--slate-400); margin-bottom: 1rem;
 }
-.categories-inner { max-width: 640px; margin: 0 auto; }
-.section-label {
-  text-align: center;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  margin-bottom: 1.5rem;
+.section-title {
+  font-size: clamp(2rem, 5vw, 3rem); font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1rem;
 }
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+.section-desc {
+  font-size: 1.05rem; line-height: 1.7;
+  color: var(--slate-500); max-width: 480px;
 }
-@media (min-width: 500px) { .categories-grid { gap: 16px; } }
-.cat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 1.2rem 0.5rem;
-  border-radius: 12px;
-  border: 1.5px solid var(--border);
+
+/* ============================================================
+   REAL REPORT — inline, no modal needed
+   ============================================================ */
+.report-showcase {
+  margin-top: 3rem;
+}
+.report-card {
+  border: 1.5px solid var(--gray-100);
+  border-radius: 14px;
   background: var(--white);
-  transition: all 0.2s ease;
+  overflow: hidden;
 }
-.cat-item:hover {
-  border-color: var(--teal);
-  background: #F0FDF4;
+.report-header {
+  padding: 1.5rem 1.8rem;
+  border-bottom: 1px solid var(--gray-100);
+  display: flex; align-items: center; gap: 14px;
 }
-.cat-icon { color: var(--teal); display: flex; align-items: center; justify-content: center; }
-.cat-label {
-  font-size: 0.8rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.06em;
-  color: var(--text-secondary);
+.report-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: var(--snow); overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+}
+.report-icon img { width: 100%; height: 100%; object-fit: cover; }
+.report-meta h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 2px; }
+.report-meta p { font-size: 0.78rem; color: var(--slate-400); }
+
+.report-section {
+  padding: 1.3rem 1.8rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+.report-section:last-child { border-bottom: none; }
+.report-section-header {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 1rem;
+}
+.badge {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 3px 8px; border-radius: 4px;
+}
+.badge--red { background: var(--red-pale); color: var(--red); border: 1px solid var(--red-border); }
+.badge--amber { background: var(--amber-pale); color: #92400E; border: 1px solid var(--amber-border); }
+.badge--green { background: var(--emerald-pale); color: var(--emerald-dark); border: 1px solid var(--emerald-light); }
+.report-section h3 { font-size: 0.9rem; font-weight: 700; }
+
+.finding {
+  display: flex; gap: 0.6rem; padding: 0.55rem 0;
+  border-bottom: 1px solid var(--snow);
+  font-size: 0.88rem; line-height: 1.6; color: var(--slate-500);
+}
+.finding:last-child { border-bottom: none; }
+.finding::before { content: '→'; color: var(--gray-200); flex-shrink: 0; font-weight: 500; }
+.finding strong { color: var(--slate-900); font-weight: 600; }
+
+.report-verdict {
+  padding: 1.2rem 1.8rem;
+  background: var(--amber-pale);
+  border-top: 1px solid var(--amber-border);
+  font-size: 0.9rem; font-weight: 600; color: #92400E;
+  line-height: 1.55;
+}
+
+.report-questions {
+  padding: 1.3rem 1.8rem;
+  background: var(--snow);
+}
+.report-questions h3 {
+  font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--slate-400); margin-bottom: 0.8rem;
+}
+.question-item {
+  display: flex; gap: 0.5rem; padding: 0.4rem 0;
+  font-size: 0.85rem; color: var(--slate-700); line-height: 1.5;
+}
+.question-item::before { content: '?'; color: var(--emerald); font-weight: 700; flex-shrink: 0; }
+
+.report-fair-value {
+  padding: 1.5rem 1.8rem;
+  background: var(--emerald-pale);
+  text-align: center;
+}
+.fair-value-label {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--emerald-deep); margin-bottom: 0.3rem;
+}
+.fair-value-price {
+  font-size: 2rem; font-weight: 700; color: var(--emerald-dark);
+}
+.fair-value-note {
+  font-size: 0.8rem; color: var(--emerald-deep); margin-top: 0.2rem;
+}
+
+.report-hint {
+  text-align: center; margin-top: 1.5rem;
+  font-size: 0.85rem; color: var(--slate-400);
 }
 
 /* ============================================================
    HOW IT WORKS
    ============================================================ */
-.how-section {
-  background: var(--bg-soft);
-  padding: 4rem 2rem;
-}
-.how-inner { max-width: 540px; margin: 0 auto; }
-.section-title {
-  font-size: clamp(1.6rem, 4vw, 2.2rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  text-align: center;
-  margin-bottom: 2.5rem;
-  color: var(--text-primary);
-}
-.how-steps { display: flex; flex-direction: column; }
-.how-step { display: flex; gap: 1.2rem; align-items: flex-start; }
+.how-block { margin-bottom: 3.5rem; }
+.how-block:last-child { margin-bottom: 0; }
 .how-num {
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  background: var(--teal); color: var(--white);
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 1.05rem; flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(16,185,129,0.2);
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--emerald); color: var(--white);
+  font-weight: 700; font-size: 0.85rem; margin-bottom: 1rem;
 }
-.how-step-title {
-  font-size: 1.15rem; font-weight: 700;
-  color: var(--text-primary);
-  margin: 0.15rem 0 0.35rem;
-}
-.how-step-desc {
-  font-size: 0.95rem; line-height: 1.6;
-  color: var(--text-secondary); margin: 0;
-}
-.how-connector {
-  width: 2px; height: 28px;
-  background: var(--teal-light);
-  margin-left: 20px; flex-shrink: 0;
+.how-block h3 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+.how-block p { font-size: 1rem; line-height: 1.7; color: var(--slate-500); max-width: 440px; }
+.marketplace-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1.2rem; }
+.pill {
+  padding: 0.4rem 0.9rem; border-radius: 100px;
+  border: 1.5px solid var(--gray-100); font-size: 0.8rem;
+  font-weight: 500; color: var(--slate-500); background: var(--white);
 }
 
 /* ============================================================
-   DEMOS
+   PRIVACY
    ============================================================ */
-.demos-section {
-  background: var(--bg-cream);
-  padding: 4rem 2rem;
-}
-.demos-inner { max-width: 720px; margin: 0 auto; }
-.demos-subtitle {
-  text-align: center;
-  color: var(--text-secondary);
-  margin-top: -1.5rem;
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
-}
-.demos-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-top: 2rem;
-}
-@media (min-width: 600px) { .demos-grid { grid-template-columns: repeat(4, 1fr); } }
-.demo-card {
-  background: var(--white);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.demo-card:hover {
-  border-color: var(--teal);
-  box-shadow: 0 8px 24px rgba(16,185,129,0.1);
-  transform: translateY(-2px);
-}
-.demo-thumb {
-  width: 100%; aspect-ratio: 1;
-  background: var(--bg-soft);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2.5rem; overflow: hidden;
-}
-.demo-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.demo-info { padding: 0.8rem 1rem; }
-.demo-label {
-  font-size: 0.75rem; font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase; letter-spacing: 0.04em;
-}
-.demo-item {
-  font-size: 0.85rem; font-weight: 600;
-  color: var(--text-primary);
-  margin-top: 0.1rem;
-}
-.demo-price {
-  font-size: 1.1rem; font-weight: 700;
-  color: var(--text-primary); margin-top: 0.15rem;
-}
-
-/* ============================================================
-   PRIVACY STRIP
-   ============================================================ */
-.privacy-strip {
-  background: var(--teal-dark);
-  padding: 3rem 2rem;
-  text-align: center;
-}
-.privacy-strip h2 {
-  font-size: 1.5rem; font-weight: 700;
-  color: var(--white); margin-bottom: 0.6rem;
-}
-.privacy-strip p {
-  font-size: 1rem; color: var(--teal-light);
-  max-width: 480px; margin: 0 auto; line-height: 1.6;
-}
+.section--dark .section-title { color: var(--white); }
+.section--dark .section-desc { color: var(--slate-400); }
+.privacy-points { display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 2rem; }
+.privacy-point { flex: 1; min-width: 150px; }
+.privacy-point-title { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.3rem; }
+.privacy-point-desc { font-size: 0.85rem; color: var(--slate-400); line-height: 1.5; }
 
 /* ============================================================
    FAQ
    ============================================================ */
-.faq-section {
-  padding: 4rem 2rem;
-  max-width: 720px;
-  margin: 0 auto;
-}
-.faq-item { border-bottom: 1px solid var(--border); }
+.faq-item { border-bottom: 1px solid var(--gray-100); }
 .faq-question {
-  width: 100%; background: none; border: none;
-  padding: 1.3rem 0;
-  font-family: var(--font);
-  font-size: 1.05rem; font-weight: 600;
-  color: var(--text-primary);
-  text-align: left; cursor: pointer;
-  display: flex; justify-content: space-between;
-  align-items: center; gap: 1rem;
+  width: 100%; background: none; border: none; padding: 1.4rem 0;
+  font-family: var(--font); font-size: 1rem; font-weight: 600;
+  color: var(--slate-900); text-align: left; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
 }
-.faq-question:hover { color: var(--teal); }
+.faq-question:hover { color: var(--emerald); }
 .faq-chevron {
-  width: 20px; height: 20px; flex-shrink: 0;
-  transition: transform 0.25s ease;
-  stroke: var(--text-muted);
+  width: 18px; height: 18px; flex-shrink: 0;
+  transition: transform 0.25s ease; stroke: var(--slate-400);
 }
-.faq-item.open .faq-chevron { transform: rotate(180deg); stroke: var(--teal); }
+.faq-item.open .faq-chevron { transform: rotate(180deg); stroke: var(--emerald); }
 .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
 .faq-item.open .faq-answer { max-height: 300px; }
 .faq-answer-inner {
-  padding: 0 0 1.3rem;
-  font-size: 0.95rem; line-height: 1.65;
-  color: var(--text-secondary);
+  padding: 0 0 1.4rem; font-size: 0.95rem;
+  line-height: 1.7; color: var(--slate-500);
 }
 
 /* ============================================================
    FOOTER
    ============================================================ */
-.footer {
-  background: var(--bg-cloud);
-  padding: 3rem 2rem 2rem;
+.footer { border-top: 1px solid var(--gray-100); padding: 2.5rem 0; }
+.footer-inner {
+  display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 1rem;
 }
-.footer-inner { max-width: 720px; margin: 0 auto; }
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem; margin-bottom: 2rem;
-}
-@media (min-width: 600px) {
-  .footer-grid { grid-template-columns: 2fr 1fr 1fr; gap: 3rem; }
-}
-.footer-brand { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem; }
-.footer-brand-icon {
-  width: 28px; height: 28px; border-radius: 7px;
-  background: var(--text-primary);
+.footer-left { display: flex; align-items: center; gap: 0.5rem; }
+.footer-logo {
+  width: 24px; height: 24px; border-radius: 6px;
+  background: var(--slate-900);
   display: flex; align-items: center; justify-content: center;
-  font-size: 14px;
+  font-size: 12px;
 }
-.footer-brand-name { font-weight: 700; font-size: 1rem; color: var(--text-primary); }
-.footer-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
-.footer-col-title {
-  font-size: 0.75rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--text-muted); margin-bottom: 0.8rem;
+.footer-copy { font-size: 0.8rem; color: var(--slate-400); }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a { font-size: 0.8rem; color: var(--slate-400); text-decoration: none; }
+.footer-links a:hover { color: var(--emerald); }
+
+/* ============================================================
+   SECOND CTA (after report)
+   ============================================================ */
+.cta-repeat {
+  margin-top: 3rem;
+  text-align: center;
 }
-.footer-col a {
-  display: block; font-size: 0.9rem;
-  color: var(--text-secondary); text-decoration: none; padding: 0.3rem 0;
+.cta-repeat-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 1rem 2.2rem; border: none; border-radius: 12px;
+  background: var(--slate-900); color: var(--white);
+  font-family: var(--font); font-size: 1.05rem; font-weight: 700;
+  cursor: pointer; transition: background 0.2s;
 }
-.footer-col a:hover { color: var(--teal); }
-.footer-bottom {
-  border-top: 1px solid rgba(15,23,42,0.08);
-  padding-top: 1.5rem;
-  display: flex; flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center; gap: 0.5rem;
+.cta-repeat-btn:hover { background: var(--slate-700); }
+.cta-repeat-hint {
+  margin-top: 0.6rem;
+  font-size: 0.8rem; color: var(--slate-400);
 }
-.footer-copy { font-size: 0.8rem; color: var(--text-muted); }
-.footer-aus { font-size: 0.8rem; color: var(--text-muted); }
+
+/* ============================================================
+   RESOURCE LINKS
+   ============================================================ */
+.resource-grid {
+  display: flex; flex-direction: column; gap: 0.8rem;
+}
+.resource-card {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.1rem 1.3rem;
+  border: 1.5px solid var(--gray-100);
+  border-radius: 12px; background: var(--snow);
+  text-decoration: none; color: inherit;
+  transition: all 0.15s ease;
+}
+.resource-card:hover {
+  border-color: var(--emerald);
+  background: #F0FDF4;
+}
+.resource-icon {
+  font-size: 1.4rem; flex-shrink: 0;
+  width: 40px; text-align: center;
+}
+.resource-info { flex: 1; min-width: 0; }
+.resource-name {
+  font-size: 0.95rem; font-weight: 700;
+  color: var(--slate-900);
+}
+.resource-desc {
+  font-size: 0.82rem; color: var(--slate-500);
+  line-height: 1.5; margin-top: 0.15rem;
+}
+.resource-arrow {
+  font-size: 1.1rem; color: var(--slate-400);
+  flex-shrink: 0; font-weight: 600;
+}
+.resource-card:hover .resource-arrow { color: var(--emerald); }
+.resource-note {
+  text-align: center; margin-top: 1.5rem;
+  font-size: 0.8rem; color: var(--slate-400);
+  font-style: italic;
+}
+
+/* ============================================================
+   HUMAN LINE
+   ============================================================ */
+.human-line {
+  text-align: center; padding: 2.5rem 0;
+  font-size: 0.9rem; color: var(--slate-400);
+  font-style: italic;
+  border-top: 1px solid var(--gray-100);
+}
+
+/* ============================================================
+   STICKY MOBILE CTA
+   ============================================================ */
+.sticky-cta {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  z-index: 100;
+  background: var(--white);
+  border-top: 1px solid var(--gray-100);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+  padding: 0.8rem 1.2rem;
+}
+.sticky-cta-btn {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  width: 100%; padding: 0.9rem; border: none; border-radius: 10px;
+  background: var(--slate-900); color: var(--white);
+  font-family: var(--font); font-size: 0.95rem; font-weight: 700;
+  cursor: pointer;
+}
+@media (max-width: 640px) {
+  .sticky-cta.visible { display: block; }
+  .footer { padding-bottom: 5rem; }
+}
 
 /* ============================================================
    TEASER OVERLAY
    ============================================================ */
 .teaser-overlay {
-  display: none;
-  position: fixed; inset: 0; z-index: 150;
+  display: none; position: fixed; inset: 0; z-index: 150;
   background: rgba(15,23,42,0.5); backdrop-filter: blur(8px);
   align-items: center; justify-content: center; padding: 24px;
 }
 .teaser-overlay.visible { display: flex; }
 .teaser-card {
-  background: var(--white); border-radius: 20px;
-  width: 100%; max-width: 420px;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.2);
-  overflow: hidden;
-  animation: teaserIn 0.3s ease;
+  background: var(--white); border-radius: 16px;
+  width: 100%; max-width: 400px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.15);
+  overflow: hidden; animation: fadeUp 0.3s ease; position: relative;
 }
-@keyframes teaserIn { from { opacity:0; transform: translateY(16px) scale(0.97); } to { opacity:1; transform: none; } }
+@keyframes fadeUp { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: none; } }
 .teaser-close {
-  position: absolute; top: 12px; right: 14px;
-  width: 32px; height: 32px; border-radius: 50%;
-  border: none; background: rgba(0,0,0,0.06);
-  font-size: 18px; cursor: pointer; color: var(--text-secondary);
+  position: absolute; top: 12px; right: 12px;
+  width: 30px; height: 30px; border-radius: 50%;
+  border: none; background: var(--snow);
+  font-size: 16px; cursor: pointer; color: var(--slate-500);
   display: flex; align-items: center; justify-content: center;
 }
-.teaser-top { padding: 2rem 1.5rem 1.5rem; text-align: center; }
+.teaser-top { padding: 2rem 1.5rem 1.2rem; text-align: center; }
 .teaser-badge {
   display: inline-block;
-  background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA;
-  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; padding: 0.3rem 0.8rem; border-radius: 6px;
-  margin-bottom: 0.8rem;
+  background: var(--red-pale); color: var(--red);
+  border: 1px solid var(--red-border);
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; padding: 0.25rem 0.7rem; border-radius: 5px;
+  margin-bottom: 0.7rem;
 }
-.teaser-title { font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.4rem; }
-.teaser-subtitle { font-size: 0.85rem; color: var(--text-secondary); }
+.teaser-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.3rem; }
+.teaser-subtitle { font-size: 0.82rem; color: var(--slate-500); }
 .teaser-stats {
   display: grid; grid-template-columns: 1fr 1fr 1fr;
-  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  border-top: 1px solid var(--gray-100); border-bottom: 1px solid var(--gray-100);
 }
-.teaser-stat { padding: 1.2rem 0.5rem; text-align: center; }
-.teaser-stat:not(:last-child) { border-right: 1px solid var(--border); }
-.teaser-stat-num { font-size: 1.8rem; font-weight: 700; color: var(--teal-deep); }
-.teaser-stat-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-top: 0.2rem; }
-.teaser-cta-area { padding: 1.5rem; text-align: center; }
+.teaser-stat { padding: 1rem 0.5rem; text-align: center; }
+.teaser-stat:not(:last-child) { border-right: 1px solid var(--gray-100); }
+.teaser-stat-num { font-size: 1.6rem; font-weight: 700; color: var(--emerald-deep); }
+.teaser-stat-label {
+  font-size: 0.65rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.04em; color: var(--slate-400); margin-top: 0.15rem;
+}
+.teaser-cta-area { padding: 1.2rem 1.5rem; text-align: center; }
 .teaser-cta {
-  display: block; width: 100%;
-  padding: 1rem; border: none; border-radius: 10px;
-  background: var(--text-primary); color: var(--white);
-  font-family: var(--font); font-size: 1.05rem; font-weight: 700;
+  display: block; width: 100%; padding: 0.9rem; border: none; border-radius: 10px;
+  background: var(--slate-900); color: var(--white);
+  font-family: var(--font); font-size: 1rem; font-weight: 700;
   cursor: pointer; transition: background 0.2s;
 }
-.teaser-cta:hover { background: #1E293B; }
-.teaser-cta-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.6rem; }
-
-/* ============================================================
-   MODAL
-   ============================================================ */
-.modal-overlay {
-  position: fixed; inset: 0; z-index: 200;
-  background: rgba(15,23,42,0.5); backdrop-filter: blur(8px);
-  display: flex; align-items: center; justify-content: center;
-  padding: 24px; opacity: 0; pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-.modal-overlay.open { opacity: 1; pointer-events: auto; }
-.modal {
-  background: var(--bg-soft); border-radius: 20px;
-  width: 100%; max-width: 640px; max-height: 85vh; overflow-y: auto;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.2);
-  transform: translateY(16px) scale(0.97); transition: transform 0.25s ease;
-}
-.modal-overlay.open .modal { transform: translateY(0) scale(1); }
-.modal-top { position: sticky; top: 0; z-index: 10; display: flex; justify-content: flex-end; padding: 16px 20px 0; }
-.modal-close {
-  width: 36px; height: 36px; border-radius: 50%;
-  border: 1px solid var(--border); background: white;
-  font-size: 18px; cursor: pointer; color: var(--text-secondary);
-  display: flex; align-items: center; justify-content: center;
-}
-.modal-close:hover { background: var(--bg-soft); }
-.modal-body { padding: 0 24px 32px; }
-
-/* Report cards */
-.report { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: white; }
-.report-header { padding: 24px 28px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 14px; }
-.report-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--bg-soft); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
-.report-meta h2 { font-size: 17px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
-.report-meta p { font-size: 12px; color: var(--text-muted); }
-.intel-block { padding: 20px 28px; border-bottom: 1px solid var(--border); }
-.intel-block:last-child { border-bottom: none; }
-.intel-block-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
-.badge { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; }
-.badge--amber { background: var(--teal-pale); color: var(--teal-deep); border: 1px solid var(--teal-light); }
-.badge--red { background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; }
-.badge--blue { background: var(--teal-pale); color: var(--teal-dark); border: 1px solid var(--teal-light); }
-.intel-block h3 { font-size: 14px; font-weight: 600; color: var(--text-primary); }
-.intel-list { list-style: none; }
-.intel-list li { font-size: 13px; line-height: 1.6; color: var(--text-secondary); padding: 7px 0; border-bottom: 1px solid var(--bg-soft); display: flex; gap: 8px; }
-.intel-list li:last-child { border-bottom: none; }
-.intel-list li::before { content: '\2192'; color: var(--bg-cloud); flex-shrink: 0; }
-.intel-list li strong { color: var(--text-primary); }
-.intel-prose { font-size: 13px; line-height: 1.65; color: var(--text-secondary); }
-.intel-prose strong { color: var(--text-primary); font-weight: 600; }
-.intel-source { font-size: 11px; color: var(--text-muted); margin-top: 10px; font-style: italic; }
-.report-verdict { padding: 20px 28px; background: var(--teal-pale); border-top: 1px solid var(--teal-light); font-size: 13px; font-weight: 600; color: var(--teal-deep); line-height: 1.55; }
-.report-verdict--warn { background: #FEF2F2; border-top-color: #FECACA; color: #DC2626; }
-
-
+.teaser-cta:hover { background: var(--slate-700); }
+.teaser-cta-sub { font-size: 0.7rem; color: var(--slate-400); margin-top: 0.5rem; }
 </style>
 </head>
 <body>
 
+<!-- BRAND -->
+<header class="brand">
+  <span class="brand-text">LISTING LENS</span>
+</header>
+
 <!-- 1. HERO -->
-<div class="hero">
-  <div class="hero-inner">
-    <div class="brand">
-      <div class="brand-icon">🔎</div>
-      <span class="brand-text">Listing Lens</span>
-    </div>
-    <h1 class="headline">Don't buy<br><span class="headline-em">blind.</span></h1>
-    <p class="subline">Found something online? Screenshot the listing and we'll tell you <strong>what it's really worth, what's wrong with it, and exactly what to ask the seller.</strong></p>
+<section class="hero">
+  <div class="container">
+    <div class="vehicle-badge">🚗 vehicle reports</div>
+    <h1 class="hero-headline">don't buy<br><em>blind.</em></h1>
+    <p class="hero-sub">screenshot any vehicle listing and we'll tell you <strong>what it's really worth, what's wrong with it, and exactly what to ask the seller.</strong></p>
+
     <div class="upload-zone" id="dropTarget">
       <div class="upload-icon">
         <svg viewBox="0 0 24 24"><path d="M19 7v3h-2V7h-3V5h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5a2 2 0 00-2 2v12c0 1.1.9 2 2 2h12a2 2 0 002-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z"/></svg>
       </div>
-      <span class="upload-text">Upload any marketplace screenshot</span>
-      <span class="upload-hint">Drop, paste, or tap to browse</span>
+      <span class="upload-text">upload a screenshot of any vehicle listing</span>
+      <span class="upload-hint">drop, paste, or tap to browse</span>
     </div>
+
     <div class="trust-strip">
       <div class="trust-item"><div class="trust-dot"></div>15 seconds</div>
-      <div class="trust-item"><div class="trust-dot"></div>No sign-up</div>
-      <div class="trust-item"><div class="trust-dot"></div>Data deleted after</div>
+      <div class="trust-item"><div class="trust-dot"></div>no sign-up</div>
+      <div class="trust-item"><div class="trust-dot"></div>data deleted after</div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- 2. CATEGORIES -->
-<section class="categories">
-  <div class="categories-inner">
-    <p class="section-label">What are you looking at?</p>
-    <div class="categories-grid">
-      <div class="cat-item">
-        <div class="cat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-2-2.2-3.2C12.9 5.7 11.8 5 10.5 5H5.8c-1 0-1.9.5-2.4 1.3L1 10"/><path d="M7 17H1v-4c0-1.1.9-2 2-2h10.6"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg></div>
-        <span class="cat-label">Vehicles</span>
+<!-- 2. REAL REPORT — the product IS the pitch -->
+<section class="section section--soft">
+  <div class="container">
+    <p class="section-eyebrow">real listing. real report.</p>
+    <h2 class="section-title">this is what $5 gets you</h2>
+    <p class="section-desc">we found this 2015 Jeep Wrangler on Carsales. here's everything the listing didn't tell you.</p>
+
+    <div class="report-showcase">
+      <div class="report-card">
+
+        <div class="report-header">
+          <div class="report-icon" style="font-size:24px;">🚙</div>
+          <div class="report-meta">
+            <h2>2015 Jeep Wrangler Unlimited Sport</h2>
+            <p>Carsales.com.au · $22,500 · 156,000 km · NSW</p>
+          </div>
+        </div>
+
+        <div class="report-section">
+          <div class="report-section-header">
+            <span class="badge badge--red">Critical</span>
+            <h3>Safety & Compliance</h3>
+          </div>
+          <div class="finding"><span><strong>Takata airbag recall active.</strong> 2014–2016 JK models affected. Passenger-side inflator can rupture. Free fix at any Jeep dealer — check ismyairbagsafe.com.au.</span></div>
+          <div class="finding"><span><strong>Registration plate withheld.</strong> Can't run a PPSR check ($2) without it. No PPSR = no way to verify finance owing, stolen status, or write-off history.</span></div>
+          <div class="finding"><span><strong>Registration expires February 2026.</strong> Days away. May need a roadworthy inspection ($50–$150) before transfer. Ask why it's expiring unsold.</span></div>
+          <div class="finding"><span><strong>Aftermarket modifications visible.</strong> Non-standard wheels, apparent lift kit. In NSW, lifts over 50mm require engineer certification. Uncertified mods can fail rego inspection and void insurance.</span></div>
+        </div>
+
+        <div class="report-section">
+          <div class="report-section-header">
+            <span class="badge badge--amber">Hidden Costs</span>
+            <h3>What the listing doesn't mention</h3>
+          </div>
+          <div class="finding"><span><strong>NSW stamp duty:</strong> ~$675</span></div>
+          <div class="finding"><span><strong>Registration transfer:</strong> $39</span></div>
+          <div class="finding"><span><strong>CTP Green Slip:</strong> ~$500–$700/year</span></div>
+          <div class="finding"><span><strong>Comprehensive insurance:</strong> ~$1,800–$2,500/year (higher with mods)</span></div>
+          <div class="finding"><span><strong>Fuel:</strong> ~$4,900/year at 11.9L/100km</span></div>
+          <div class="finding"><span><strong>Servicing:</strong> ~$400–$600 per service</span></div>
+          <div class="finding"><span><strong>True first-year cost: ~$30,000+</strong> — not $22,500.</span></div>
+        </div>
+
+        <div class="report-section">
+          <div class="report-section-header">
+            <span class="badge badge--amber">Mechanical</span>
+            <h3>Known issues for this model</h3>
+          </div>
+          <div class="finding"><span><strong>3.6L Pentastar oil cooler leak.</strong> Most common JK failure. Plastic housing warps between 80k–130k km. At 156k, it's either been replaced or it's overdue. Repair: $900–$1,400.</span></div>
+          <div class="finding"><span><strong>Pentastar lifter tick.</strong> Common on higher-mileage 3.6L engines. Repair: $800–$1,200.</span></div>
+          <div class="finding"><span><strong>Additional recalls:</strong> Clockspring, seat belt, PCM O2 sensor — all should be verified against VIN.</span></div>
+        </div>
+
+        <div class="report-section">
+          <div class="report-section-header">
+            <span class="badge badge--green">Market</span>
+            <h3>Comparable listings right now</h3>
+          </div>
+          <div class="finding"><span><strong>2015 Wrangler Unlimited, 117k km, SA dealer:</strong> $28,490</span></div>
+          <div class="finding"><span><strong>2015 Wrangler Unlimited, 131k km, VIC with roadworthy:</strong> $25,990</span></div>
+          <div class="finding"><span><strong>"Below market price" is misleading.</strong> Lower price reflects higher km, withheld plate, expiring rego, and uncertified mods.</span></div>
+        </div>
+
+        <div class="report-questions">
+          <h3>Questions to ask the seller</h3>
+          <div class="question-item"><span>What's the registration plate number? (for PPSR and Takata check)</span></div>
+          <div class="question-item"><span>Has the Takata airbag recall been completed?</span></div>
+          <div class="question-item"><span>Has the oil cooler housing been replaced?</span></div>
+          <div class="question-item"><span>Is the suspension lift engineer-certified for NSW?</span></div>
+          <div class="question-item"><span>Do you have full service history?</span></div>
+          <div class="question-item"><span>Why is rego expiring unsold?</span></div>
+          <div class="question-item"><span>Will you allow a pre-purchase inspection?</span></div>
+          <div class="question-item"><span>Is there any finance owing on the vehicle?</span></div>
+        </div>
+
+        <div class="report-verdict">⚠️ Proceed with caution. Withheld rego plate, imminent registration expiry, uncertified modifications, active Takata recall, and 156k on a Pentastar 3.6L with known oil cooler issues all require verification before purchase.</div>
+
+        <div class="report-fair-value">
+          <div class="fair-value-label">Fair offer after inspection</div>
+          <div class="fair-value-price">$18,000 – $20,000</div>
+          <div class="fair-value-note">not the listed $22,500</div>
+        </div>
+
       </div>
-      <div class="cat-item">
-        <div class="cat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-        <span class="cat-label">Property</span>
-      </div>
-      <div class="cat-item">
-        <div class="cat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg></div>
-        <span class="cat-label">Electronics</span>
-      </div>
-      <div class="cat-item">
-        <div class="cat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2 12 5 8 2 3.62 3.46a2 2 0 0 0-1.34 1.89v.8c0 .74.4 1.42 1.05 1.78L7 10v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V10l3.67-2.07c.65-.36 1.05-1.04 1.05-1.78v-.8a2 2 0 0 0-1.34-1.89z"/></svg></div>
-        <span class="cat-label">Fashion</span>
-      </div>
-      <div class="cat-item">
-        <div class="cat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6"/><polyline points="12 10 12 12 13 13"/><path d="m16.13 7.66-.81-4.05a2 2 0 0 0-2-1.61h-2.68a2 2 0 0 0-2 1.61l-.78 4.05"/><path d="m7.88 16.36.8 4a2 2 0 0 0 2 1.61h2.72a2 2 0 0 0 2-1.61l.78-4.05"/></svg></div>
-        <span class="cat-label">Watches</span>
-      </div>
-      <div class="cat-item">
-        <div class="cat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div>
-        <span class="cat-label">Everything Else</span>
+
+      <p class="report-hint">↑ this is a real report from a real listing</p>
+
+      <div class="cta-repeat">
+        <button class="cta-repeat-btn" onclick="document.getElementById('dropTarget').scrollIntoView({behavior:'smooth'}); setTimeout(function(){document.getElementById('dropTarget').click()},600);">try it with your listing →</button>
+        <div class="cta-repeat-hint">free scan · no sign-up · 15 seconds</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- 3. HOW IT WORKS -->
-<section class="how-section">
-  <div class="how-inner">
-    <h2 class="section-title">How it works</h2>
-    <div class="how-steps">
-      <div class="how-step">
-        <div class="how-num">1</div>
-        <div>
-          <h3 class="how-step-title">Screenshot any listing</h3>
-          <p class="how-step-desc">Facebook Marketplace, Carsales, Gumtree, eBay, Realestate — anywhere. If it has a price, we can analyse it.</p>
-        </div>
+<section class="section">
+  <div class="container">
+    <p class="section-eyebrow">how it works</p>
+
+    <div class="how-block">
+      <div class="how-num">1</div>
+      <h3>screenshot any vehicle listing</h3>
+      <p>Any marketplace, any country. If it's a car, ute, SUV, truck, or motorbike with a price — we can analyse it.</p>
+      <div class="marketplace-pills">
+        <span class="pill">Carsales</span>
+        <span class="pill">Facebook</span>
+        <span class="pill">Gumtree</span>
+        <span class="pill">AutoTrader</span>
+        <span class="pill">eBay Motors</span>
+        <span class="pill">Cars.com</span>
+        <span class="pill">Craigslist</span>
+        <span class="pill">anywhere</span>
       </div>
-      <div class="how-connector"></div>
-      <div class="how-step">
-        <div class="how-num">2</div>
-        <div>
-          <h3 class="how-step-title">AI searches real sources</h3>
-          <p class="how-step-desc">Manufacturer recalls, owner forums, market data, review sites. Not guessing — finding. The research that would take you hours, done in seconds.</p>
-        </div>
+    </div>
+
+    <div class="how-block">
+      <div class="how-num">2</div>
+      <h3>we search real sources</h3>
+      <p>Government recall databases, owner forums, market listings, insurance data, state transfer costs. Not guessing — finding. The research that would take you hours, done in seconds.</p>
+    </div>
+
+    <div class="how-block">
+      <div class="how-num">3</div>
+      <h3>get your report</h3>
+      <p>Safety recalls, hidden costs, mechanical issues, comparable listings, questions to ask the seller, fair value estimate, and a clear verdict. Everything you need to negotiate with confidence.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. PRIVACY -->
+<section class="section section--dark">
+  <div class="container">
+    <p class="section-eyebrow" style="color:var(--emerald-light)">your data</p>
+    <h2 class="section-title">we go out of our way to forget you.</h2>
+    <p class="section-desc">your screenshot is analysed, your report is delivered, then everything is deleted.</p>
+    <div class="privacy-points">
+      <div class="privacy-point">
+        <div class="privacy-point-title">No accounts</div>
+        <div class="privacy-point-desc">No sign-up, no login, no profile.</div>
       </div>
-      <div class="how-connector"></div>
-      <div class="how-step">
-        <div class="how-num">3</div>
-        <div>
-          <h3 class="how-step-title">Get your report</h3>
-          <p class="how-step-desc">Fair value estimate, hidden costs, red flags, questions to ask, and a negotiation strategy. Everything you need to buy with confidence.</p>
-        </div>
+      <div class="privacy-point">
+        <div class="privacy-point-title">No tracking</div>
+        <div class="privacy-point-desc">No cookies, no analytics, no data brokers.</div>
+      </div>
+      <div class="privacy-point">
+        <div class="privacy-point-title">No history</div>
+        <div class="privacy-point-desc">Screenshots and reports deleted after delivery.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 4. DEMOS -->
-<section class="demos-section">
-  <div class="demos-inner">
-    <h2 class="section-title">Real listings. Real reports.</h2>
-    <p class="demos-subtitle">Tap any listing to see what we found.</p>
-    <div class="demos-grid">
-      <div class="demo-card" onclick="openModal('property')">
-        <div class="demo-thumb"><img src="https://listinglens.app/apartment-screenshot.jpg" alt="Melbourne apartment"></div>
-        <div class="demo-info"><div class="demo-label">Property</div><div class="demo-item">Melbourne Apartment</div><div class="demo-price">$1.8M</div></div>
-      </div>
-      <div class="demo-card" onclick="openModal('vehicle')">
-        <div class="demo-thumb"><img src="https://listinglens.app/Jeep-screenshot.jpg" alt="Jeep Gladiator"></div>
-        <div class="demo-info"><div class="demo-label">Vehicle</div><div class="demo-item">Jeep Gladiator</div><div class="demo-price">$51,950</div></div>
-      </div>
-      <div class="demo-card" onclick="openModal('electronics')">
-        <div class="demo-thumb"><img src="https://listinglens.app/console-screenshot.jpg" alt="Nintendo 64"></div>
-        <div class="demo-info"><div class="demo-label">Electronics</div><div class="demo-item">Nintendo 64</div><div class="demo-price">US $88</div></div>
-      </div>
-      <div class="demo-card" onclick="openModal('jewellery')">
-        <div class="demo-thumb">💎</div>
-        <div class="demo-info"><div class="demo-label">Jewellery</div><div class="demo-item">Diamond Ring 1.2ct</div><div class="demo-price">$4,200</div></div>
-      </div>
-    </div>
+<!-- 5. PRICE -->
+<section class="section section--soft" style="text-align:center;">
+  <div class="container">
+    <p class="section-eyebrow">pricing</p>
+    <h2 class="section-title">$5</h2>
+    <p class="section-desc" style="margin:0 auto;">one report, one price, in your local currency. the initial scan is free — you see what we found before paying anything. no subscriptions, no upsells.</p>
   </div>
 </section>
 
-<!-- 5. PRIVACY STRIP -->
-<section class="privacy-strip">
-  <h2>Your data, gone.</h2>
-  <p>Your screenshot is analysed, your report is delivered, then everything is deleted. No accounts. No history. No tracking. We go out of our way to forget you.</p>
+<!-- 5b. USEFUL LINKS -->
+<section class="section">
+  <div class="container">
+    <p class="section-eyebrow">do your homework</p>
+    <h2 class="section-title" style="margin-bottom:0.5rem;">we're your first step, not your only one.</h2>
+    <p class="section-desc" style="margin-bottom:2.5rem;">we'll tell you what to look for — these are the places to verify it. bookmark them.</p>
+
+    <div class="resource-grid">
+      <a href="https://www.ppsr.gov.au/" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-icon">🔍</div>
+        <div class="resource-info">
+          <div class="resource-name">PPSR Check</div>
+          <div class="resource-desc">Check for finance owing, stolen or written-off status. $2 per search. You'll need the rego plate or VIN.</div>
+        </div>
+        <div class="resource-arrow">→</div>
+      </a>
+      <a href="https://www.vehiclerecalls.gov.au/" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-icon">⚠️</div>
+        <div class="resource-info">
+          <div class="resource-name">Vehicle Recalls Australia</div>
+          <div class="resource-desc">Search active safety recalls by make, model, or year. Free. Run by the ACCC.</div>
+        </div>
+        <div class="resource-arrow">→</div>
+      </a>
+      <a href="https://www.ismyairbagsafe.com.au/" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-icon">🛡️</div>
+        <div class="resource-info">
+          <div class="resource-name">Takata Airbag Check</div>
+          <div class="resource-desc">Check if a vehicle has a deadly Takata airbag recall. Free. Enter the rego plate.</div>
+        </div>
+        <div class="resource-arrow">→</div>
+      </a>
+      <a href="https://www.accc.gov.au/consumers/buying-products-and-services/buying-a-used-car" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-icon">📋</div>
+        <div class="resource-info">
+          <div class="resource-name">ACCC Used Car Guide</div>
+          <div class="resource-desc">Your consumer rights when buying a used car in Australia. Know what the law protects.</div>
+        </div>
+        <div class="resource-arrow">→</div>
+      </a>
+    </div>
+
+    <p class="resource-note">These are Australian resources. Our reports include region-specific links for your country.</p>
+  </div>
 </section>
 
 <!-- 6. FAQ -->
-<section class="faq-section">
-  <h2 class="section-title">Questions? Answered.</h2>
-  <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">What marketplaces does this work with?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">All of them. Carsales, Realestate.com.au, eBay, Facebook Marketplace, Gumtree, Amazon, Craigslist, Autotrader, Rightmove, Carousell — if it's a listing with a price, we can analyse it. Just screenshot it.</div></div></div>
-  <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">What does a report include?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">Hidden costs the listing doesn't mention, red flags and inconsistencies, region-specific recalls and regulations, questions you should ask the seller, market context so you know if the price is fair, and a clear verdict. Tap any of the demo listings above to see a real example.</div></div></div>
-  <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">How fast is it?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">The free scan takes about 3 seconds. The full paid report takes 15–30 seconds depending on the listing complexity. You'll have your report before you finish your coffee.</div></div></div>
-  <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">How much does it cost?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">The initial scan is free — you'll see what we found before paying anything. If you want the full report, it's $5 in your local currency. No subscriptions, no hidden fees, no upsells.</div></div></div>
-  <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Is my data stored?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">No. Your screenshots are deleted immediately after your report is generated. We don't create accounts, we don't use cookies or tracking, and we don't store any personal information. Once you close the page, everything is gone.</div></div></div>
-  <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">What if the report misses something?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">Our reports are AI-generated buyer intelligence — think of them as a very thorough second pair of eyes, not a professional inspection. They're designed to help you ask better questions and spot things you might miss. Always do your own due diligence before making a purchase.</div></div></div>
-  <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Does it work outside Australia?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">Yes. Listing Lens works with marketplace listings from anywhere in the world. You tell us your country, and we tailor the report to your region — local recalls, consumer laws, import duties, and market pricing specific to where you are.</div></div></div>
+<section class="section">
+  <div class="container">
+    <p class="section-eyebrow">questions</p>
+    <h2 class="section-title" style="margin-bottom:2rem;">answered.</h2>
+
+    <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">What types of vehicles does this work with?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">Cars, SUVs, utes, trucks, vans, motorbikes — if it's a vehicle listing with a price on any marketplace, we can analyse it. Carsales, Facebook Marketplace, Gumtree, AutoTrader, eBay Motors, Cars.com, Craigslist, and more.</div></div></div>
+    <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Does it work outside Australia?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">Yes. You tell us your country and we tailor the report — local recalls, registration costs, consumer laws, insurance estimates, and market comparisons specific to where you are.</div></div></div>
+    <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">What does a report include?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">Safety recalls, hidden on-road costs, known mechanical issues for that exact model, comparable market listings, questions you should ask the seller, a fair value estimate, and a clear verdict. Scroll up to see a real example.</div></div></div>
+    <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">How fast is it?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">The free scan takes about 3 seconds. The full paid report takes 15–30 seconds depending on the vehicle. You'll have it before you finish your coffee.</div></div></div>
+    <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Is my data stored?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">No. Screenshots are deleted immediately after your report is generated. No accounts, no cookies, no personal information stored. Once you close the page, everything is gone.</div></div></div>
+    <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Is this legit?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">Yes. Built in Australia, payments processed securely through Airwallex. No data stored, no account required. Scroll up to see exactly what you get — that's a real report from a real listing, not a mockup.</div></div></div>
+  </div>
 </section>
 
-<!-- 7. TEASER OVERLAY -->
+<!-- HUMAN LINE -->
+<div class="container">
+  <div class="human-line">made by an Aussie who got sick of getting ripped off. 🇦🇺</div>
+</div>
+
+<!-- 7. FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="footer-copy" style="font-weight:700; letter-spacing:0.04em;">LISTING LENS</span>
+        <span class="footer-copy">© 2026</span>
+        <span class="footer-copy">🇦🇺</span>
+      </div>
+      <div class="footer-links">
+        <a href="/terms">Terms & Privacy</a>
+        <a href="#" id="contactLink">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- STICKY MOBILE CTA -->
+<div class="sticky-cta" id="stickyCta">
+  <button class="sticky-cta-btn" onclick="document.getElementById('dropTarget').scrollIntoView({behavior:'smooth'}); setTimeout(function(){document.getElementById('dropTarget').click()},600);">upload a listing →</button>
+</div>
+
+<!-- TEASER OVERLAY -->
 <div class="teaser-overlay" id="teaserOverlay">
-  <div class="teaser-card" style="position:relative;">
+  <div class="teaser-card">
     <button class="teaser-close" onclick="closeTeaser()">&times;</button>
     <div class="teaser-top">
-      <div class="teaser-badge">🚩 Issues detected</div>
-      <div class="teaser-title">2021 Jeep Gladiator Overland</div>
-      <div class="teaser-subtitle">We scanned this listing in 3 seconds. Here's what we found.</div>
+      <div class="teaser-badge">🚩 issues detected</div>
+      <div class="teaser-title">2015 Jeep Wrangler Unlimited</div>
+      <div class="teaser-subtitle">we scanned this listing in 3 seconds.</div>
     </div>
     <div class="teaser-stats">
-      <div class="teaser-stat"><div class="teaser-stat-num">5</div><div class="teaser-stat-label">Critical issues</div></div>
-      <div class="teaser-stat"><div class="teaser-stat-num">3</div><div class="teaser-stat-label">Hidden costs</div></div>
-      <div class="teaser-stat"><div class="teaser-stat-num">2</div><div class="teaser-stat-label">Questions to ask</div></div>
+      <div class="teaser-stat"><div class="teaser-stat-num">4</div><div class="teaser-stat-label">Critical</div></div>
+      <div class="teaser-stat"><div class="teaser-stat-num">7</div><div class="teaser-stat-label">Hidden costs</div></div>
+      <div class="teaser-stat"><div class="teaser-stat-num">8</div><div class="teaser-stat-label">Questions</div></div>
     </div>
     <div class="teaser-cta-area">
-      <button class="teaser-cta" onclick="closeTeaser()">Get full report — $5</button>
+      <button class="teaser-cta" onclick="closeTeaser()">get full report — $5</button>
       <div class="teaser-cta-sub">Powered by Airwallex · Secure payment · Data deleted after</div>
     </div>
   </div>
 </div>
 
-<!-- 8. FOOTER -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand"><div class="footer-brand-icon">🔎</div><span class="footer-brand-name">Listing Lens</span></div>
-        <p class="footer-desc">AI-powered buyer intelligence for marketplace listings. Know what it's really worth before you hand over a cent.</p>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Product</div>
-        <a href="#top">Scan a listing</a>
-        <a href="#demos">See examples</a>
-        <a href="#faq">How it works</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Legal</div>
-        <a href="/terms">Terms & Privacy</a>
-        <a href="#" id="contactLink">Contact us</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span class="footer-copy">© 2026 Listing Lens Labs Pty Ltd</span>
-      <span class="footer-aus">🇦🇺 Made in Australia</span>
-    </div>
-  </div>
-</footer>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <div class="modal-top"><button class="modal-close" onclick="closeModal()">&times;</button></div>
-    <div class="modal-body" id="modalBody"></div>
-  </div>
-</div>
-
-<!-- REPORT TEMPLATES -->
-<template id="tpl-property">
-  <div class="report">
-    <div class="report-header"><div class="report-icon">🏠</div><div class="report-meta"><h2>Carlton Apartment — 3 Bed / 2 Bath / 3 Car</h2><p>Realestate.com.au · $1.8M–$1.95M · 230m²</p></div></div>
-    <div class="intel-block"><div class="intel-block-header"><span class="badge badge--amber">Critical</span><h3>Undisclosed Costs</h3></div>
-      <ul class="intel-list">
-        <li><span><strong>Repayment calculation unclear.</strong> $17,322/month shown with no loan term or rate. At 6.5% over 30yrs on $1.8M = ~$11,850/month.</span></li>
-        <li><span><strong>Body corp fees hidden.</strong> For 230m² premium Carlton apartment, expect $15K–$25K/year minimum.</span></li>
-        <li><span><strong>Ongoing costs missing.</strong> Council rates (~$5K/yr), water (~$1.5K/yr), building insurance — none disclosed.</span></li>
-        <li><span><strong>Price gap is a signal.</strong> $150K range suggests vendor uncertainty or soft market.</span></li>
-        <li><span><strong>Size affects resale.</strong> 230m² is unusually large for an apartment — buyer pool may be narrow.</span></li>
-      </ul>
-    </div>
-    <div class="intel-block"><div class="intel-block-header"><span class="badge badge--blue">Suburb Intel</span><h3>Living in Carlton</h3></div>
-      <div class="intel-prose"><strong>Lifestyle:</strong> Inner-city, walking distance to CBD, vibrant café precinct.<br><br><strong>Noise:</strong> High foot traffic, bars open late. Check building insulation.<br><br><strong>Transport:</strong> Tram routes 1 &amp; 96, ~15 min to CBD.<br><br><strong>Schools:</strong> Zoned for Carlton Primary, near University High School.</div>
-      <p class="intel-source">Sources: Domain suburb profile, r/melbourne, council data</p>
-    </div>
-    <div class="report-verdict">💰 Ask: (1) Actual body corp fees? (2) Special levies planned? (3) Loan term behind $17K/month? (4) Recent comparable sales at this size?</div>
-  </div>
-</template>
-<template id="tpl-vehicle">
-  <div class="report">
-    <div class="report-header"><div class="report-icon">🚗</div><div class="report-meta"><h2>2021 Jeep Gladiator Overland</h2><p>Carsales.com.au · $51,950 · Private Sale · 51,000 km</p></div></div>
-    <div class="intel-block"><div class="intel-block-header"><span class="badge badge--amber">Critical</span><h3>Hidden Research Required</h3></div>
-      <ul class="intel-list">
-        <li><span><strong>Modification check.</strong> VIC requires VSI engineering cert for lifts over 50mm.</span></li>
-        <li><span><strong>Recall status.</strong> Check VIN at vehiclerecalls.gov.au.</span></li>
-        <li><span><strong>On-road costs hidden.</strong> $51,950 excludes stamp duty (~$2,900), rego transfer (~$250), roadworthy (~$200).</span></li>
-        <li><span><strong>Insurance risk.</strong> Modified vehicles frequently refused or attract 50–100% premium increases.</span></li>
-        <li><span><strong>Resale impact.</strong> Modified 4WDs have smaller buyer pool. Banks often refuse finance.</span></li>
-      </ul>
-    </div>
-    <div class="intel-block"><div class="intel-block-header"><span class="badge badge--blue">Community</span><h3>What Owners Say</h3></div>
-      <div class="intel-prose"><strong>Praise:</strong> Off-road capability, truck bed versatility.<br><br><strong>Complaints:</strong> Harsh highway ride, road noise, 13–15L/100km real-world.<br><br><strong>Known issues:</strong> Fuel pump recalls, airbag sensor faults, transmission hesitation.</div>
-      <p class="intel-source">Sources: Australian 4x4 forums, ProductReview.com.au</p>
-    </div>
-    <div class="report-verdict">💰 Verify engineering certs, get insurance quotes with mod details, confirm bank will finance.</div>
-  </div>
-</template>
-<template id="tpl-electronics">
-  <div class="report">
-    <div class="report-header"><div class="report-icon">🎮</div><div class="report-meta"><h2>Nintendo 64 Console</h2><p>eBay.com · US $88.00 + $108.64 shipping · Used</p></div></div>
-    <div class="intel-block"><div class="intel-block-header"><span class="badge badge--red">Compatibility</span><h3>Critical Issues Found</h3></div>
-      <ul class="intel-list">
-        <li><span><strong>Region incompatible.</strong> US console outputs NTSC. Australian TVs use PAL.</span></li>
-        <li><span><strong>True landed cost.</strong> US $88 + $108.64 shipping = ~AU $280–$300.</span></li>
-        <li><span><strong>No games included.</strong> N64 games run AU $30–$100 each.</span></li>
-        <li><span><strong>Controller wear unknown.</strong> "Working" doesn't confirm joystick condition.</span></li>
-        <li><span><strong>Returns cost ~$100.</strong> You pay return shipping to the USA.</span></li>
-        <li><span><strong>Buy local instead.</strong> PAL consoles with games: $120–$200 on FB Marketplace.</span></li>
-      </ul>
-    </div>
-    <div class="report-verdict report-verdict--warn">⚠️ ~AU $300 for incompatible console vs $120–$200 locally for PAL with games.</div>
-  </div>
-</template>
-<template id="tpl-jewellery">
-  <div class="report">
-    <div class="report-header"><div class="report-icon">💎</div><div class="report-meta"><h2>18K White Gold Diamond Ring — 1.2ct</h2><p>Facebook Marketplace · $4,200 · Private Seller</p></div></div>
-    <div class="intel-block"><div class="intel-block-header"><span class="badge badge--amber">Critical</span><h3>Verification Required</h3></div>
-      <ul class="intel-list">
-        <li><span><strong>No certification shown.</strong> No GIA, AGS, or independent grading report.</span></li>
-        <li><span><strong>Price vs retail gap.</strong> Certified 1.2ct retails $8K–$15K. $4,200 is a red flag.</span></li>
-        <li><span><strong>No return policy.</strong> Private sale = no buyer protection.</span></li>
-        <li><span><strong>Resizing costs.</strong> 18K white gold: $80–$200+.</span></li>
-        <li><span><strong>Independent appraisal needed.</strong> Budget $80–$150. Non-negotiable.</span></li>
-      </ul>
-    </div>
-    <div class="intel-block"><div class="intel-block-header"><span class="badge badge--blue">Market Context</span><h3>What to Know</h3></div>
-      <div class="intel-prose"><strong>Common scams:</strong> Synthetic sold as natural, inflated carat weight.<br><br><strong>Negotiation leverage:</strong> No cert = no proof. Resistance to verification = walk away.<br><br><strong>Safer alternatives:</strong> Certified pre-owned from established jewellers.</div>
-      <p class="intel-source">Sources: GIA pricing guides, Australian jeweller forums</p>
-    </div>
-    <div class="report-verdict">💰 Non-negotiable: (1) Ask for GIA/AGS cert. (2) Meet at independent jeweller. (3) If refused, walk away.</div>
-  </div>
-</template>
-
 <script>
-// Contact email
 var cl = document.getElementById('contactLink');
 if (cl) cl.href = 'mai' + 'lto:hel' + 'lo@list' + 'inglens.app';
-
-// Keyboard
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
-
-// Upload zone
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeTeaser(); });
 var dt = document.getElementById('dropTarget');
 dt.addEventListener('click', function() {
   var i = document.createElement('input');
@@ -823,15 +790,26 @@ dt.addEventListener('click', function() {
   i.click();
 });
 dt.addEventListener('dragover', function(e) {
-  e.preventDefault();
-  dt.style.borderColor = 'var(--teal)';
-  dt.style.background = '#F0FDF4';
+  e.preventDefault(); dt.style.borderColor = 'var(--emerald)'; dt.style.background = '#F0FDF4';
 });
 dt.addEventListener('dragleave', function() { dt.style.borderColor = ''; dt.style.background = ''; });
 dt.addEventListener('drop', function(e) {
-  e.preventDefault(); dt.style.borderColor = ''; dt.style.background = '';
-  showTeaser();
+  e.preventDefault(); dt.style.borderColor = ''; dt.style.background = ''; showTeaser();
 });
+
+// Sticky mobile CTA — show after scrolling past upload zone
+var sticky = document.getElementById('stickyCta');
+var heroUpload = document.getElementById('dropTarget');
+if (sticky && heroUpload) {
+  window.addEventListener('scroll', function() {
+    var rect = heroUpload.getBoundingClientRect();
+    if (rect.bottom < 0) {
+      sticky.classList.add('visible');
+    } else {
+      sticky.classList.remove('visible');
+    }
+  }, { passive: true });
+}
 </script>
 </body>
 </html>
