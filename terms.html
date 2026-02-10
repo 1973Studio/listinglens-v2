@@ -54,7 +54,7 @@ body { margin: 0; }
   display: flex; align-items: center; justify-content: center;
   font-size: 16px;
 }
-.topbar-name { font-size: 1rem; font-weight: 700; color: var(--text-primary); }
+.topbar-name { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.04em; color: var(--text-primary); }
 .topbar-back {
   font-size: 0.85rem; color: var(--teal); text-decoration: none; font-weight: 600;
 }
@@ -65,7 +65,7 @@ body { margin: 0; }
 
 .page-title {
   font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.03em;
   margin-bottom: 0.5rem;
   color: var(--text-primary);
@@ -143,7 +143,7 @@ body { margin: 0; }
 
 .section-title {
   font-size: 1.5rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
   margin-bottom: 1.5rem;
   color: var(--text-primary);
@@ -249,8 +249,7 @@ p strong { color: var(--text-primary); font-weight: 600; }
 <!-- Top bar -->
 <div class="topbar">
   <a href="/" class="topbar-brand">
-    <div class="topbar-icon">🔎</div>
-    <span class="topbar-name">Listing Lens</span>
+    <span class="topbar-name">LISTING LENS</span>
   </a>
   <a href="/" class="topbar-back">← Back to home</a>
 </div>
@@ -262,13 +261,13 @@ p strong { color: var(--text-primary); font-weight: 600; }
 
   <!-- TLDR -->
   <div class="tldr">
-    <div class="tldr-title">The short version</div>
+    <div class="tldr-title">TL;DR </div>
     <ul class="tldr-list">
       <li>We don't store your screenshots or reports after delivery</li>
       <li>We don't create accounts, profiles, or track you across sessions</li>
       <li>We don't sell, share, or monetise any data</li>
       <li>Payments are handled by Airwallex — we never see your card details</li>
-      <li>Reports are AI-generated information, not professional advice</li>
+      <li>Reports are automated analysis, not professional advice</li>
       <li>Prohibited content results in immediate blocking with no refund</li>
     </ul>
   </div>
@@ -280,7 +279,7 @@ p strong { color: var(--text-primary); font-weight: 600; }
     <a href="#terms">Terms of Use</a>
     <a href="#payments">Payments</a>
     <a href="#content">Prohibited Content</a>
-    <a href="#ai">AI Disclaimer</a>
+    <a href="#disclaimer">Report Disclaimer</a>
     <a href="#rights">Your Rights</a>
     <a href="#contact">Contact</a>
   </div>
@@ -384,7 +383,7 @@ p strong { color: var(--text-primary); font-weight: 600; }
           </tr>
           <tr>
             <td><strong>Anthropic (Claude)</strong></td>
-            <td>AI analysis of your screenshots</td>
+            <td>Report analysis engine</td>
             <td>Your uploaded screenshots (transiently, for analysis only). <a href="https://www.anthropic.com/privacy" style="color:var(--teal)">Their policy</a></td>
           </tr>
         </tbody>
@@ -401,14 +400,14 @@ p strong { color: var(--text-primary); font-weight: 600; }
 
     <div class="subsection">
       <h3 class="subsection-title">The service</h3>
-      <p>Listing Lens is a marketplace listing analysis tool. You upload a screenshot of a listing from any online marketplace. We use artificial intelligence to analyse the visible content and generate a buyer intelligence report highlighting potential issues, hidden costs, and questions to consider.</p>
+      <p>Listing Lens is a vehicle listing analysis tool. You upload a screenshot of a vehicle listing from any online marketplace. We analyse the visible content and generate a buyer intelligence report highlighting potential issues, hidden costs, known mechanical problems, and questions to ask the seller.</p>
     </div>
 
     <div class="subsection">
       <h3 class="subsection-title">How it works</h3>
       <ul class="legal-list">
-        <li><strong>Free scan:</strong> Upload one screenshot. Our AI identifies the listing and provides a summary of what it found — the category, estimated issue count, and what the full report would cover. This is free and costs you nothing.</li>
-        <li><strong>Paid report ($5 AUD):</strong> If the scan shows value, you can pay $5 to unlock a full report. After payment, you're taken to a temporary workspace where you upload up to two screenshots of the same listing. Our AI cross-references both images and generates a detailed buyer intelligence report.</li>
+        <li><strong>Free scan:</strong> Upload one screenshot. We identify the vehicle and provide a summary of what we found — the make and model, estimated issue count, and what the full report would cover. This is free and costs you nothing.</li>
+        <li><strong>Paid report ($5 AUD):</strong> If the scan shows value, you can pay $5 to unlock a full report. After payment, you're taken to a temporary workspace where you upload up to two screenshots of the same listing. We cross-reference both images and generate a detailed buyer intelligence report.</li>
         <li><strong>Delivery:</strong> Your report is displayed in your browser. You can save it as a PDF or copy it. Once you leave the page, the report and your screenshots are permanently deleted.</li>
       </ul>
     </div>
@@ -420,13 +419,13 @@ p strong { color: var(--text-primary); font-weight: 600; }
         <li>You must not upload prohibited content (see below)</li>
         <li>You must be at least 18 years old or have parental consent to use this service</li>
         <li>You are responsible for saving your report before leaving the page — we cannot retrieve it afterwards</li>
-        <li>You accept that reports are generated by AI and may contain inaccuracies</li>
+        <li>You accept that reports are generated using automated analysis and may contain inaccuracies</li>
       </ul>
     </div>
 
     <div class="subsection">
       <h3 class="subsection-title">Availability</h3>
-      <p>We aim to keep Listing Lens available at all times but make no guarantees of uptime. The service may be unavailable during maintenance, outages from our hosting or AI providers, or periods of high demand. We are not liable for any losses arising from service unavailability.</p>
+      <p>We aim to keep Listing Lens available at all times but make no guarantees of uptime. The service may be unavailable during maintenance, outages from our hosting or analysis providers, or periods of high demand. We are not liable for any losses arising from service unavailability.</p>
     </div>
   </div>
 
@@ -448,10 +447,10 @@ p strong { color: var(--text-primary); font-weight: 600; }
 
     <div class="subsection">
       <h3 class="subsection-title">Refunds</h3>
-      <p>We understand that AI-generated reports may not always meet expectations. Our refund policy is straightforward:</p>
+      <p>We understand that reports may not always meet expectations. Our refund policy is straightforward:</p>
       <ul class="legal-list">
         <li><strong>Report not delivered:</strong> If you pay and no report is generated due to a technical error, you will receive a full refund automatically</li>
-        <li><strong>Report delivered:</strong> Once a report has been successfully generated and displayed, the $5 fee is considered earned. We are unable to offer refunds for delivered reports, as the AI processing cost has been incurred</li>
+        <li><strong>Report delivered:</strong> Once a report has been successfully generated and displayed, the $5 fee is considered earned. We are unable to offer refunds for delivered reports, as the processing cost has been incurred</li>
         <li><strong>Prohibited content:</strong> If your upload is flagged and blocked for prohibited content, no refund will be issued (see Prohibited Content below)</li>
       </ul>
       <p>Under the <strong>Australian Consumer Law</strong>, you have rights to a remedy if services are not provided with due care and skill, or are not fit for purpose. If you believe your statutory rights have been breached, please contact us.</p>
@@ -483,7 +482,7 @@ p strong { color: var(--text-primary); font-weight: 600; }
 
     <div class="subsection">
       <h3 class="subsection-title">How we detect prohibited content</h3>
-      <p>Uploaded images are screened by our AI before analysis begins. If prohibited content is detected:</p>
+      <p>Uploaded images are automatically screened before analysis begins. If prohibited content is detected:</p>
       <ul class="legal-list">
         <li>The upload is immediately rejected and the image is not processed</li>
         <li>Your session is terminated</li>
@@ -500,19 +499,19 @@ p strong { color: var(--text-primary); font-weight: 600; }
   </div>
 
   <!-- ============================================================
-       AI DISCLAIMER
+       REPORT DISCLAIMER
        ============================================================ -->
-  <div class="legal-section" id="ai">
-    <h2 class="section-title">AI-Generated Content Disclaimer</h2>
+  <div class="legal-section" id="disclaimer">
+    <h2 class="section-title">Report Disclaimer</h2>
 
     <div class="callout callout-info">
-      <p><strong>Reports are informational only.</strong> They are not professional advice and should not be treated as such. Always do your own due diligence before making a purchase.</p>
+      <p><strong>Reports are informational only.</strong> They are not professional advice and should not be treated as such. Always do your own due diligence before purchasing any vehicle.</p>
     </div>
 
     <div class="subsection">
       <h3 class="subsection-title">What our reports are</h3>
       <ul class="legal-list">
-        <li>AI-generated analysis based on visible content in your uploaded screenshots</li>
+        <li>Automated analysis based on visible content in your uploaded screenshots</li>
         <li>General information intended to help you ask better questions and identify potential issues</li>
         <li>A starting point for your own research, not a replacement for it</li>
       </ul>
@@ -523,15 +522,15 @@ p strong { color: var(--text-primary); font-weight: 600; }
       <ul class="legal-list">
         <li><strong>Not financial advice.</strong> We are not licensed financial advisors. Do not make purchasing decisions based solely on our reports</li>
         <li><strong>Not legal advice.</strong> We are not solicitors. Reports may reference laws or regulations but this is general information only</li>
-        <li><strong>Not a professional inspection.</strong> Our AI analyses photos and text — it cannot physically inspect a property, vehicle, or item</li>
-        <li><strong>Not guaranteed to be accurate.</strong> AI can make errors. Information may be outdated, incorrect, or incomplete. Market data and pricing may not reflect current conditions</li>
+        <li><strong>Not a professional inspection.</strong> We analyse photos and text — we cannot physically inspect a vehicle</li>
+        <li><strong>Not guaranteed to be accurate.</strong> Automated analysis can produce errors. Information may be outdated, incorrect, or incomplete. Market data and pricing may not reflect current conditions</li>
         <li><strong>Not a valuation.</strong> Any price commentary is based on general market information and should not be relied upon as a formal valuation</li>
       </ul>
     </div>
 
     <div class="subsection">
       <h3 class="subsection-title">Limitation of liability</h3>
-      <p>To the maximum extent permitted by Australian law, Listing Lens is not liable for any loss, damage, or expense arising from the use of or reliance on our reports. This includes but is not limited to financial loss from purchase decisions, missed defects or issues not identified in the report, and inaccurate information generated by the AI.</p>
+      <p>To the maximum extent permitted by Australian law, Listing Lens is not liable for any loss, damage, or expense arising from the use of or reliance on our reports. This includes but is not limited to financial loss from purchase decisions, missed defects or issues not identified in the report, and inaccurate information in the analysis.</p>
       <p>Nothing in these terms excludes or limits any rights you have under the <strong>Australian Consumer Law</strong> that cannot be excluded or limited by law.</p>
     </div>
   </div>
