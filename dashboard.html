@@ -4,31 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
 <title>Listing Lens — Your Report</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg-cream: #FAFAF7;
-  --bg-soft: #F5F4F0;
-  --bg-cloud: #EBE9E4;
-  --text-primary: #1E293B;
+  --bg-cream: #FFFFFF;
+  --bg-soft: #F9FAFB;
+  --bg-cloud: #F1F5F9;
+  --text-primary: #0F172A;
   --text-secondary: #64748B;
   --text-muted: #94A3B8;
-  --teal: #0D9488;
-  --teal-hot: #14B8A6;
-  --teal-light: #5EEAD4;
-  --teal-pale: #CCFBF1;
-  --teal-deep: #0F766E;
-  --teal-dark: #134E4A;
-  --amber: #F59E0B;
-  --amber-pale: #FEF3C7;
+  --teal: #10B981;
+  --teal-hot: #34D399;
+  --teal-light: #6EE7B7;
+  --teal-pale: #D1FAE5;
+  --teal-deep: #059669;
+  --teal-dark: #064E3B;
+  
+  
   --red: #DC2626;
   --red-pale: #FEF2F2;
   --white: #fff;
-  --border: rgba(30,41,59,0.08);
-  --font: 'Outfit', system-ui, -apple-system, sans-serif;
+  --border: #E5E7EB;
+  --font: 'DM Sans', system-ui, -apple-system, sans-serif;
 }
 
 html {
@@ -59,13 +59,14 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
 .topbar-icon {
   width: 32px; height: 32px;
   border-radius: 8px;
-  background: var(--teal);
+  background: var(--text-primary);
   display: flex; align-items: center; justify-content: center;
   font-size: 16px;
 }
 .topbar-name {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
+  letter-spacing: 0.04em;
   color: var(--text-primary);
 }
 .topbar-status {
@@ -101,8 +102,8 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
   display: flex;
   align-items: flex-start;
   gap: 0.8rem;
-  background: var(--amber-pale);
-  border: 1px solid #FDE68A;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
   border-radius: 12px;
   padding: 1rem 1.2rem;
   margin-bottom: 2rem;
@@ -117,7 +118,7 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
   color: var(--text-secondary);
   line-height: 1.55;
 }
-.ephemeral-text strong { color: var(--text-primary); }
+.ephemeral-text strong { color: #991B1B; }
 
 /* Welcome */
 .welcome {
@@ -125,7 +126,7 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
 }
 .welcome h1 {
   font-size: 1.8rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.02em;
   margin-bottom: 0.5rem;
@@ -175,26 +176,25 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
   display: flex; align-items: center; gap: 0.8rem;
 }
 .country-card-number {
-  width: 32px; height: 32px; border-radius: 50%;
+  width: 48px; height: 48px; border-radius: 50%;
   background: var(--bg-soft);
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.85rem; font-weight: 700; color: var(--text-muted);
+  font-size: 1.3rem; font-weight: 700; color: var(--text-muted);
   flex-shrink: 0;
 }
 .country-card.complete .country-card-number {
   background: var(--teal-pale); color: var(--teal);
 }
-.country-card-title { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+.country-card-title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
 .country-card-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 .country-card-body { padding: 1.5rem; }
 
 .country-select-wrapper {
   position: relative;
 }
-.country-select {
+.country-search {
   width: 100%;
-  padding: 1rem 1.2rem;
-  padding-left: 3.2rem;
+  padding: 1rem 1.2rem 1rem 3.2rem;
   border: 2px solid var(--bg-cloud);
   border-radius: 12px;
   font-family: inherit;
@@ -202,31 +202,14 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
   font-weight: 500;
   color: var(--text-primary);
   background: var(--bg-cream);
-  appearance: none;
-  -webkit-appearance: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
-}
-.country-select:focus {
   outline: none;
+  transition: all 0.2s ease;
+}
+.country-search:focus {
   border-color: var(--teal-light);
-  background-color: rgba(204,251,241,0.1);
+  background: rgba(209,250,229,0.08);
 }
-.country-select optgroup {
-  font-weight: 700;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  font-style: normal;
-  padding-top: 0.5rem;
-}
-.country-select option {
-  font-weight: 500;
-  color: var(--text-primary);
-  padding: 0.3rem 0;
-}
+.country-search::placeholder { color: var(--text-muted); }
 .country-flag {
   position: absolute;
   left: 1.2rem;
@@ -235,6 +218,35 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
   font-size: 1.3rem;
   pointer-events: none;
 }
+.country-results {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 20;
+  display: none;
+}
+.country-results.open { display: block; }
+.country-result {
+  padding: 0.7rem 1.2rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: background 0.1s;
+}
+.country-result:first-child { border-radius: 12px 12px 0 0; }
+.country-result:last-child { border-radius: 0 0 12px 12px; }
+.country-result:hover,
+.country-result.highlighted { background: var(--teal-pale); }
+.country-result-flag { font-size: 1.2rem; }
 .country-helper {
   margin-top: 0.8rem;
   font-size: 0.8rem;
@@ -247,87 +259,6 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
 .country-helper svg {
   width: 14px; height: 14px; flex-shrink: 0; margin-top: 2px;
   stroke: var(--teal-light); fill: none; stroke-width: 2;
-}
-
-/* ============================================================
-   CATEGORY SELECTOR
-   ============================================================ */
-.category-card {
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--white);
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-  transition: all 0.2s ease;
-}
-.category-card.complete { border-color: var(--teal-light); }
-.category-card-header {
-  padding: 1.2rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.category-card-left {
-  display: flex; align-items: center; gap: 0.8rem;
-}
-.category-card-number {
-  width: 32px; height: 32px; border-radius: 50%;
-  background: var(--bg-soft);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.85rem; font-weight: 700; color: var(--text-muted);
-  flex-shrink: 0;
-}
-.category-card.complete .category-card-number {
-  background: var(--teal-pale); color: var(--teal);
-}
-.category-card-title { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
-.category-card-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
-.category-card-body { padding: 1.5rem; }
-
-.category-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.7rem;
-}
-@media (min-width: 480px) {
-  .category-grid { grid-template-columns: 1fr 1fr 1fr; }
-}
-.category-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 1.2rem 0.5rem;
-  border: 2px solid var(--bg-cloud);
-  border-radius: 12px;
-  background: var(--bg-cream);
-  cursor: pointer;
-  font-family: var(--font);
-  transition: all 0.15s ease;
-}
-.category-btn:hover {
-  border-color: var(--teal-light);
-  background: rgba(204,251,241,0.15);
-}
-.category-btn.selected {
-  border-color: var(--teal);
-  background: var(--teal-pale);
-}
-.category-btn-icon {
-  font-size: 1.5rem;
-  line-height: 1;
-}
-.category-btn-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-secondary);
-}
-.category-btn.selected .category-btn-label {
-  color: var(--teal-deep);
 }
 
 /* ============================================================
@@ -368,11 +299,11 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
   gap: 0.8rem;
 }
 .upload-card-number {
-  width: 32px; height: 32px;
+  width: 48px; height: 48px;
   border-radius: 50%;
   background: var(--bg-soft);
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.85rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: var(--text-muted);
   flex-shrink: 0;
@@ -382,8 +313,8 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
   color: var(--teal);
 }
 .upload-card-title {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
   color: var(--text-primary);
 }
 .upload-card-subtitle {
@@ -409,7 +340,7 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
 
 /* Drop zone inside card */
 .card-drop {
-  border: 2px dashed var(--bg-cloud);
+  border: 2px dashed var(--teal-light);
   border-radius: 12px;
   padding: 2rem 1.5rem;
   display: flex;
@@ -418,16 +349,16 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
   gap: 0.5rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  background: var(--bg-cream);
+  background: #F0FDF4;
 }
 .card-drop:hover {
-  border-color: var(--teal-light);
-  background: rgba(204,251,241,0.15);
+  border-color: var(--teal);
+  background: #DCFCE7;
 }
 .card-drop-icon {
   width: 44px; height: 44px;
   border-radius: 12px;
-  background: var(--bg-soft);
+  background: var(--teal-pale);
   display: flex; align-items: center; justify-content: center;
   font-size: 22px;
 }
@@ -537,11 +468,11 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
   justify-content: center;
   gap: 0.6rem;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 12px rgba(13,148,136,0.25);
+  box-shadow: 0 2px 12px rgba(16,185,129,0.25);
 }
 .generate-btn:hover {
   background: var(--teal-deep);
-  box-shadow: 0 4px 20px rgba(13,148,136,0.35);
+  box-shadow: 0 4px 20px rgba(16,185,129,0.35);
 }
 .generate-btn:disabled {
   background: var(--bg-cloud);
@@ -575,7 +506,7 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
 }
 .report-output-header h2 {
   font-size: 1.3rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 .report-done-badge {
   font-size: 0.7rem;
@@ -700,8 +631,7 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
 <!-- TOP BAR -->
 <div class="topbar">
   <a href="/" class="topbar-brand" style="text-decoration:none;">
-    <div class="topbar-icon">🔎</div>
-    <span class="topbar-name">Listing Lens</span>
+    <span class="topbar-name">LISTING LENS</span>
   </a>
   <div class="topbar-status">
     <div class="topbar-dot"></div>
@@ -723,17 +653,17 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
 
   <!-- Welcome -->
   <div class="welcome">
-    <h1>Let's build your report.</h1>
-    <p>Tell us where you are, then upload two screenshots of the same listing — the more we see, the more we find. Your location helps us check local recalls, laws, and costs specific to your region.</p>
+    <h1>Let's build your vehicle report.</h1>
+    <p>Tell us where you are, then upload two screenshots of the same listing — the more we see, the more we find.</p>
   </div>
 
-  <!-- Progress steps (5: country, category, img1, img2, generate) -->
+  <!-- Progress steps (4: country, img1, img2, generate) -->
   <div class="steps" id="stepBars">
     <div class="step-bar" id="step0"></div>
+    
     <div class="step-bar" id="step1"></div>
     <div class="step-bar" id="step2"></div>
     <div class="step-bar" id="step3"></div>
-    <div class="step-bar" id="step4"></div>
   </div>
 
   <!-- COUNTRY SELECTOR -->
@@ -751,118 +681,12 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
     <div class="country-card-body">
       <div class="country-select-wrapper">
         <span class="country-flag" id="selectedFlag">🌍</span>
-        <select class="country-select" id="countrySelect" onchange="handleCountry(this)">
-          <option value="">Select your country</option>
-          <optgroup label="Asia Pacific">
-            <option value="AU" data-flag="🇦🇺">🇦🇺 Australia</option>
-            <option value="NZ" data-flag="🇳🇿">🇳🇿 New Zealand</option>
-            <option value="SG" data-flag="🇸🇬">🇸🇬 Singapore</option>
-            <option value="HK" data-flag="🇭🇰">🇭🇰 Hong Kong</option>
-            <option value="JP" data-flag="🇯🇵">🇯🇵 Japan</option>
-            <option value="KR" data-flag="🇰🇷">🇰🇷 South Korea</option>
-            <option value="TW" data-flag="🇹🇼">🇹🇼 Taiwan</option>
-            <option value="MY" data-flag="🇲🇾">🇲🇾 Malaysia</option>
-            <option value="TH" data-flag="🇹🇭">🇹🇭 Thailand</option>
-            <option value="PH" data-flag="🇵🇭">🇵🇭 Philippines</option>
-            <option value="ID" data-flag="🇮🇩">🇮🇩 Indonesia</option>
-            <option value="VN" data-flag="🇻🇳">🇻🇳 Vietnam</option>
-            <option value="IN" data-flag="🇮🇳">🇮🇳 India</option>
-            <option value="BD" data-flag="🇧🇩">🇧🇩 Bangladesh</option>
-            <option value="LK" data-flag="🇱🇰">🇱🇰 Sri Lanka</option>
-            <option value="PK" data-flag="🇵🇰">🇵🇰 Pakistan</option>
-          </optgroup>
-          <optgroup label="Europe">
-            <option value="GB" data-flag="🇬🇧">🇬🇧 United Kingdom</option>
-            <option value="IE" data-flag="🇮🇪">🇮🇪 Ireland</option>
-            <option value="DE" data-flag="🇩🇪">🇩🇪 Germany</option>
-            <option value="FR" data-flag="🇫🇷">🇫🇷 France</option>
-            <option value="NL" data-flag="🇳🇱">🇳🇱 Netherlands</option>
-            <option value="BE" data-flag="🇧🇪">🇧🇪 Belgium</option>
-            <option value="IT" data-flag="🇮🇹">🇮🇹 Italy</option>
-            <option value="ES" data-flag="🇪🇸">🇪🇸 Spain</option>
-            <option value="PT" data-flag="🇵🇹">🇵🇹 Portugal</option>
-            <option value="AT" data-flag="🇦🇹">🇦🇹 Austria</option>
-            <option value="CH" data-flag="🇨🇭">🇨🇭 Switzerland</option>
-            <option value="SE" data-flag="🇸🇪">🇸🇪 Sweden</option>
-            <option value="NO" data-flag="🇳🇴">🇳🇴 Norway</option>
-            <option value="DK" data-flag="🇩🇰">🇩🇰 Denmark</option>
-            <option value="FI" data-flag="🇫🇮">🇫🇮 Finland</option>
-            <option value="PL" data-flag="🇵🇱">🇵🇱 Poland</option>
-            <option value="CZ" data-flag="🇨🇿">🇨🇿 Czech Republic</option>
-            <option value="RO" data-flag="🇷🇴">🇷🇴 Romania</option>
-          </optgroup>
-          <optgroup label="Middle East & Africa">
-            <option value="AE" data-flag="🇦🇪">🇦🇪 UAE</option>
-            <option value="SA" data-flag="🇸🇦">🇸🇦 Saudi Arabia</option>
-            <option value="IL" data-flag="🇮🇱">🇮🇱 Israel</option>
-            <option value="EG" data-flag="🇪🇬">🇪🇬 Egypt</option>
-            <option value="ZA" data-flag="🇿🇦">🇿🇦 South Africa</option>
-            <option value="NG" data-flag="🇳🇬">🇳🇬 Nigeria</option>
-            <option value="KE" data-flag="🇰🇪">🇰🇪 Kenya</option>
-            <option value="GH" data-flag="🇬🇭">🇬🇭 Ghana</option>
-          </optgroup>
-          <optgroup label="Americas">
-            <option value="CA" data-flag="🇨🇦">🇨🇦 Canada</option>
-            <option value="MX" data-flag="🇲🇽">🇲🇽 Mexico</option>
-            <option value="BR" data-flag="🇧🇷">🇧🇷 Brazil</option>
-            <option value="AR" data-flag="🇦🇷">🇦🇷 Argentina</option>
-            <option value="CL" data-flag="🇨🇱">🇨🇱 Chile</option>
-            <option value="CO" data-flag="🇨🇴">🇨🇴 Colombia</option>
-            <option value="US" data-flag="🇺🇸">🇺🇸 United States</option>
-          </optgroup>
-          <optgroup label="Other">
-            <option value="OTHER" data-flag="🌍">🌍 My country is not listed</option>
-          </optgroup>
-        </select>
+        <input type="text" class="country-search" id="countrySearch" placeholder="start typing your country..." autocomplete="off">
+        <div class="country-results" id="countryResults"></div>
       </div>
       <div class="country-helper">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-        <span>This helps us find region-specific recalls, consumer laws, import duties, and local market pricing. We don't store your location after the report is generated.</span>
-      </div>
-      <div id="otherCountryWrap" style="display:none; margin-top:0.8rem;">
-        <input type="text" id="otherCountryInput" placeholder="Type your country name" style="width:100%;padding:0.9rem 1.2rem;border:2px solid var(--bg-cloud);border-radius:12px;font-family:inherit;font-size:1rem;font-weight:500;color:var(--text-primary);background:var(--bg-cream);outline:none;transition:border-color 0.2s ease;" onfocus="this.style.borderColor='var(--teal-light)'" onblur="this.style.borderColor='var(--bg-cloud)'">
-      </div>
-    </div>
-  </div>
-
-  <!-- CATEGORY SELECTOR -->
-  <div class="category-card" id="categoryCard">
-    <div class="category-card-header">
-      <div class="category-card-left">
-        <div class="category-card-number">2</div>
-        <div>
-          <div class="category-card-title">What are you buying?</div>
-          <div class="category-card-subtitle">Helps us tailor the analysis</div>
-        </div>
-      </div>
-      <span class="upload-card-badge badge-required" id="badgeCategory">Required</span>
-    </div>
-    <div class="category-card-body">
-      <div class="category-grid">
-        <button class="category-btn" onclick="selectCategory(this,'vehicles')">
-          <span class="category-btn-icon">🚗</span>
-          <span class="category-btn-label">Vehicles</span>
-        </button>
-        <button class="category-btn" onclick="selectCategory(this,'property')">
-          <span class="category-btn-icon">🏠</span>
-          <span class="category-btn-label">Property</span>
-        </button>
-        <button class="category-btn" onclick="selectCategory(this,'electronics')">
-          <span class="category-btn-icon">📱</span>
-          <span class="category-btn-label">Electronics</span>
-        </button>
-        <button class="category-btn" onclick="selectCategory(this,'fashion')">
-          <span class="category-btn-icon">👕</span>
-          <span class="category-btn-label">Fashion</span>
-        </button>
-        <button class="category-btn" onclick="selectCategory(this,'jewellery')">
-          <span class="category-btn-icon">⌚</span>
-          <span class="category-btn-label">Watches &amp; Jewellery</span>
-        </button>
-        <button class="category-btn" onclick="selectCategory(this,'other')">
-          <span class="category-btn-icon">📦</span>
-          <span class="category-btn-label">Everything Else</span>
-        </button>
+        <span>This helps us find region-specific recalls, consumer laws, and local market pricing.</span>
       </div>
     </div>
   </div>
@@ -874,7 +698,7 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
     <div class="upload-card" id="card1">
       <div class="upload-card-header">
         <div class="upload-card-left">
-          <div class="upload-card-number">3</div>
+          <div class="upload-card-number">2</div>
           <div>
             <div class="upload-card-title">The listing overview</div>
             <div class="upload-card-subtitle">The main image and price</div>
@@ -911,7 +735,7 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
     <div class="upload-card" id="card2">
       <div class="upload-card-header">
         <div class="upload-card-left">
-          <div class="upload-card-number">4</div>
+          <div class="upload-card-number">3</div>
           <div>
             <div class="upload-card-title">The fine print</div>
             <div class="upload-card-subtitle">Scroll down and screenshot the details</div>
@@ -1004,49 +828,159 @@ body { margin: 0; color: var(--text-primary); min-height: 100svh; }
 <script>
 var uploaded = [false, false];
 var countrySelected = false;
-var categorySelected = false;
-var selectedCategoryName = '';
+var selectedCountryName = '';
+var selectedCountryCode = '';
 
-function handleCountry(sel) {
-  if (!sel.value) return;
+// Country data — comprehensive list
+var countries = [
+  {code:'AU',flag:'🇦🇺',name:'Australia'},{code:'NZ',flag:'🇳🇿',name:'New Zealand'},
+  {code:'US',flag:'🇺🇸',name:'United States'},{code:'CA',flag:'🇨🇦',name:'Canada'},
+  {code:'GB',flag:'🇬🇧',name:'United Kingdom'},{code:'IE',flag:'🇮🇪',name:'Ireland'},
+  {code:'DE',flag:'🇩🇪',name:'Germany'},{code:'FR',flag:'🇫🇷',name:'France'},
+  {code:'NL',flag:'🇳🇱',name:'Netherlands'},{code:'BE',flag:'🇧🇪',name:'Belgium'},
+  {code:'IT',flag:'🇮🇹',name:'Italy'},{code:'ES',flag:'🇪🇸',name:'Spain'},
+  {code:'PT',flag:'🇵🇹',name:'Portugal'},{code:'AT',flag:'🇦🇹',name:'Austria'},
+  {code:'CH',flag:'🇨🇭',name:'Switzerland'},{code:'SE',flag:'🇸🇪',name:'Sweden'},
+  {code:'NO',flag:'🇳🇴',name:'Norway'},{code:'DK',flag:'🇩🇰',name:'Denmark'},
+  {code:'FI',flag:'🇫🇮',name:'Finland'},{code:'PL',flag:'🇵🇱',name:'Poland'},
+  {code:'CZ',flag:'🇨🇿',name:'Czech Republic'},{code:'RO',flag:'🇷🇴',name:'Romania'},
+  {code:'GR',flag:'🇬🇷',name:'Greece'},{code:'HU',flag:'🇭🇺',name:'Hungary'},
+  {code:'HR',flag:'🇭🇷',name:'Croatia'},{code:'BG',flag:'🇧🇬',name:'Bulgaria'},
+  {code:'RS',flag:'🇷🇸',name:'Serbia'},{code:'SK',flag:'🇸🇰',name:'Slovakia'},
+  {code:'SI',flag:'🇸🇮',name:'Slovenia'},{code:'LT',flag:'🇱🇹',name:'Lithuania'},
+  {code:'LV',flag:'🇱🇻',name:'Latvia'},{code:'EE',flag:'🇪🇪',name:'Estonia'},
+  {code:'SG',flag:'🇸🇬',name:'Singapore'},{code:'HK',flag:'🇭🇰',name:'Hong Kong'},
+  {code:'JP',flag:'🇯🇵',name:'Japan'},{code:'KR',flag:'🇰🇷',name:'South Korea'},
+  {code:'TW',flag:'🇹🇼',name:'Taiwan'},{code:'MY',flag:'🇲🇾',name:'Malaysia'},
+  {code:'TH',flag:'🇹🇭',name:'Thailand'},{code:'PH',flag:'🇵🇭',name:'Philippines'},
+  {code:'ID',flag:'🇮🇩',name:'Indonesia'},{code:'VN',flag:'🇻🇳',name:'Vietnam'},
+  {code:'IN',flag:'🇮🇳',name:'India'},{code:'BD',flag:'🇧🇩',name:'Bangladesh'},
+  {code:'LK',flag:'🇱🇰',name:'Sri Lanka'},{code:'PK',flag:'🇵🇰',name:'Pakistan'},
+  {code:'AE',flag:'🇦🇪',name:'United Arab Emirates'},{code:'SA',flag:'🇸🇦',name:'Saudi Arabia'},
+  {code:'IL',flag:'🇮🇱',name:'Israel'},{code:'EG',flag:'🇪🇬',name:'Egypt'},
+  {code:'ZA',flag:'🇿🇦',name:'South Africa'},{code:'NG',flag:'🇳🇬',name:'Nigeria'},
+  {code:'KE',flag:'🇰🇪',name:'Kenya'},{code:'GH',flag:'🇬🇭',name:'Ghana'},
+  {code:'MA',flag:'🇲🇦',name:'Morocco'},{code:'TN',flag:'🇹🇳',name:'Tunisia'},
+  {code:'MX',flag:'🇲🇽',name:'Mexico'},{code:'BR',flag:'🇧🇷',name:'Brazil'},
+  {code:'AR',flag:'🇦🇷',name:'Argentina'},{code:'CL',flag:'🇨🇱',name:'Chile'},
+  {code:'CO',flag:'🇨🇴',name:'Colombia'},{code:'PE',flag:'🇵🇪',name:'Peru'},
+  {code:'EC',flag:'🇪🇨',name:'Ecuador'},{code:'UY',flag:'🇺🇾',name:'Uruguay'},
+  {code:'CR',flag:'🇨🇷',name:'Costa Rica'},{code:'PA',flag:'🇵🇦',name:'Panama'},
+  {code:'DO',flag:'🇩🇴',name:'Dominican Republic'},{code:'PR',flag:'🇵🇷',name:'Puerto Rico'},
+  {code:'JM',flag:'🇯🇲',name:'Jamaica'},{code:'TT',flag:'🇹🇹',name:'Trinidad and Tobago'},
+  {code:'IS',flag:'🇮🇸',name:'Iceland'},{code:'LU',flag:'🇱🇺',name:'Luxembourg'},
+  {code:'MT',flag:'🇲🇹',name:'Malta'},{code:'CY',flag:'🇨🇾',name:'Cyprus'},
+  {code:'QA',flag:'🇶🇦',name:'Qatar'},{code:'BH',flag:'🇧🇭',name:'Bahrain'},
+  {code:'KW',flag:'🇰🇼',name:'Kuwait'},{code:'OM',flag:'🇴🇲',name:'Oman'},
+  {code:'JO',flag:'🇯🇴',name:'Jordan'},{code:'LB',flag:'🇱🇧',name:'Lebanon'},
+  {code:'MM',flag:'🇲🇲',name:'Myanmar'},{code:'KH',flag:'🇰🇭',name:'Cambodia'},
+  {code:'LA',flag:'🇱🇦',name:'Laos'},{code:'NP',flag:'🇳🇵',name:'Nepal'},
+  {code:'FJ',flag:'🇫🇯',name:'Fiji'},{code:'PG',flag:'🇵🇬',name:'Papua New Guinea'},
+  {code:'CN',flag:'🇨🇳',name:'China'},{code:'RU',flag:'🇷🇺',name:'Russia'},
+  {code:'TR',flag:'🇹🇷',name:'Turkey'},{code:'UA',flag:'🇺🇦',name:'Ukraine'}
+];
 
-  var otherWrap = document.getElementById('otherCountryWrap');
-  if (sel.value === 'OTHER') {
-    otherWrap.style.display = 'block';
-    document.getElementById('otherCountryInput').focus();
-  } else {
-    otherWrap.style.display = 'none';
+// Aliases for common searches
+var aliases = {
+  'usa':'United States','us':'United States','america':'United States','uk':'United Kingdom',
+  'england':'United Kingdom','britain':'United Kingdom','uae':'United Arab Emirates',
+  'emirates':'United Arab Emirates','dubai':'United Arab Emirates','ksa':'Saudi Arabia',
+  'oz':'Australia','aussie':'Australia','nz':'New Zealand','kiwi':'New Zealand',
+  'deutschland':'Germany','espana':'Spain','brasil':'Brazil','nippon':'Japan',
+  'holland':'Netherlands','south korea':'South Korea','rok':'South Korea',
+  'czech':'Czech Republic','czechia':'Czech Republic'
+};
+
+var searchInput = document.getElementById('countrySearch');
+var resultsDiv = document.getElementById('countryResults');
+var highlightIndex = -1;
+
+searchInput.addEventListener('input', function() {
+  var q = this.value.trim().toLowerCase();
+  highlightIndex = -1;
+  if (q.length < 1) { resultsDiv.classList.remove('open'); return; }
+
+  // Check aliases first
+  var aliasMatch = aliases[q];
+
+  var matches = countries.filter(function(c) {
+    if (aliasMatch && c.name === aliasMatch) return true;
+    return c.name.toLowerCase().indexOf(q) > -1 || c.code.toLowerCase() === q;
+  });
+
+  // Sort: starts-with first, then contains
+  matches.sort(function(a, b) {
+    var aStarts = a.name.toLowerCase().indexOf(q) === 0 ? 0 : 1;
+    var bStarts = b.name.toLowerCase().indexOf(q) === 0 ? 0 : 1;
+    return aStarts - bStarts || a.name.localeCompare(b.name);
+  });
+
+  if (matches.length === 0) {
+    resultsDiv.innerHTML = '<div class="country-result" style="color:var(--text-muted);cursor:default;">No matches found</div>';
+    resultsDiv.classList.add('open');
+    return;
   }
 
-  countrySelected = true;
+  resultsDiv.innerHTML = matches.slice(0, 8).map(function(c, i) {
+    return '<div class="country-result" data-code="' + c.code + '" data-flag="' + c.flag + '" data-name="' + c.name + '">' +
+      '<span class="country-result-flag">' + c.flag + '</span>' + c.name + '</div>';
+  }).join('');
+  resultsDiv.classList.add('open');
+});
 
-  var opt = sel.options[sel.selectedIndex];
-  var flag = opt.getAttribute('data-flag') || '🌍';
+searchInput.addEventListener('keydown', function(e) {
+  var items = resultsDiv.querySelectorAll('.country-result[data-code]');
+  if (!items.length) return;
+
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    highlightIndex = Math.min(highlightIndex + 1, items.length - 1);
+    updateHighlight(items);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    highlightIndex = Math.max(highlightIndex - 1, 0);
+    updateHighlight(items);
+  } else if (e.key === 'Enter' && highlightIndex >= 0) {
+    e.preventDefault();
+    selectCountry(items[highlightIndex]);
+  }
+});
+
+function updateHighlight(items) {
+  items.forEach(function(el, i) {
+    el.classList.toggle('highlighted', i === highlightIndex);
+  });
+}
+
+resultsDiv.addEventListener('click', function(e) {
+  var el = e.target.closest('.country-result[data-code]');
+  if (el) selectCountry(el);
+});
+
+function selectCountry(el) {
+  selectedCountryCode = el.dataset.code;
+  selectedCountryName = el.dataset.name;
+  var flag = el.dataset.flag;
+
+  searchInput.value = selectedCountryName;
   document.getElementById('selectedFlag').textContent = flag;
+  resultsDiv.classList.remove('open');
 
+  countrySelected = true;
   var card = document.getElementById('countryCard');
   card.classList.add('complete');
   var badge = document.getElementById('badgeCountry');
   badge.textContent = 'Done';
   badge.className = 'upload-card-badge badge-done';
-
   updateProgress();
 }
 
-function selectCategory(btn, cat) {
-  document.querySelectorAll('.category-btn').forEach(function(b){ b.classList.remove('selected'); });
-  btn.classList.add('selected');
-  categorySelected = true;
-  selectedCategoryName = btn.querySelector('.category-btn-label').textContent;
-
-  var card = document.getElementById('categoryCard');
-  card.classList.add('complete');
-  var badge = document.getElementById('badgeCategory');
-  badge.textContent = 'Done';
-  badge.className = 'upload-card-badge badge-done';
-
-  updateProgress();
-}
+// Close results on outside click
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.country-select-wrapper')) {
+    resultsDiv.classList.remove('open');
+  }
+});
 
 function triggerUpload(n) {
   document.getElementById('fileInput' + n).click();
@@ -1056,20 +990,17 @@ function handleUpload(n, input) {
   if (!input.files || !input.files[0]) return;
   var file = input.files[0];
   var reader = new FileReader();
-
   reader.onload = function(e) {
     var img = document.getElementById('img' + n);
     img.src = e.target.result;
     document.getElementById('preview' + n).style.display = 'block';
     document.getElementById('drop' + n).style.display = 'none';
     document.getElementById('name' + n).textContent = file.name;
-
     var card = document.getElementById('card' + n);
     card.classList.add('complete');
     var badge = document.getElementById('badge' + n);
     badge.textContent = 'Done';
     badge.className = 'upload-card-badge badge-done';
-
     uploaded[n - 1] = true;
     updateProgress();
   };
@@ -1080,63 +1011,49 @@ function updateProgress() {
   var s0 = document.getElementById('step0');
   var s1 = document.getElementById('step1');
   var s2 = document.getElementById('step2');
-  var s3 = document.getElementById('step3');
   var btn = document.getElementById('generateBtn');
 
   if (countrySelected) s0.className = 'step-bar complete';
-  if (categorySelected) s1.className = 'step-bar complete';
-  if (uploaded[0]) s2.className = 'step-bar complete';
-  if (uploaded[1]) s3.className = 'step-bar complete';
+  if (uploaded[0]) s1.className = 'step-bar complete';
+  if (uploaded[1]) s2.className = 'step-bar complete';
 
-  // Enable generate if country + category + at least image 1
-  btn.disabled = !(countrySelected && categorySelected && uploaded[0]);
+  // Enable generate if country + at least image 1
+  btn.disabled = !(countrySelected && uploaded[0]);
 
-  // All complete visual
-  if (countrySelected && categorySelected && uploaded[0] && uploaded[1]) {
+  if (countrySelected && uploaded[0] && uploaded[1]) {
     s0.className = 'step-bar active';
     s1.className = 'step-bar active';
     s2.className = 'step-bar active';
-    s3.className = 'step-bar active';
   }
 }
 
 function generateReport() {
-  var country = document.getElementById('countrySelect');
-  var countryCode = country.value;
-  var countryName;
-
-  if (countryCode === 'OTHER') {
-    countryName = document.getElementById('otherCountryInput').value.trim() || 'your region';
-  } else {
-    countryName = country.options[country.selectedIndex].text.replace(/^[^\w]*/,'').trim();
-  }
+  var countryName = selectedCountryName || 'your region';
 
   document.getElementById('loadingOverlay').classList.add('visible');
-  document.getElementById('step4').className = 'step-bar active';
+  document.getElementById('step3').className = 'step-bar active';
 
   document.querySelector('.loading-sub').textContent =
-    'Analysing ' + selectedCategoryName.toLowerCase() + ' listing · Checking ' + countryName + ' recalls & regulations';
+    'Analysing vehicle listing · Checking ' + countryName + ' recalls & regulations';
 
   setTimeout(function() {
     document.getElementById('loadingOverlay').classList.remove('visible');
-
     var output = document.getElementById('reportOutput');
     output.classList.add('visible');
 
     document.getElementById('reportContent').innerHTML = '<div class="report">' +
-      '<div class="report-header"><div class="report-icon">🔎</div><div class="report-meta"><h3>Analysis Complete</h3><p>' + selectedCategoryName + ' · ' + countryName + ' · Based on ' + (uploaded[1] ? '2 screenshots' : '1 screenshot') + ' · Generated just now</p></div></div>' +
+      '<div class="report-header"><div class="report-icon">🔎</div><div class="report-meta"><h3>Analysis Complete</h3><p>Vehicle · ' + countryName + ' · Based on ' + (uploaded[1] ? '2 screenshots' : '1 screenshot') + ' · Generated just now</p></div></div>' +
       '<div class="intel-block"><h4><span class="badge badge--critical">Critical</span> Issues Found</h4>' +
       '<ul class="intel-list">' +
-      '<li><span><strong>Your full report would appear here.</strong> In production, this is generated by AI analysis of your uploaded screenshots.</span></li>' +
-      '<li><span><strong>Category-specific analysis for ' + selectedCategoryName + '</strong> tailored to ' + countryName + ' including local recalls, consumer protection laws, and market pricing.</span></li>' +
+      '<li><span><strong>Your full report would appear here.</strong> In production, this is generated from analysis of your uploaded screenshots.</span></li>' +
+      '<li><span><strong>Vehicle-specific analysis</strong> tailored to ' + countryName + ' including local recalls, consumer protection laws, and market pricing.</span></li>' +
       '</ul></div>' +
-      '<div class="report-verdict">This is a preview of the report layout. The real version includes ' + selectedCategoryName.toLowerCase() + '-specific checks, hidden costs, questions to ask, and community insights for ' + countryName + '.</div>' +
+      '<div class="report-verdict">This is a preview of the report layout. The real version includes safety recalls, hidden costs, mechanical issues, questions to ask, and a fair value estimate for ' + countryName + '.</div>' +
       '</div>';
 
     output.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     document.querySelector('.country-card').style.display = 'none';
-    document.querySelector('.category-card').style.display = 'none';
     document.querySelector('.upload-cards').style.display = 'none';
     document.querySelector('.generate-section').style.display = 'none';
   }, 3000);
