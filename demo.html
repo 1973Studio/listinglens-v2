@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listing Lens Report — 2015 Jeep Wrangler Unlimited Sport</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg-cream: #FFFFFF;
+  --bg-soft: #F1F5F9;
+  --bg-cloud: #E2E8F0;
+  --white: #FFFFFF;
+  --text-primary: #0F172A;
+  --text-secondary: #64748B;
+  --text-muted: #94A3B8;
+  --teal: #10B981;
+  --teal-deep: #059669;
+  --teal-light: #99F6E4;
+  --teal-pale: #F0FDFA;
+  --red: #DC2626;
+  --red-pale: #FEF2F2;
+  --amber: #D97706;
+  --amber-pale: #FFFBEB;
+  --border: #E2E8F0;
+  --font: 'DM Sans', system-ui, -apple-system, sans-serif;
+}
+html { font-family: var(--font); background: var(--bg-cream); -webkit-font-smoothing: antialiased; }
+body { margin: 0; padding: 1rem; }
+
+.report-page { max-width: 640px; margin: 0 auto; }
+
+.report-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 0 1.5rem;
+}
+.report-brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+.report-brand-icon {
+  width: 32px; height: 32px; border-radius: 8px; background: var(--teal);
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
+}
+.report-brand-name { font-weight: 700; color: var(--text-primary); font-size: 1.05rem; letter-spacing: 0.04em; }
+.report-timestamp { font-size: 0.75rem; color: var(--text-muted); }
+
+.report {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.report-header {
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 14px;
+}
+.report-icon {
+  width: 48px; height: 48px; border-radius: 12px; background: var(--bg-soft);
+  display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;
+}
+.report-meta h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; color: var(--text-primary); }
+.report-meta p { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+.intel-block { padding: 20px 28px; border-bottom: 1px solid var(--border); }
+.intel-block:last-of-type { border-bottom: none; }
+.intel-block-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.badge {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 3px 8px; border-radius: 4px;
+}
+.badge--red { background: var(--red-pale); color: var(--red); border: 1px solid #FECACA; }
+.badge--amber { background: var(--amber-pale); color: var(--amber); border: 1px solid #FDE68A; }
+.badge--teal { background: var(--teal-pale); color: var(--teal); border: 1px solid var(--teal-light); }
+.badge--blue { background: var(--teal-pale); color: var(--teal-deep); border: 1px solid #A7F3D0; }
+.intel-block h3 { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.intel-list { list-style: none; }
+.intel-list li {
+  font-size: 13px; line-height: 1.6; color: var(--text-secondary);
+  padding: 8px 0; border-bottom: 1px solid var(--bg-soft);
+  display: flex; gap: 8px;
+}
+.intel-list li:last-child { border-bottom: none; }
+.intel-list li::before { content: '\2192'; color: var(--bg-cloud); flex-shrink: 0; }
+.intel-list li strong { color: var(--text-primary); }
+.intel-prose {
+  font-size: 13px; line-height: 1.65; color: var(--text-secondary);
+}
+.intel-prose strong { color: var(--text-primary); font-weight: 600; }
+.intel-source { font-size: 11px; color: var(--text-muted); margin-top: 10px; font-style: italic; }
+
+.report-verdict {
+  padding: 20px 28px;
+  background: var(--red-pale);
+  border-top: 1px solid #FECACA;
+  font-size: 14px; font-weight: 600;
+  color: var(--red);
+  line-height: 1.55;
+}
+
+.report-footer {
+  padding: 1.5rem 0;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.report-footer a { color: var(--teal); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="report-page">
+
+  <div class="report-topbar">
+    <a href="/" class="report-brand">
+      <span class="report-brand-name">LISTING LENS</span>
+    </a>
+    <span class="report-timestamp">Generated just now · 2 screenshots analysed</span>
+  </div>
+
+  <div class="report">
+
+    <div class="report-header">
+      <div class="report-icon">🚗</div>
+      <div class="report-meta">
+        <h2>2015 Jeep Wrangler Unlimited Sport 4x4 MY15</h2>
+        <p>Carsales · $22,500 Excl. Govt. Charges · Private Seller · NSW<br>
+        🇦🇺 Region: Australia</p>
+      </div>
+    </div>
+
+    <!-- BLOCK 1: Critical Issues -->
+    <div class="intel-block">
+      <div class="intel-block-header">
+        <span class="badge badge--red">Critical</span>
+        <h3>Red Flags &amp; Safety Concerns</h3>
+      </div>
+      <ul class="intel-list">
+        <li><span><strong>Takata airbag recall applies to this exact model.</strong> 2014–2016 Jeep Wrangler JK vehicles are subject to a mandatory ACCC recall for the passenger-side airbag inflator. The inflator can rupture and send metal fragments through the airbag. This is a potentially fatal defect. Ask the seller if the recall has been completed — it's free at any Jeep dealer. Check at ismyairbagsafe.com.au with the registration plate.</span></li>
+        <li><span><strong>Registration plate withheld.</strong> The listing says "Check with seller" for the rego plate. This prevents you from running a free PPSR check, NSW rego check, or Takata recall lookup before contacting the seller. Legitimate sellers have no reason to hide the plate — the photo shows it's on the car. Ask for it before inspecting.</span></li>
+        <li><span><strong>Registration expires February 2026.</strong> That's days away. If it lapses before transfer, you'll need a new roadworthy/pink slip inspection in NSW, which could cost $50–$150 and may reveal issues the seller is trying to offload before they surface.</span></li>
+        <li><span><strong>Visible aftermarket modifications.</strong> The vehicle has non-standard black alloy wheels and appears to have an aftermarket suspension lift. Modified vehicles can fail NSW roadworthy inspections, may void insurance if not declared, and modifications must be engineer-certified in NSW if they affect ride height or suspension geometry. Ask: who did the work, is it engineer-certified, and do you have the compliance paperwork?</span></li>
+      </ul>
+      <p class="intel-source">Sources: ACCC Product Safety recall PRA 2018/16702 · NSW Roads &amp; Maritime vehicle standards</p>
+    </div>
+
+    <!-- BLOCK 2: Hidden Costs -->
+    <div class="intel-block">
+      <div class="intel-block-header">
+        <span class="badge badge--amber">Hidden Costs</span>
+        <h3>What You'll Actually Pay</h3>
+      </div>
+      <ul class="intel-list">
+        <li><span><strong>NSW stamp duty: ~$675.</strong> At $22,500, stamp duty is calculated at $3 per $100 = $675. This is payable at Service NSW when you transfer the registration.</span></li>
+        <li><span><strong>Registration transfer fee: $39.</strong> Must be paid within 14 days of purchase. After 14 days, the fee jumps to $182.</span></li>
+        <li><span><strong>CTP Green Slip: ~$500–$700/year.</strong> Compulsory third-party insurance transfers automatically but you'll want to confirm the policy and may need to arrange your own.</span></li>
+        <li><span><strong>Comprehensive insurance: ~$1,800–$2,500/year.</strong> Wranglers are in a higher insurance group due to theft rates and off-road use. Aftermarket modifications may increase premiums or require specialist cover.</span></li>
+        <li><span><strong>Fuel costs are significant.</strong> The 3.6L Pentastar V6 is rated at 11.9L/100km combined. At current Sydney fuel prices (~$2.05/L), budget ~$4,900/year for 20,000km of driving. This is not a fuel-efficient vehicle.</span></li>
+        <li><span><strong>Servicing: ~$400–$600 per service.</strong> Jeep recommends servicing every 6 months or 10,000km. At 156,000km, this vehicle is due for major service items including transmission fluid, differential oils, transfer case fluid, and spark plugs if not already done.</span></li>
+        <li><span><strong>True first-year cost: ~$30,000+.</strong> $22,500 purchase + $675 stamp duty + $39 transfer + ~$600 insurance gap + ~$500 service = minimum $24,314 before you drive it. Budget $28,000–$30,000 including fuel, insurance, and inevitable maintenance on a 10-year-old vehicle with 156,000km.</span></li>
+      </ul>
+      <p class="intel-source">Sources: Service NSW stamp duty calculator · Revenue NSW · Jeep Australia service schedule</p>
+    </div>
+
+    <!-- BLOCK 3: Known Mechanical Issues -->
+    <div class="intel-block">
+      <div class="intel-block-header">
+        <span class="badge badge--amber">Mechanical</span>
+        <h3>Known Issues for This Model</h3>
+      </div>
+      <ul class="intel-list">
+        <li><span><strong>3.6L Pentastar oil cooler/filter housing leak.</strong> This is the most common and expensive issue on JK Wranglers with the 3.6L engine. The plastic oil cooler housing warps, cracks, and leaks — typically between 80,000–130,000km. At 156,000km, this has either already been replaced or is overdue. Repair cost: $900–$1,400 at a mechanic. Ask the seller directly: has the oil cooler housing been replaced? Look for oil residue on the transmission bellhousing.</span></li>
+        <li><span><strong>Pentastar lifter tick.</strong> Another well-documented 3.6L issue. Rocker arms and lifters can develop a ticking noise, often requiring replacement. Budget $800–$1,200 if it develops.</span></li>
+        <li><span><strong>Additional recalls on this model year.</strong> 2015 Wrangler JK has recalls for: clockspring assembly failure (air bag circuit — especially right-hand drive models), seat belt buckle strap separation, and PCM software update for O2 sensor detection. Ask for proof all recalls have been completed.</span></li>
+        <li><span><strong>Warranty is long expired.</strong> The original warranty was 3 years / 100,000km. This vehicle is 11 years old with 156,000km — well beyond both thresholds. Every repair is out of pocket.</span></li>
+      </ul>
+      <p class="intel-source">Sources: Jeep Wrangler Forum · CarComplaints.com · NHTSA recall database · Jeep Australia</p>
+    </div>
+
+    <!-- BLOCK 4: Market Context -->
+    <div class="intel-block">
+      <div class="intel-block-header">
+        <span class="badge badge--blue">Market Context</span>
+        <h3>Is the Price Fair?</h3>
+      </div>
+      <div class="intel-prose">
+        <strong>Comparable listings:</strong> A dealer-sold 2015 Wrangler Unlimited Sport with 117,000km in SA is listed at $28,490. A Victorian dealer has a 2015 Sport manual with 131,000km at $25,990 including roadworthy. This private-sale listing at $22,500 with 156,000km sits below those — but it has significantly more kilometres, is a private sale with no consumer guarantees, and has aftermarket modifications of unknown certification status.<br><br>
+
+        <strong>The "Below Market Price" tag is misleading.</strong> Carsales generates this automatically based on aggregate data. It doesn't account for the higher-than-average kilometres, imminent rego expiry, uncertified modifications, or potential recall status. The price is competitive on paper, but only if the vehicle has no hidden mechanical issues.<br><br>
+
+        <strong>Negotiation leverage:</strong> The rego expiring in days is your strongest card. The seller knows that if it lapses, they need to invest in a roadworthy before they can sell. The withheld registration plate, high kilometres, and lack of service history documentation also give you room. A fair offer after inspection would be $18,000–$20,000 depending on what the mechanic finds.<br><br>
+
+        <strong>New equivalent pricing:</strong> A 2025/2026 Jeep Wrangler Unlimited starts at $82,990+ in Australia. The JK generation (2007–2018) is highly sought after by enthusiasts, which keeps used prices elevated compared to most 10-year-old vehicles.
+      </div>
+      <p class="intel-source">Sources: Carsales.com.au · Gumtree · CarExpert · Trucksales · RedBook estimated market range</p>
+    </div>
+
+    <!-- BLOCK 5: Questions to Ask -->
+    <div class="intel-block">
+      <div class="intel-block-header">
+        <span class="badge badge--teal">Action</span>
+        <h3>Questions to Ask the Seller</h3>
+      </div>
+      <ul class="intel-list">
+        <li><span><strong>What is the registration plate number?</strong> You need this to run a PPSR check ($2), confirm Takata recall status, and verify the NSW rego status before inspecting.</span></li>
+        <li><span><strong>Has the Takata airbag recall been completed?</strong> Non-negotiable safety issue. Ask for the Jeep dealer receipt.</span></li>
+        <li><span><strong>Has the oil cooler/filter housing been replaced?</strong> If yes, ask for the receipt and whether it was the upgraded Dorman aluminium unit or another plastic OEM replacement. If no, budget $900–$1,400 for the repair.</span></li>
+        <li><span><strong>Are the suspension modifications engineer-certified?</strong> In NSW, suspension lifts over 50mm require an engineer's certification. Ask for the certificate and the name of the installer.</span></li>
+        <li><span><strong>Do you have the full service history?</strong> At 156,000km, you want to see evidence of regular servicing — especially transmission fluid, differentials, and transfer case fluid changes.</span></li>
+        <li><span><strong>Why is the registration about to expire?</strong> If the rego expires in days, ask why they haven't renewed. If it's because the car won't pass a roadworthy, that's a significant red flag.</span></li>
+        <li><span><strong>Will you agree to a pre-purchase inspection?</strong> At this age and mileage, a $200–$350 independent inspection is essential. Any seller who refuses is telling you something.</span></li>
+        <li><span><strong>What's the PPSR status?</strong> A $2 check at ppsr.gov.au confirms no money owing, no stolen report, no write-off history, and no security interest. Do this before paying a deposit.</span></li>
+      </ul>
+    </div>
+
+    <!-- VERDICT -->
+    <div class="report-verdict">
+      ⚠️ Proceed with caution. The price is competitive but the withheld rego plate, imminent registration expiry, uncertified modifications, Takata recall exposure, and 156,000km on a Pentastar 3.6L with known oil cooler issues all require verification before committing. Get the plate number, run PPSR, confirm recall status, and book an independent inspection. Do not pay a deposit before completing these steps. Fair offer after inspection: $18,000–$20,000.
+    </div>
+
+  </div>
+
+  <div class="report-footer">
+    LISTING LENS · Know before you buy<br>
+    This report is automated buyer intelligence and does not constitute professional, legal, or financial advice.<br>
+    Your screenshots were deleted immediately after this report was generated.<br>
+    <a href="https://listinglens.app/terms">Terms & Privacy</a>
+  </div>
+
+</div>
+</body>
+</html>
