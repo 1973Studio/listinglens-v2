@@ -2,45 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<meta name="description" content="Screenshot any vehicle listing. We'll tell you what it's really worth, what's wrong with it, and exactly what to ask the seller. $5 per report.">
-<meta property="og:title" content="Listing Lens — Don't buy blind">
-<meta property="og:description" content="Screenshot any vehicle listing. We'll tell you what's really wrong with it, what it's actually worth, and what to ask the seller. $5.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://listinglens.app">
-<meta property="og:site_name" content="Listing Lens">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Listing Lens — Don't buy blind">
-<meta name="twitter:description" content="Screenshot any vehicle listing. We'll tell you what's really wrong with it, what it's actually worth, and what to ask the seller. $5.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Listing Lens — Don't buy blind</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<script>
-function showTeaser() {
-  document.getElementById('teaserOverlay').classList.add('visible');
-  document.body.style.overflow = 'hidden';
-}
-function closeTeaser() {
-  document.getElementById('teaserOverlay').classList.remove('visible');
-  document.body.style.overflow = '';
-}
-function toggleFaq(btn) {
-  var item = btn.parentElement;
-  var wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
-  if (!wasOpen) item.classList.add('open');
-}
-</script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
   --white: #FFFFFF;
   --snow: #F9FAFB;
-  --gray-50: #F1F5F9;
   --gray-100: #E5E7EB;
   --gray-200: #D1D5DB;
   --slate-900: #0F172A;
+  --slate-800: #1E293B;
   --slate-700: #334155;
   --slate-500: #64748B;
   --slate-400: #94A3B8;
@@ -51,789 +26,639 @@ function toggleFaq(btn) {
   --emerald-dark: #064E3B;
   --red: #DC2626;
   --red-pale: #FEF2F2;
-  --red-border: #FECACA;
   --amber: #F59E0B;
-  --amber-pale: #FEF3C7;
-  --amber-border: #FDE68A;
   --font: 'DM Sans', system-ui, -apple-system, sans-serif;
 }
 
-html {
-  font-family: var(--font);
-  -webkit-font-smoothing: antialiased;
-  font-size: 15px;
-  line-height: 1.5;
-  background: var(--white);
-  color: var(--slate-900);
-}
-body { margin: 0; overflow-x: hidden; }
+html { font-family: var(--font); -webkit-font-smoothing: antialiased; background: var(--snow); color: var(--slate-900); }
+body { margin: 0; padding: 1.2rem; min-height: 100vh; }
 
-.container { max-width: 680px; margin: 0 auto; padding: 0 2rem; }
-.section { padding: 6rem 0; }
-.section--soft { background: var(--snow); }
-.section--dark { background: var(--slate-900); color: var(--white); }
+@media (min-width: 768px) { body { padding: 2rem; } }
 
 /* ============================================================
-   BRAND
+   BENTO GRID
    ============================================================ */
-.brand {
-  display: flex; align-items: center; gap: 0.55rem;
-  padding: 1.5rem 2rem;
-}
-.brand-icon {
-  width: 36px; height: 36px; border-radius: 9px;
-  background: var(--slate-900);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 17px;
-}
-.brand-text { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.04em; }
-
-/* ============================================================
-   HERO
-   ============================================================ */
-.hero { padding: 4rem 0 5rem; }
-.hero-headline {
-  font-size: clamp(3.2rem, 10vw, 5.5rem);
-  font-weight: 700; letter-spacing: -0.045em;
-  line-height: 1; margin-bottom: 1.5rem;
-}
-.hero-headline em { font-style: normal; color: var(--emerald); }
-.hero-sub {
-  font-size: 1.2rem; line-height: 1.7;
-  color: var(--slate-500); max-width: 460px; margin-bottom: 3rem;
-}
-.hero-sub strong { color: var(--slate-700); font-weight: 600; }
-
-/* Upload */
-.upload-zone {
-  border: 1.5px dashed var(--gray-200); border-radius: 12px;
-  background: var(--snow); padding: 2.2rem 1.5rem;
-  display: flex; flex-direction: column; align-items: center;
-  gap: 0.5rem; cursor: pointer; transition: all 0.2s ease;
-}
-.upload-zone:hover { border-color: var(--emerald); background: #F0FDF4; }
-.upload-icon {
-  width: 48px; height: 48px; border-radius: 12px;
-  background: var(--slate-900);
-  display: flex; align-items: center; justify-content: center;
-}
-.upload-icon svg { width: 24px; height: 24px; fill: white; }
-.upload-text { font-size: 1rem; font-weight: 600; margin-top: 0.3rem; }
-.upload-hint { font-size: 0.85rem; color: var(--slate-400); }
-.trust-strip {
-  display: flex; justify-content: center; gap: 2rem;
-  flex-wrap: wrap; margin-top: 1.5rem;
-}
-.trust-item {
-  display: flex; align-items: center; gap: 0.4rem;
-  font-size: 0.8rem; color: var(--slate-400); font-weight: 500;
-}
-.trust-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald); }
-
-/* Vehicle badge */
-.vehicle-badge {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  padding: 0.35rem 0.9rem; border-radius: 100px;
-  background: var(--emerald-pale); color: var(--emerald-dark);
-  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.05em; margin-bottom: 1.5rem;
-}
-
-/* ============================================================
-   SECTION TITLES
-   ============================================================ */
-.section-eyebrow {
-  font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.1em; color: var(--slate-400); margin-bottom: 1rem;
-}
-.section-title {
-  font-size: clamp(2rem, 5vw, 3rem); font-weight: 700;
-  letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1rem;
-}
-.section-desc {
-  font-size: 1.05rem; line-height: 1.7;
-  color: var(--slate-500); max-width: 480px;
-}
-
-/* ============================================================
-   LISTING SCREENSHOTS — the actual listing being analysed
-   ============================================================ */
-.listing-screenshots {
+.bento {
+  max-width: 960px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 2rem;
+  gap: 14px;
 }
-.listing-screenshots img {
-  width: 100%;
-  border-radius: 10px;
-  border: 1.5px solid var(--gray-100);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-}
-@media (max-width: 480px) {
-  .listing-screenshots { grid-template-columns: 1fr; gap: 10px; }
+
+@media (min-width: 768px) {
+  .bento {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
 }
 
 /* ============================================================
-   REAL REPORT — inline, no modal needed
+   CARD BASE
    ============================================================ */
-.report-showcase {
-  margin-top: 3rem;
-}
-.report-card {
-  border: 1.5px solid var(--gray-100);
-  border-radius: 14px;
-  background: var(--white);
+.card {
+  border-radius: 20px;
+  padding: 1.8rem;
+  position: relative;
   overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.report-header {
-  padding: 1.5rem 1.8rem;
-  border-bottom: 1px solid var(--gray-100);
-  display: flex; align-items: center; gap: 14px;
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
 }
-.report-icon {
-  width: 48px; height: 48px; border-radius: 12px;
-  background: var(--snow); overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px; flex-shrink: 0;
-}
-.report-icon img { width: 100%; height: 100%; object-fit: cover; }
-.report-meta h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 2px; }
-.report-meta p { font-size: 0.78rem; color: var(--slate-400); }
 
-.report-section {
-  padding: 1.3rem 1.8rem;
-  border-bottom: 1px solid var(--gray-100);
+/* ============================================================
+   HERO CARD — full width
+   ============================================================ */
+.card--hero {
+  grid-column: 1 / -1;
+  background: var(--slate-900);
+  color: var(--white);
+  padding: 3rem 2.5rem;
+  border-radius: 24px;
 }
-.report-section:last-child { border-bottom: none; }
-.report-section-header {
-  display: flex; align-items: center; gap: 8px;
+.card--hero .brand {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--slate-400);
+  margin-bottom: 2rem;
+}
+.card--hero h1 {
+  font-size: clamp(2.8rem, 7vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1;
   margin-bottom: 1rem;
 }
-.badge {
-  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.06em;
-  text-transform: uppercase; padding: 3px 8px; border-radius: 4px;
+.card--hero h1 em {
+  font-style: normal;
+  color: var(--emerald);
 }
-.badge--red { background: var(--red-pale); color: var(--red); border: 1px solid var(--red-border); }
-.badge--amber { background: var(--amber-pale); color: #92400E; border: 1px solid var(--amber-border); }
-.badge--green { background: var(--emerald-pale); color: var(--emerald-dark); border: 1px solid var(--emerald-light); }
-.report-section h3 { font-size: 0.9rem; font-weight: 700; }
-
-.finding {
-  display: flex; gap: 0.6rem; padding: 0.55rem 0;
-  border-bottom: 1px solid var(--snow);
-  font-size: 0.88rem; line-height: 1.6; color: var(--slate-500);
+.card--hero p {
+  font-size: 1.1rem;
+  color: var(--slate-400);
+  line-height: 1.6;
+  max-width: 500px;
 }
-.finding:last-child { border-bottom: none; }
-.finding::before { content: '→'; color: var(--gray-200); flex-shrink: 0; font-weight: 500; }
-.finding strong { color: var(--slate-900); font-weight: 600; }
-
-.report-verdict {
-  padding: 1.2rem 1.8rem;
-  background: var(--amber-pale);
-  border-top: 1px solid var(--amber-border);
-  font-size: 0.9rem; font-weight: 600; color: #92400E;
-  line-height: 1.55;
-}
-
-.report-questions {
-  padding: 1.3rem 1.8rem;
-  background: var(--snow);
-}
-.report-questions h3 {
-  font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; color: var(--slate-400); margin-bottom: 0.8rem;
-}
-.question-item {
-  display: flex; gap: 0.5rem; padding: 0.4rem 0;
-  font-size: 0.85rem; color: var(--slate-700); line-height: 1.5;
-}
-.question-item::before { content: '?'; color: var(--emerald); font-weight: 700; flex-shrink: 0; }
-
-.report-fair-value {
-  padding: 1.5rem 1.8rem;
-  background: var(--emerald-pale);
-  text-align: center;
-}
-.fair-value-label {
-  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.08em; color: var(--emerald-deep); margin-bottom: 0.3rem;
-}
-.fair-value-price {
-  font-size: 2rem; font-weight: 700; color: var(--emerald-dark);
-}
-.fair-value-note {
-  font-size: 0.8rem; color: var(--emerald-deep); margin-top: 0.2rem;
-}
-
-.report-hint {
-  text-align: center; margin-top: 1.5rem;
-  font-size: 0.85rem; color: var(--slate-400);
+.card--hero p strong {
+  color: var(--white);
+  font-weight: 600;
 }
 
 /* ============================================================
-   HOW IT WORKS
+   TOP BAR — Google Translate
    ============================================================ */
-.how-block { margin-bottom: 3.5rem; }
-.how-block:last-child { margin-bottom: 0; }
-.how-num {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 32px; height: 32px; border-radius: 50%;
-  background: var(--emerald); color: var(--white);
-  font-weight: 700; font-size: 0.85rem; margin-bottom: 1rem;
-}
-.how-block h3 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-.how-block p { font-size: 1rem; line-height: 1.7; color: var(--slate-500); max-width: 440px; }
-.marketplace-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1.2rem; }
-.pill {
-  padding: 0.4rem 0.9rem; border-radius: 100px;
-  border: 1.5px solid var(--gray-100); font-size: 0.8rem;
-  font-weight: 500; color: var(--slate-500); background: var(--white);
-}
-
-/* ============================================================
-   PRIVACY
-   ============================================================ */
-.section--dark .section-title { color: var(--white); }
-.section--dark .section-desc { color: var(--slate-400); }
-.privacy-points { display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 2rem; }
-.privacy-point { flex: 1; min-width: 150px; }
-.privacy-point-title { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.3rem; }
-.privacy-point-desc { font-size: 0.85rem; color: var(--slate-400); line-height: 1.5; }
-
-/* ============================================================
-   FAQ
-   ============================================================ */
-.faq-item { border-bottom: 1px solid var(--gray-100); }
-.faq-question {
-  width: 100%; background: none; border: none; padding: 1.4rem 0;
-  font-family: var(--font); font-size: 1rem; font-weight: 600;
-  color: var(--slate-900); text-align: left; cursor: pointer;
-  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
-}
-.faq-question:hover { color: var(--emerald); }
-.faq-chevron {
-  width: 18px; height: 18px; flex-shrink: 0;
-  transition: transform 0.25s ease; stroke: var(--slate-400);
-}
-.faq-item.open .faq-chevron { transform: rotate(180deg); stroke: var(--emerald); }
-.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-.faq-item.open .faq-answer { max-height: 300px; }
-.faq-answer-inner {
-  padding: 0 0 1.4rem; font-size: 0.95rem;
-  line-height: 1.7; color: var(--slate-500);
-}
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-.footer { border-top: 1px solid var(--gray-100); padding: 2.5rem 0; }
-.footer-inner {
-  display: flex; justify-content: space-between;
-  align-items: center; flex-wrap: wrap; gap: 1rem;
-}
-.footer-left { display: flex; align-items: center; gap: 0.5rem; }
-.footer-logo {
-  width: 24px; height: 24px; border-radius: 6px;
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   background: var(--slate-900);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px;
+  margin: -1.2rem -1.2rem 1.2rem;
+  padding: 0 1.2rem;
 }
-.footer-copy { font-size: 0.8rem; color: var(--slate-400); }
-.footer-links { display: flex; gap: 1.5rem; }
-.footer-links a { font-size: 0.8rem; color: var(--slate-400); text-decoration: none; }
+@media (min-width: 768px) {
+  .topbar { margin: -2rem -2rem 2rem; padding: 0 2rem; }
+}
+.topbar-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.topbar-globe {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+/* Override Google Translate default styling */
+.goog-te-gadget { font-family: var(--font) !important; font-size: 0 !important; }
+.goog-te-gadget .goog-te-combo {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.07);
+  font-family: var(--font);
+  font-size: 0.8rem;
+  color: var(--white);
+  outline: none;
+}
+.goog-te-gadget .goog-te-combo option { color: var(--slate-900); }
+.goog-te-gadget span { display: none !important; }
+/* Hide Google Translate banner */
+.goog-te-banner-frame { display: none !important; }
+body { top: 0 !important; }
+
+/* ============================================================
+   CATEGORY CARDS — the big two
+   ============================================================ */
+.card--category {
+  grid-column: span 1;
+  background: var(--white);
+  border: 1.5px solid var(--gray-100);
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .card--category { grid-column: span 2; }
+}
+
+.card--category:hover {
+  border-color: var(--emerald);
+}
+
+.card-visual {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: var(--slate-900);
+  border-radius: 18px 18px 0 0;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  opacity: 0.55;
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}
+.card--category:hover .card-visual img {
+  opacity: 0.7;
+  transform: scale(1.03);
+}
+.card-visual-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15,23,42,0.3) 0%, rgba(15,23,42,0.85) 100%);
+}
+.card-visual-badge {
+  position: absolute;
+  top: 1.2rem;
+  left: 1.2rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.card-visual-finding {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 1.2rem;
+  right: 1.2rem;
+  color: var(--white);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.card-visual-finding span {
+  color: var(--emerald-light);
+}
+
+.card-body {
+  padding: 1.5rem 1.6rem 1.6rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.card-category-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--slate-400);
+  margin-bottom: 0.4rem;
+}
+.card-category-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+.card-category-desc {
+  font-size: 0.88rem;
+  color: var(--slate-500);
+  line-height: 1.55;
+  flex: 1;
+}
+.card-category-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 10px;
+  background: var(--slate-900);
+  color: var(--white);
+  font-family: var(--font);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none;
+  width: fit-content;
+}
+.card-category-cta:hover { background: var(--slate-700); }
+
+/* ============================================================
+   STAT CARDS — small squares
+   ============================================================ */
+.card--stat {
+  grid-column: span 1;
+  background: var(--white);
+  border: 1.5px solid var(--gray-100);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+}
+.stat-number {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--slate-900);
+  line-height: 1;
+}
+.stat-number--green { color: var(--emerald); }
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 0.5rem;
+}
+
+/* ============================================================
+   EVERYTHING ELSE CARD
+   ============================================================ */
+.card--else {
+  grid-column: span 2;
+  background: #EFF6FF;
+  border: 1.5px solid #BFDBFE;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  color: var(--slate-900);
+}
+.card--else:hover { 
+  border-color: #3B82F6; 
+  background: #DBEAFE;
+}
+.card--else .else-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(59,130,246,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.card--else .else-text h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.15rem;
+  color: #1E3A5F;
+}
+.card--else .else-text p {
+  font-size: 0.82rem;
+  color: #3B6BA5;
+}
+.card--else .else-cta {
+  margin-left: auto;
+  padding: 0.5rem 1.1rem;
+  border-radius: 8px;
+  background: var(--slate-900);
+  color: var(--white);
+  font-family: var(--font);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.card--else:hover .else-cta { background: var(--slate-700); }
+
+@media (max-width: 480px) {
+  .card--else { flex-wrap: wrap; }
+  .card--else .else-cta { margin-left: 0; margin-top: 0.5rem; width: 100%; text-align: center; }
+}
+
+/* ============================================================
+   PRIVACY CARD — dark, full width
+   ============================================================ */
+.card--privacy {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #064E3B 0%, #065F46 100%);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.card--privacy h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  flex: 1;
+  min-width: 200px;
+}
+.card--privacy h2 em {
+  font-style: normal;
+  color: var(--emerald);
+}
+.privacy-tags {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.privacy-tag {
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.18);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--emerald-light);
+}
+
+/* ============================================================
+   HOW IT WORKS — 3 small cards in a row
+   ============================================================ */
+.card--step {
+  background: var(--white);
+  border: 1.5px solid var(--gray-100);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+@media (max-width: 767px) {
+  .card--step { grid-column: span 1; }
+}
+
+.step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--emerald);
+  color: var(--white);
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card--step h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.card--step p {
+  font-size: 0.8rem;
+  color: var(--slate-500);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   TRUST / SOCIAL PROOF CARD
+   ============================================================ */
+.card--trust {
+  grid-column: 1 / -1;
+  background: var(--emerald-pale);
+  border: 1.5px solid var(--emerald-light);
+  text-align: center;
+  padding: 2rem;
+}
+.card--trust blockquote {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--emerald-dark);
+  line-height: 1.5;
+  font-style: italic;
+}
+.card--trust cite {
+  display: block;
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
+  font-style: normal;
+  color: var(--emerald-deep);
+  font-weight: 500;
+}
+
+/* ============================================================
+   FOOTER CARD
+   ============================================================ */
+.card--footer {
+  grid-column: 1 / -1;
+  background: transparent;
+  padding: 1rem 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+.card--footer:hover { transform: none; box-shadow: none; }
+.footer-brand {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--slate-400);
+}
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+.footer-links a {
+  font-size: 0.78rem;
+  color: var(--slate-400);
+  text-decoration: none;
+}
 .footer-links a:hover { color: var(--emerald); }
 
 /* ============================================================
-   SECOND CTA (after report)
+   ANIMATIONS
    ============================================================ */
-.cta-repeat {
-  margin-top: 3rem;
-  text-align: center;
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-.cta-repeat-btn {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 1rem 2.2rem; border: none; border-radius: 12px;
-  background: var(--slate-900); color: var(--white);
-  font-family: var(--font); font-size: 1.05rem; font-weight: 700;
-  cursor: pointer; transition: background 0.2s;
+.card {
+  opacity: 0;
+  animation: fadeUp 0.5s ease forwards;
 }
-.cta-repeat-btn:hover { background: var(--slate-700); }
-.cta-repeat-hint {
-  margin-top: 0.6rem;
-  font-size: 0.8rem; color: var(--slate-400);
-}
-
-/* ============================================================
-   RESOURCE LINKS
-   ============================================================ */
-.resource-grid {
-  display: flex; flex-direction: column; gap: 0.8rem;
-}
-.resource-card {
-  display: flex; align-items: center; gap: 1rem;
-  padding: 1.1rem 1.3rem;
-  border: 1.5px solid var(--gray-100);
-  border-radius: 12px; background: var(--snow);
-  text-decoration: none; color: inherit;
-  transition: all 0.15s ease;
-}
-.resource-card:hover {
-  border-color: var(--emerald);
-  background: #F0FDF4;
-}
-.resource-icon {
-  font-size: 1.4rem; flex-shrink: 0;
-  width: 40px; text-align: center;
-}
-.resource-info { flex: 1; min-width: 0; }
-.resource-name {
-  font-size: 0.95rem; font-weight: 700;
-  color: var(--slate-900);
-}
-.resource-desc {
-  font-size: 0.82rem; color: var(--slate-500);
-  line-height: 1.5; margin-top: 0.15rem;
-}
-.resource-arrow {
-  font-size: 1.1rem; color: var(--slate-400);
-  flex-shrink: 0; font-weight: 600;
-}
-.resource-card:hover .resource-arrow { color: var(--emerald); }
-.resource-note {
-  text-align: center; margin-top: 1.5rem;
-  font-size: 0.8rem; color: var(--slate-400);
-  font-style: italic;
-}
-
-/* ============================================================
-   HUMAN LINE
-   ============================================================ */
-.human-line {
-  text-align: center; padding: 2.5rem 0;
-  font-size: 0.9rem; color: var(--slate-400);
-  font-style: italic;
-  border-top: 1px solid var(--gray-100);
-}
-
-/* ============================================================
-   STICKY MOBILE CTA
-   ============================================================ */
-.sticky-cta {
-  display: none;
-  position: fixed; bottom: 0; left: 0; right: 0;
-  z-index: 100;
-  background: var(--white);
-  border-top: 1px solid var(--gray-100);
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
-  padding: 0.8rem 1.2rem;
-}
-.sticky-cta-btn {
-  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-  width: 100%; padding: 0.9rem; border: none; border-radius: 10px;
-  background: var(--slate-900); color: var(--white);
-  font-family: var(--font); font-size: 0.95rem; font-weight: 700;
-  cursor: pointer;
-}
-@media (max-width: 640px) {
-  .sticky-cta.visible { display: block; }
-  .footer { padding-bottom: 5rem; }
-}
-
-/* ============================================================
-   TEASER OVERLAY
-   ============================================================ */
-.teaser-overlay {
-  display: none; position: fixed; inset: 0; z-index: 150;
-  background: rgba(15,23,42,0.5); backdrop-filter: blur(8px);
-  align-items: center; justify-content: center; padding: 24px;
-}
-.teaser-overlay.visible { display: flex; }
-.teaser-card {
-  background: var(--white); border-radius: 16px;
-  width: 100%; max-width: 400px;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.15);
-  overflow: hidden; animation: fadeUp 0.3s ease; position: relative;
-}
-@keyframes fadeUp { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: none; } }
-.teaser-close {
-  position: absolute; top: 12px; right: 12px;
-  width: 30px; height: 30px; border-radius: 50%;
-  border: none; background: var(--snow);
-  font-size: 16px; cursor: pointer; color: var(--slate-500);
-  display: flex; align-items: center; justify-content: center;
-}
-.teaser-top { padding: 2rem 1.5rem 1.2rem; text-align: center; }
-.teaser-badge {
-  display: inline-block;
-  background: var(--red-pale); color: var(--red);
-  border: 1px solid var(--red-border);
-  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.05em; padding: 0.25rem 0.7rem; border-radius: 5px;
-  margin-bottom: 0.7rem;
-}
-.teaser-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.3rem; }
-.teaser-subtitle { font-size: 0.82rem; color: var(--slate-500); }
-.teaser-stats {
-  display: grid; grid-template-columns: 1fr 1fr 1fr;
-  border-top: 1px solid var(--gray-100); border-bottom: 1px solid var(--gray-100);
-}
-.teaser-stat { padding: 1rem 0.5rem; text-align: center; }
-.teaser-stat:not(:last-child) { border-right: 1px solid var(--gray-100); }
-.teaser-stat-num { font-size: 1.6rem; font-weight: 700; color: var(--emerald-deep); }
-.teaser-stat-label {
-  font-size: 0.65rem; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.04em; color: var(--slate-400); margin-top: 0.15rem;
-}
-.teaser-cta-area { padding: 1.2rem 1.5rem; text-align: center; }
-.teaser-cta {
-  display: block; width: 100%; padding: 0.9rem; border: none; border-radius: 10px;
-  background: var(--slate-900); color: var(--white);
-  font-family: var(--font); font-size: 1rem; font-weight: 700;
-  cursor: pointer; transition: background 0.2s;
-}
-.teaser-cta:hover { background: var(--slate-700); }
-.teaser-cta-sub { font-size: 0.7rem; color: var(--slate-400); margin-top: 0.5rem; }
+.card:nth-child(1) { animation-delay: 0s; }
+.card:nth-child(2) { animation-delay: 0.06s; }
+.card:nth-child(3) { animation-delay: 0.12s; }
+.card:nth-child(4) { animation-delay: 0.18s; }
+.card:nth-child(5) { animation-delay: 0.24s; }
+.card:nth-child(6) { animation-delay: 0.28s; }
+.card:nth-child(7) { animation-delay: 0.32s; }
+.card:nth-child(8) { animation-delay: 0.36s; }
+.card:nth-child(9) { animation-delay: 0.4s; }
+.card:nth-child(10) { animation-delay: 0.44s; }
+.card:nth-child(11) { animation-delay: 0.48s; }
+.card:nth-child(12) { animation-delay: 0.52s; }
+.card:nth-child(13) { animation-delay: 0.56s; }
 </style>
 </head>
 <body>
 
-<!-- BRAND -->
-<header class="brand">
-  <span class="brand-text">LISTING LENS</span>
-</header>
-
-<!-- 1. HERO -->
-<section class="hero">
-  <div class="container">
-    <div class="vehicle-badge">🚗 vehicle reports</div>
-    <h1 class="hero-headline">don't buy<br><em>blind.</em></h1>
-    <p class="hero-sub">screenshot any vehicle listing and we'll tell you <strong>what it's really worth, what's wrong with it, and exactly what to ask the seller.</strong></p>
-
-    <div class="upload-zone" id="dropTarget">
-      <div class="upload-icon">
-        <svg viewBox="0 0 24 24"><path d="M19 7v3h-2V7h-3V5h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5a2 2 0 00-2 2v12c0 1.1.9 2 2 2h12a2 2 0 002-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z"/></svg>
-      </div>
-      <span class="upload-text">upload a screenshot of any vehicle listing</span>
-      <span class="upload-hint">drop, paste, or tap to browse</span>
-    </div>
-
-    <div class="trust-strip">
-      <div class="trust-item"><div class="trust-dot"></div>15 seconds</div>
-      <div class="trust-item"><div class="trust-dot"></div>no sign-up</div>
-      <div class="trust-item"><div class="trust-dot"></div>data deleted after</div>
-    </div>
+<!-- TOP BAR — Google Translate -->
+<div class="topbar" id="topbar">
+  <div class="topbar-inner">
+    <span class="topbar-globe">🌐</span>
+    <div id="google_translate_element"></div>
   </div>
-</section>
-
-<!-- 2. REAL REPORT — the product IS the pitch -->
-<section class="section section--soft">
-  <div class="container">
-    <p class="section-eyebrow">real listing. real report.</p>
-    <h2 class="section-title">this is what $5 gets you</h2>
-    <p class="section-desc">we found this 2015 Jeep Wrangler online. here's everything the listing failed to mention.</p>
-
-    <div class="listing-screenshots">
-      <img src="https://listinglens.app/jeep-2026-1.png" alt="2015 Jeep Wrangler Unlimited listing screenshot — main photo and pricing" loading="lazy">
-      <img src="https://listinglens.app/jeep-2026-2.png" alt="2015 Jeep Wrangler Unlimited listing screenshot — vehicle details" loading="lazy">
-    </div>
-
-    <div class="report-showcase">
-      <div class="report-card">
-
-        <div class="report-header">
-          <div class="report-icon" style="font-size:24px;">🚙</div>
-          <div class="report-meta">
-            <h2>2015 Jeep Wrangler Unlimited Sport</h2>
-            <p>Australian Car Sales Website · $22,500 · 156,000 km · NSW</p>
-          </div>
-        </div>
-
-        <div class="report-section">
-          <div class="report-section-header">
-            <span class="badge badge--red">Critical</span>
-            <h3>Safety & Compliance</h3>
-          </div>
-          <div class="finding"><span><strong>Takata airbag recall active.</strong> 2014–2016 JK models affected. Passenger-side inflator can rupture. Free fix at any Jeep dealer — check ismyairbagsafe.com.au.</span></div>
-          <div class="finding"><span><strong>Registration plate withheld.</strong> Can't run a PPSR check ($2) without it. No PPSR = no way to verify finance owing, stolen status, or write-off history.</span></div>
-          <div class="finding"><span><strong>Registration expires February 2026.</strong> Days away. May need a roadworthy inspection ($50–$150) before transfer. Ask why it's expiring unsold.</span></div>
-          <div class="finding"><span><strong>Aftermarket modifications visible.</strong> Non-standard wheels, apparent lift kit. In NSW, lifts over 50mm require engineer certification. Uncertified mods can fail rego inspection and void insurance.</span></div>
-        </div>
-
-        <div class="report-section">
-          <div class="report-section-header">
-            <span class="badge badge--amber">Hidden Costs</span>
-            <h3>What the listing doesn't mention</h3>
-          </div>
-          <div class="finding"><span><strong>NSW stamp duty:</strong> ~$675</span></div>
-          <div class="finding"><span><strong>Registration transfer:</strong> $39</span></div>
-          <div class="finding"><span><strong>CTP Green Slip:</strong> ~$500–$700/year</span></div>
-          <div class="finding"><span><strong>Comprehensive insurance:</strong> ~$1,800–$2,500/year (higher with mods)</span></div>
-          <div class="finding"><span><strong>Fuel:</strong> ~$4,900/year at 11.9L/100km</span></div>
-          <div class="finding"><span><strong>Servicing:</strong> ~$400–$600 per service</span></div>
-          <div class="finding"><span><strong>True first-year cost: ~$30,000+</strong> — not $22,500.</span></div>
-        </div>
-
-        <div class="report-section">
-          <div class="report-section-header">
-            <span class="badge badge--amber">Mechanical</span>
-            <h3>Known issues for this model</h3>
-          </div>
-          <div class="finding"><span><strong>3.6L Pentastar oil cooler leak.</strong> Most common JK failure. Plastic housing warps between 80k–130k km. At 156k, it's either been replaced or it's overdue. Repair: $900–$1,400.</span></div>
-          <div class="finding"><span><strong>Pentastar lifter tick.</strong> Common on higher-mileage 3.6L engines. Repair: $800–$1,200.</span></div>
-          <div class="finding"><span><strong>Additional recalls:</strong> Clockspring, seat belt, PCM O2 sensor — all should be verified against VIN.</span></div>
-        </div>
-
-        <div class="report-section">
-          <div class="report-section-header">
-            <span class="badge badge--green">Market</span>
-            <h3>Comparable listings right now</h3>
-          </div>
-          <div class="finding"><span><strong>2015 Wrangler Unlimited, 117k km, SA dealer:</strong> $28,490</span></div>
-          <div class="finding"><span><strong>2015 Wrangler Unlimited, 131k km, VIC with roadworthy:</strong> $25,990</span></div>
-          <div class="finding"><span><strong>"Below market price" is misleading.</strong> Lower price reflects higher km, withheld plate, expiring rego, and uncertified mods.</span></div>
-        </div>
-
-        <div class="report-questions">
-          <h3>Questions to ask the seller</h3>
-          <div class="question-item"><span>What's the registration plate number? (for PPSR and Takata check)</span></div>
-          <div class="question-item"><span>Has the Takata airbag recall been completed?</span></div>
-          <div class="question-item"><span>Has the oil cooler housing been replaced?</span></div>
-          <div class="question-item"><span>Is the suspension lift engineer-certified for NSW?</span></div>
-          <div class="question-item"><span>Do you have full service history?</span></div>
-          <div class="question-item"><span>Why is rego expiring unsold?</span></div>
-          <div class="question-item"><span>Will you allow a pre-purchase inspection?</span></div>
-          <div class="question-item"><span>Is there any finance owing on the vehicle?</span></div>
-        </div>
-
-        <div class="report-verdict">⚠️ Proceed with caution. Withheld rego plate, imminent registration expiry, uncertified modifications, active Takata recall, and 156k on a Pentastar 3.6L with known oil cooler issues all require verification before purchase.</div>
-
-        <div class="report-fair-value">
-          <div class="fair-value-label">Fair offer after inspection</div>
-          <div class="fair-value-price">$18,000 – $20,000</div>
-          <div class="fair-value-note">not the listed $22,500</div>
-        </div>
-
-      </div>
-
-      <p class="report-hint">↑ this is a real report from a real listing</p>
-
-      <div class="cta-repeat">
-        <button class="cta-repeat-btn" onclick="document.getElementById('dropTarget').scrollIntoView({behavior:'smooth'}); setTimeout(function(){document.getElementById('dropTarget').click()},600);">try it with your listing →</button>
-        <div class="cta-repeat-hint">free scan · no sign-up · 15 seconds</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 3. HOW IT WORKS -->
-<section class="section">
-  <div class="container">
-    <p class="section-eyebrow">how it works</p>
-
-    <div class="how-block">
-      <div class="how-num">1</div>
-      <h3>screenshot any vehicle listing</h3>
-      <p>Any marketplace, any country. If it's a car, ute, SUV, truck, caravan, boat, jetski or motorbike with a price — we can analyse it.</p>
-      <div class="marketplace-pills">
-        <span class="pill">Carsales</span>
-        <span class="pill">Facebook</span>
-        <span class="pill">Gumtree</span>
-        <span class="pill">AutoTrader</span>
-        <span class="pill">eBay</span>
-        <span class="pill">CarSensor</span>
-        <span class="pill">Cars24</span>
-        <span class="pill">anywhere</span>
-      </div>
-    </div>
-
-    <div class="how-block">
-      <div class="how-num">2</div>
-      <h3>we search real sources</h3>
-      <p>Government recall databases, owner forums, market listings, insurance data, state transfer costs. Not guessing — finding. The research that would take you hours, done in seconds.</p>
-    </div>
-
-    <div class="how-block">
-      <div class="how-num">3</div>
-      <h3>get your report</h3>
-      <p>Safety recalls, hidden costs, mechanical issues, comparable listings, questions to ask the seller, fair value estimate, and a clear verdict. Everything you need to negotiate with confidence.</p>
-    </div>
-  </div>
-</section>
-
-<!-- 4. PRIVACY -->
-<section class="section section--dark">
-  <div class="container">
-    <p class="section-eyebrow" style="color:var(--emerald-light)">your data</p>
-    <h2 class="section-title">we go out of our way to forget you.</h2>
-    <p class="section-desc">your screenshot is analysed, your report is delivered, then everything is deleted.</p>
-    <div class="privacy-points">
-      <div class="privacy-point">
-        <div class="privacy-point-title">No accounts</div>
-        <div class="privacy-point-desc">No sign-up, no login, no profile.</div>
-      </div>
-      <div class="privacy-point">
-        <div class="privacy-point-title">No tracking</div>
-        <div class="privacy-point-desc">No cookies, no analytics, no data brokers.</div>
-      </div>
-      <div class="privacy-point">
-        <div class="privacy-point-title">No history</div>
-        <div class="privacy-point-desc">Screenshots and reports deleted after delivery.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 5. PRICE -->
-<section class="section section--soft" style="text-align:center;">
-  <div class="container">
-    <p class="section-eyebrow">pricing</p>
-    <h2 class="section-title">$5</h2>
-    <p class="section-desc" style="margin:0 auto;">one report, one price, in your local currency. the initial scan is free — you see what we found before paying anything. no subscriptions, no upsells.</p>
-  </div>
-</section>
-
-<!-- 5b. USEFUL LINKS -->
-<section class="section">
-  <div class="container">
-    <p class="section-eyebrow">do your homework</p>
-    <h2 class="section-title" style="margin-bottom:0.5rem;">we're your first step, not your only one.</h2>
-    <p class="section-desc" style="margin-bottom:2.5rem;">we'll tell you what to look for — these are the places to verify it. bookmark them.</p>
-
-    <div class="resource-grid">
-      <a href="https://www.ppsr.gov.au/" target="_blank" rel="noopener" class="resource-card">
-        <div class="resource-icon">🔍</div>
-        <div class="resource-info">
-          <div class="resource-name">PPSR Check</div>
-          <div class="resource-desc">Check for finance owing, stolen or written-off status. $2 per search. You'll need the rego plate or VIN.</div>
-        </div>
-        <div class="resource-arrow">→</div>
-      </a>
-      <a href="https://www.accc.gov.au/consumers/specific-products-and-activities/new-and-second-hand-cars" target="_blank" rel="noopener" class="resource-card">
-        <div class="resource-icon">⚠️</div>
-        <div class="resource-info">
-          <div class="resource-name">Vehicle Recalls Australia</div>
-          <div class="resource-desc">Search active safety recalls by make, model, or year. Free. Run by the ACCC.</div>
-        </div>
-        <div class="resource-arrow">→</div>
-      </a>
-      <a href="https://www.ismyairbagsafe.com.au/" target="_blank" rel="noopener" class="resource-card">
-        <div class="resource-icon">🛡️</div>
-        <div class="resource-info">
-          <div class="resource-name">Takata Airbag Check</div>
-          <div class="resource-desc">Check if a vehicle has a deadly Takata airbag recall. Free. Enter the rego plate.</div>
-        </div>
-        <div class="resource-arrow">→</div>
-      </a>
-      <a href="https://www.accc.gov.au/consumers/buying-products-and-services/buying-a-used-car" target="_blank" rel="noopener" class="resource-card">
-        <div class="resource-icon">📋</div>
-        <div class="resource-info">
-          <div class="resource-name">ACCC Used Car Guide</div>
-          <div class="resource-desc">Your consumer rights when buying a used car in Australia. Know what the law protects.</div>
-        </div>
-        <div class="resource-arrow">→</div>
-      </a>
-    </div>
-
-    <p class="resource-note">These are Australian resources. Our reports include region-specific links for your country, tailored to your needs.</p>
-  </div>
-</section>
-
-<!-- 6. FAQ -->
-<section class="section">
-  <div class="container">
-    <p class="section-eyebrow">questions</p>
-    <h2 class="section-title" style="margin-bottom:2rem;">answered.</h2>
-
-    <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">What types of vehicles does this work with?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">Cars, SUVs, utes, trucks, vans, motorbikes — if it's a vehicle listing with a price on any marketplace, we can analyse it. Carsales, Facebook Marketplace, Gumtree, AutoTrader, eBay Motors, Cars.com, Craigslist, and more.</div></div></div>
-    <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Does it work outside Australia?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">Yes. You tell us your country and we tailor the report — local recalls, registration costs, consumer laws, insurance estimates, and market comparisons specific to where you are.</div></div></div>
-    <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">What does a report include?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">Safety recalls, hidden on-road costs, known mechanical issues for that exact model, comparable market listings, questions you should ask the seller, a fair value estimate, and a clear verdict. Scroll up to see a real example.</div></div></div>
-    <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">How fast is it?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">The free scan takes about 3 seconds. The full paid report takes 15–30 seconds depending on the vehicle. You'll have it before you finish your coffee.</div></div></div>
-    <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Is my data stored?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">No. Screenshots are deleted immediately after your report is generated. No accounts, no cookies, no personal information stored. Once you close the page, everything is gone.</div></div></div>
-    <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Is this legit?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer"><div class="faq-answer-inner">Yes. Built in Australia, payments processed securely through Airwallex. No data stored, no account required. Scroll up to see exactly what you get — that's a real report from a real listing, not a mockup.</div></div></div>
-  </div>
-</section>
-
-<!-- HUMAN LINE -->
-<div class="container">
-  <div class="human-line">made by an Aussie who got sick and tired of getting ripped off. <img src="https://flagcdn.com/w40/au.png" alt="Australian flag" style="height:1em;vertical-align:middle;"></div>
 </div>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateInit"></script>
+<script>
+function googleTranslateInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+    autoDisplay: false
+  }, 'google_translate_element');
+}
+</script>
 
-<!-- 7. FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <span class="footer-copy" style="font-weight:700; letter-spacing:0.04em;">LISTING LENS</span>
-        <span class="footer-copy">© 2026</span>
-        <span class="footer-copy">🇦🇺</span>
-      </div>
-      <div class="footer-links">
-        <a href="/terms">Terms & Privacy</a>
-        <a href="#" id="contactLink">Contact</a>
-      </div>
+<div class="bento">
+
+  <!-- 1. HERO — full width -->
+  <div class="card card--hero">
+    <div class="brand">LISTING LENS</div>
+    <h1>don't buy<br><em>blind.</em></h1>
+    <p>screenshot any listing. we'll tell you <strong>what's really wrong with it, what it's actually worth, and exactly what to ask the seller.</strong></p>
+  </div>
+
+  <!-- 2. VEHICLE CARD -->
+  <div class="card card--category" onclick="window.location.hash='vehicle'">
+    <div class="card-visual">
+      <img src="https://listinglens.app/jeep-2026-1.png" alt="2015 Jeep Wrangler listing">
+      <div class="card-visual-overlay"></div>
+      <div class="card-visual-badge">🚗 Real report</div>
+      <div class="card-visual-finding">"<span>Takata airbag recall active</span> — saved $4,500 off the asking price"</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category-label">Vehicles</div>
+      <div class="card-category-title">cars, utes, SUVs, bikes</div>
+      <div class="card-category-desc">Recalls, hidden costs, mechanical issues, market comparisons, fair value estimate, and a verdict.</div>
+      <a class="card-category-cta" href="#vehicle">scan a vehicle listing →</a>
     </div>
   </div>
-</footer>
 
-<!-- STICKY MOBILE CTA -->
-<div class="sticky-cta" id="stickyCta">
-  <button class="sticky-cta-btn" onclick="document.getElementById('dropTarget').scrollIntoView({behavior:'smooth'}); setTimeout(function(){document.getElementById('dropTarget').click()},600);">upload a listing →</button>
-</div>
-
-<!-- TEASER OVERLAY -->
-<div class="teaser-overlay" id="teaserOverlay">
-  <div class="teaser-card">
-    <button class="teaser-close" onclick="closeTeaser()">&times;</button>
-    <div class="teaser-top">
-      <div class="teaser-badge">🚩 issues detected</div>
-      <div class="teaser-title">2015 Jeep Wrangler Unlimited</div>
-      <div class="teaser-subtitle">we scanned this listing in 3 seconds.</div>
+  <!-- 3. PROPERTY CARD -->
+  <div class="card card--category" onclick="window.location.hash='property'">
+    <div class="card-visual">
+      <img src="https://listinglens.app/apartment2-screenshot.jpg" alt="Parramatta apartment listing">
+      <div class="card-visual-overlay"></div>
+      <div class="card-visual-badge">🏠 Real report</div>
+      <div class="card-visual-finding">"<span>Structural defect on the NSW Fair Trading register</span> — $70k overpriced"</div>
     </div>
-    <div class="teaser-stats">
-      <div class="teaser-stat"><div class="teaser-stat-num">4</div><div class="teaser-stat-label">Critical</div></div>
-      <div class="teaser-stat"><div class="teaser-stat-num">7</div><div class="teaser-stat-label">Hidden costs</div></div>
-      <div class="teaser-stat"><div class="teaser-stat-num">8</div><div class="teaser-stat-label">Questions</div></div>
-    </div>
-    <div class="teaser-cta-area">
-      <button class="teaser-cta" onclick="closeTeaser()">get full report — $5</button>
-      <div class="teaser-cta-sub">Powered by Airwallex · Secure payment · Data deleted after</div>
+    <div class="card-body">
+      <div class="card-category-label">Property</div>
+      <div class="card-category-title">houses, apartments, land</div>
+      <div class="card-category-desc">Developer history, strata & body corp, hidden costs, comparable sales, oversupply risk, and a verdict.</div>
+      <a class="card-category-cta" href="#property">scan a property listing →</a>
     </div>
   </div>
+
+  <!-- 4–5. STAT CARDS -->
+  <div class="card card--stat">
+    <div class="stat-number stat-number--green">$5</div>
+    <div class="stat-label">per report</div>
+  </div>
+
+  <div class="card card--stat">
+    <div class="stat-number">15s</div>
+    <div class="stat-label">per report</div>
+  </div>
+
+  <!-- 6. EVERYTHING ELSE -->
+  <div class="card card--else" onclick="window.location.hash='other'">
+    <div class="else-icon">🛒</div>
+    <div class="else-text">
+      <h3>other purchases</h3>
+      <p>electronics, watches, jewellery, furniture — anything with a price tag.</p>
+    </div>
+    <a class="else-cta" href="#other">scan a listing →</a>
+  </div>
+
+  <!-- 7. PRIVACY — full width dark -->
+  <div class="card card--privacy">
+    <h2>we go out of our way to <em>forget you.</em></h2>
+    <div class="privacy-tags">
+      <span class="privacy-tag">no accounts</span>
+      <span class="privacy-tag">no tracking</span>
+      <span class="privacy-tag">no cookies</span>
+      <span class="privacy-tag">data deleted after</span>
+    </div>
+  </div>
+
+  <!-- 8-10. HOW IT WORKS -->
+  <div class="card card--step">
+    <div class="step-num">1</div>
+    <h3>find it</h3>
+    <p>Found your dream car, apartment, or house online? Before you fall in love — let us take a look.</p>
+  </div>
+
+  <div class="card card--step">
+    <div class="step-num">2</div>
+    <h3>screenshot it</h3>
+    <p>Any marketplace, any country. If it has a price, we can analyse it.</p>
+  </div>
+
+  <div class="card card--step">
+    <div class="step-num">3</div>
+    <h3>we search</h3>
+    <p>Recalls, forums, market data, government databases. Real sources, not guessing.</p>
+  </div>
+
+  <div class="card card--step">
+    <div class="step-num">4</div>
+    <h3>your report</h3>
+    <p>Red flags, hidden costs, questions to ask, fair value, and a clear verdict.</p>
+  </div>
+
+  <!-- 11. TRUST -->
+  <div class="card card--trust">
+    <blockquote>"I paid $5 and it found a structural defect that could have cost me $200,000. This should be mandatory before buying."</blockquote>
+    <cite>— what we're building towards</cite>
+  </div>
+
+  <!-- 12. FOOTER -->
+  <div class="card card--footer">
+    <div class="footer-brand">LISTING LENS © 2026 <img src="https://flagcdn.com/w40/au.png" alt="AU" style="height:0.9em;vertical-align:middle;margin-left:0.3rem;"></div>
+    <div class="footer-links">
+      <a href="/terms">Terms & Privacy</a>
+      <a href="#" id="contactLink">Contact</a>
+    </div>
+  </div>
+
 </div>
 
 <script>
 var cl = document.getElementById('contactLink');
 if (cl) cl.href = 'mai' + 'lto:hel' + 'lo@list' + 'inglens.app';
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeTeaser(); });
-var dt = document.getElementById('dropTarget');
-dt.addEventListener('click', function() {
-  var i = document.createElement('input');
-  i.type = 'file'; i.accept = 'image/*';
-  i.onchange = function() { showTeaser(); };
-  i.click();
-});
-dt.addEventListener('dragover', function(e) {
-  e.preventDefault(); dt.style.borderColor = 'var(--emerald)'; dt.style.background = '#F0FDF4';
-});
-dt.addEventListener('dragleave', function() { dt.style.borderColor = ''; dt.style.background = ''; });
-dt.addEventListener('drop', function(e) {
-  e.preventDefault(); dt.style.borderColor = ''; dt.style.background = ''; showTeaser();
-});
-
-// Sticky mobile CTA — show after scrolling past upload zone
-var sticky = document.getElementById('stickyCta');
-var heroUpload = document.getElementById('dropTarget');
-if (sticky && heroUpload) {
-  window.addEventListener('scroll', function() {
-    var rect = heroUpload.getBoundingClientRect();
-    if (rect.bottom < 0) {
-      sticky.classList.add('visible');
-    } else {
-      sticky.classList.remove('visible');
-    }
-  }, { passive: true });
-}
 </script>
 </body>
 </html>
