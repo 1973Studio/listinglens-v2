@@ -358,7 +358,7 @@ body { top: 0 !important; }
 .coming-privacy-link:hover { color: var(--emerald); }
 
 /* ============================================================
-   INTERACTIVE DEMO — before/after slider
+   INTERACTIVE DEMO — tab toggle
    ============================================================ */
 .card--demo {
   grid-column: 1 / -1;
@@ -382,14 +382,14 @@ body { top: 0 !important; }
   color: var(--slate-500);
   margin-bottom: 1.2rem;
 }
-/* Demo tabs */
-.demo-tabs {
+/* Category tabs (vehicle / property) */
+.demo-cats {
   display: flex;
   gap: 6px;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
   flex-wrap: wrap;
 }
-.demo-tab {
+.demo-cat {
   padding: 0.45rem 0.9rem;
   border: 1.5px solid var(--gray-100);
   border-radius: 100px;
@@ -404,80 +404,153 @@ body { top: 0 !important; }
   align-items: center;
   gap: 0.35rem;
 }
-.demo-tab:hover { border-color: var(--emerald); }
-.demo-tab.active {
+.demo-cat:hover { border-color: var(--emerald); }
+.demo-cat.active {
   background: var(--emerald-pale);
   border-color: var(--emerald);
   color: var(--emerald-dark);
 }
-/* Slider container */
-.demo-slider {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  touch-action: none;
-  user-select: none;
-  cursor: ew-resize;
+/* View toggle (listing / report) */
+.demo-toggle {
+  display: flex;
+  background: var(--snow);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 1rem;
   border: 1.5px solid var(--gray-100);
 }
-.demo-layer {
-  width: 100%;
-  display: block;
+.demo-toggle-btn {
+  flex: 1;
+  padding: 0.55rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--slate-500);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
 }
-.demo-layer--listing {
-  display: block;
+.demo-toggle-btn.active {
+  background: var(--white);
+  color: var(--slate-900);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
-.demo-layer--report {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  clip-path: inset(0 0 0 50%);
-  transition: clip-path 0.05s ease-out;
-}
-.demo-slider-handle {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 3px;
-  background: var(--emerald);
-  transform: translateX(-50%);
-  z-index: 10;
-  pointer-events: none;
-  transition: left 0.05s ease-out;
-}
-.demo-slider-handle::before {
-  content: '◀ ▶';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--emerald);
+.demo-toggle-btn.active.is-report {
+  background: var(--emerald-deep);
   color: var(--white);
-  font-size: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  letter-spacing: 0.15em;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
-.demo-labels {
+/* Content panels */
+.demo-panel {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1.5px solid var(--gray-100);
+  animation: demoFade 0.3s ease;
+}
+@keyframes demoFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Listing panel */
+.demo-listing {
+  padding: 1.5rem;
+  background: var(--snow);
+}
+.demo-listing-photo {
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.demo-listing-photo img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+.demo-listing-price {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+.demo-listing-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+.demo-listing-meta {
+  font-size: 0.78rem;
+  color: var(--slate-400);
+  margin-bottom: 0.8rem;
+}
+.demo-listing-desc {
+  font-size: 0.82rem;
+  color: var(--slate-500);
+  line-height: 1.6;
+  font-style: italic;
+  border-left: 3px solid var(--gray-200);
+  padding-left: 0.8rem;
+}
+/* Report panel */
+.demo-report {
+  padding: 1.5rem;
+  background: #F0FDF4;
+}
+.demo-report-bar {
+  background: #064E3B;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
   display: flex;
   justify-content: space-between;
-  padding: 0.5rem 0.2rem 0;
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--slate-400);
+  align-items: center;
+  margin-bottom: 1rem;
 }
-.demo-label-report { color: var(--emerald-deep); }
-/* CTA below slider */
+.demo-report-bar span {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #6EE7B7;
+  letter-spacing: 0.03em;
+}
+.demo-flag {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+.demo-flag strong {
+  display: block;
+  margin-bottom: 0.1rem;
+}
+.demo-flag small {
+  font-size: 0.72rem;
+  opacity: 0.8;
+}
+.demo-flag--red { background: #FEF2F2; color: #DC2626; }
+.demo-flag--amber { background: #FFFBEB; color: #92400E; }
+.demo-flag--green { background: #F0FDF4; color: #065F46; border: 1px solid #BBF7D0; }
+.demo-flag-icon { font-size: 1rem; flex-shrink: 0; padding-top: 1px; }
+.demo-info-card {
+  background: var(--white);
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.5rem;
+}
+.demo-info-card h4 {
+  font-size: 0.78rem;
+  font-weight: 800;
+  margin-bottom: 0.3rem;
+}
+.demo-info-card p {
+  font-size: 0.75rem;
+  color: var(--slate-500);
+  line-height: 1.5;
+}
+/* CTA below demo */
 .demo-cta {
   margin-top: 1.2rem;
   padding: 1.2rem;
@@ -509,13 +582,6 @@ body { top: 0 !important; }
   text-decoration: none;
 }
 .demo-cta-btn:hover { background: var(--emerald-dark); transform: translateY(-1px); }
-.demo-hint {
-  font-size: 0.7rem;
-  color: var(--slate-400);
-  margin-top: 0.6rem;
-  display: block;
-  text-align: center;
-}
 
 /* ============================================================
    PRIVACY CARD — dark, full width
@@ -728,61 +794,94 @@ function googleTranslateInit() {
   </div>
 
 
-  <!-- 2. VEHICLE CARD -->
-  <div class="card card--category" onclick="window.location.href='/dashboard.html'">
-    <div class="card-visual">
-      <img src="https://listinglens.app/jeep-2026-1.png" alt="2015 Jeep Wrangler listing">
-    </div>
-    <div class="card-body">
-      <div class="card-finding" translate="yes">🚗 <strong>Real report:</strong> "<span>Takata airbag recall active</span> — saved $4,500 off the asking price"</div>
-      <div class="card-category-label" translate="yes">Vehicles</div>
-      <div class="card-category-title" translate="yes">cars, utes, SUVs, bikes</div>
-      <div class="card-category-desc" translate="yes">Recalls, hidden costs, mechanical issues, market comparisons, fair value estimate, and a verdict.</div>
-      <a class="card-category-cta" href="/dashboard.html" translate="yes">get your vehicle report →</a>
-    </div>
-  </div>
-
-
-  <!-- 3. PROPERTY CARD -->
-  <div class="card card--category" onclick="window.location.href='/dashboard.html'">
-    <div class="card-visual">
-      <img src="https://listinglens.app/apartment2-screenshot.jpg" alt="Parramatta apartment listing">
-    </div>
-    <div class="card-body">
-      <div class="card-finding" translate="yes">🏠 <strong>Real report:</strong> "<span>Structural defect on the NSW Fair Trading register</span> — $70k overpriced"</div>
-      <div class="card-category-label" translate="yes">Property</div>
-      <div class="card-category-title" translate="yes">houses, apartments, land</div>
-      <div class="card-category-desc" translate="yes">Developer history, strata & body corp, hidden costs, comparable sales, oversupply risk, and a verdict.</div>
-      <a class="card-category-cta" href="/dashboard.html" translate="yes">get your property report →</a>
-    </div>
-  </div>
-
-
-  <!-- 4. INTERACTIVE DEMO -->
+  <!-- 2. INTERACTIVE DEMO -->
   <div class="card card--demo" id="demoCard">
     <div class="demo-header">
       <h2 translate="yes">see it in <em>action.</em></h2>
-      <p translate="yes">drag the slider to reveal what a real Listing Lens report looks like.</p>
+      <p translate="yes">tap between the listing and the report to see what Listing Lens finds.</p>
     </div>
 
-    <div class="demo-tabs" id="demoTabs">
-      <button class="demo-tab active" data-demo="vehicle">🚗 vehicle</button>
-      <button class="demo-tab" data-demo="property">🏠 property</button>
+    <div class="demo-cats" id="demoCats">
+      <button class="demo-cat active" data-cat="vehicle">🚗 vehicle</button>
+      <button class="demo-cat" data-cat="property">🏠 property</button>
     </div>
 
-    <!-- VEHICLE DEMO -->
-    <div class="demo-slider" id="demoSlider">
-      <div class="demo-layer demo-layer--listing" id="demoListing"></div>
-      <div class="demo-layer demo-layer--report" id="demoReport"></div>
-      <div class="demo-slider-handle" id="demoHandle"></div>
+    <div class="demo-toggle">
+      <button class="demo-toggle-btn active" data-view="listing">📸 the listing</button>
+      <button class="demo-toggle-btn is-report" data-view="report">📋 our report</button>
     </div>
 
-    <div class="demo-labels">
-      <span translate="yes">← listing screenshot</span>
-      <span class="demo-label-report" translate="yes">your report →</span>
+    <!-- VEHICLE -->
+    <div id="demo-vehicle-listing" class="demo-panel demo-listing">
+      <div class="demo-listing-photo"><img src="https://listinglens.app/jeep-2026-1.png" alt="2019 Toyota RAV4 listing"></div>
+      <div class="demo-listing-price" translate="no">$34,990</div>
+      <div class="demo-listing-title">2019 Toyota RAV4 GXL — Auto, SUV</div>
+      <div class="demo-listing-meta">📍 Parramatta, NSW · Private seller · 87,400 km · Listed 3 days ago</div>
+      <div class="demo-listing-desc">"Great family car, full service history, no accidents. One owner, always garaged. Brand new tyres fitted."</div>
     </div>
 
-    <span class="demo-hint" translate="yes">👆 drag the green handle to compare</span>
+    <div id="demo-vehicle-report" class="demo-panel demo-report" style="display:none;">
+      <div class="demo-report-bar">
+        <span>LISTING LENS REPORT</span>
+        <span>2019 Toyota RAV4 GXL</span>
+      </div>
+      <div class="demo-flag demo-flag--red">
+        <span class="demo-flag-icon">🚨</span>
+        <div><strong>Takata airbag recall active (critical safety)</strong><small>This model/year is affected. Check recalls.gov.au before purchasing.</small></div>
+      </div>
+      <div class="demo-flag demo-flag--amber">
+        <span class="demo-flag-icon">⚠️</span>
+        <div><strong>Overpriced by ~$3,200 vs market average</strong><small>Comparable RAV4s (2019, &lt;90k km, NSW): $30,500–$33,100</small></div>
+      </div>
+      <div class="demo-flag demo-flag--green">
+        <span class="demo-flag-icon">✅</span>
+        <div><strong>Service history claim appears consistent</strong></div>
+      </div>
+      <div class="demo-info-card">
+        <h4>💰 Hidden costs (NSW estimate)</h4>
+        <p>Stamp duty: ~$1,120 · Transfer: $33 · CTP: ~$650/yr · Insurance est: ~$1,400/yr</p>
+      </div>
+      <div class="demo-info-card">
+        <h4>❓ Questions to ask the seller</h4>
+        <p>1. Has the Takata recall been addressed? · 2. Can you provide the full service logbook?</p>
+      </div>
+    </div>
+
+    <!-- PROPERTY -->
+    <div id="demo-property-listing" class="demo-panel demo-listing" style="display:none;">
+      <div class="demo-listing-photo"><img src="https://listinglens.app/apartment2-screenshot.jpg" alt="Apartment listing"></div>
+      <div class="demo-listing-price" translate="no">S$1,280,000</div>
+      <div class="demo-listing-title">2BR Apartment — Orchard Road, Level 18</div>
+      <div class="demo-listing-meta">📍 District 09, Singapore · Agent listed · 75 sqm · 2 bed, 1 bath</div>
+      <div class="demo-listing-desc">"Stunning city views, walking distance to MRT. Recently renovated kitchen and bathroom. Must see!"</div>
+    </div>
+
+    <div id="demo-property-report" class="demo-panel demo-report" style="display:none;">
+      <div class="demo-report-bar">
+        <span>LISTING LENS REPORT</span>
+        <span>2BR Apartment — Orchard Rd</span>
+      </div>
+      <div class="demo-flag demo-flag--red">
+        <span class="demo-flag-icon">🚨</span>
+        <div><strong>Unit in en-bloc potential zone</strong><small>Building &gt;30 years old. En-bloc sale attempts in 2021 and 2023.</small></div>
+      </div>
+      <div class="demo-flag demo-flag--amber">
+        <span class="demo-flag-icon">⚠️</span>
+        <div><strong>Priced S$95,000 above recent comparables</strong><small>Similar units (D09, 2BR, 70-80sqm): S$1,150,000–S$1,210,000</small></div>
+      </div>
+      <div class="demo-flag demo-flag--amber">
+        <span class="demo-flag-icon">⚠️</span>
+        <div><strong>Remaining lease: 61 years — may affect financing</strong></div>
+      </div>
+      <div class="demo-info-card">
+        <h4>💰 Hidden costs (Singapore estimate)</h4>
+        <p>BSD: ~S$36,400 · ABSD (if applicable): up to 20% · Maintenance: ~S$350/month</p>
+      </div>
+      <div class="demo-info-card">
+        <h4>❓ Questions to ask the agent</h4>
+        <p>1. What is the exact remaining lease? · 2. Were there recent en-bloc attempts?</p>
+      </div>
+    </div>
 
     <div class="demo-cta">
       <p translate="yes"><strong>Want this for your listing?</strong> Upload your screenshots, get your report in under a minute.</p>
@@ -899,172 +998,38 @@ var cl = document.getElementById('contactLink');
 if (cl) cl.href = 'mai' + 'lto:hel' + 'lo@list' + 'inglens.app';
 
 // ============================================================
-// INTERACTIVE DEMO — before/after slider
+// INTERACTIVE DEMO — tab toggle
 // ============================================================
+var currentCat = 'vehicle';
+var currentView = 'listing';
 
-// Demo data — pre-built "screenshots" and "reports" as inline SVGs
-var demos = {
-  vehicle: {
-    listing: function() {
-      var s = document.createElementNS('http://www.w3.org/2000/svg','svg');
-      s.setAttribute('viewBox','0 0 600 500');
-      s.setAttribute('width','100%');
-      s.style.display = 'block';
-      s.style.background = '#fff';
-      s.innerHTML =
-        '<rect width="600" height="500" fill="#F8FAFC"/>' +
-        '<rect x="20" y="20" width="560" height="220" rx="12" fill="#E2E8F0"/>' +
-        '<text x="300" y="140" text-anchor="middle" fill="#94A3B8" font-family="DM Sans,sans-serif" font-size="18" font-weight="700">🚗 2019 Toyota RAV4 GXL</text>' +
-        '<text x="300" y="170" text-anchor="middle" fill="#CBD5E1" font-family="DM Sans,sans-serif" font-size="13">Photo placeholder — demo listing</text>' +
-        '<rect x="20" y="260" width="560" height="50" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1.5"/>' +
-        '<text x="40" y="292" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="22" font-weight="800">$34,990</text>' +
-        '<text x="560" y="290" text-anchor="end" fill="#64748B" font-family="DM Sans,sans-serif" font-size="12">87,400 km · Automatic · SUV</text>' +
-        '<rect x="20" y="325" width="560" height="40" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1.5"/>' +
-        '<text x="40" y="351" fill="#64748B" font-family="DM Sans,sans-serif" font-size="12">📍 Parramatta, NSW · Private seller</text>' +
-        '<rect x="20" y="380" width="560" height="100" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1.5"/>' +
-        '<text x="40" y="406" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="13" font-weight="600">Seller\'s description:</text>' +
-        '<text x="40" y="428" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11.5">"Great family car, full service history, no accidents.</text>' +
-        '<text x="40" y="446" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11.5">One owner, always garaged. Brand new tyres fitted."</text>' +
-        '<text x="40" y="468" fill="#94A3B8" font-family="DM Sans,sans-serif" font-size="10">Listed 3 days ago · 42 views</text>';
-      return s;
-    },
-    report: function() {
-      var s = document.createElementNS('http://www.w3.org/2000/svg','svg');
-      s.setAttribute('viewBox','0 0 600 500');
-      s.setAttribute('width','100%');
-      s.style.display = 'block';
-      s.innerHTML =
-        '<rect width="600" height="500" fill="#F0FDF4"/>' +
-        '<rect x="20" y="16" width="560" height="44" rx="10" fill="#064E3B"/>' +
-        '<text x="40" y="44" fill="#6EE7B7" font-family="DM Sans,sans-serif" font-size="13" font-weight="800">LISTING LENS REPORT</text>' +
-        '<text x="560" y="44" text-anchor="end" fill="#6EE7B7" font-family="DM Sans,sans-serif" font-size="11">2019 Toyota RAV4 GXL</text>' +
-        '<rect x="20" y="74" width="200" height="30" rx="15" fill="#FEF2F2"/>' +
-        '<text x="35" y="94" fill="#DC2626" font-family="DM Sans,sans-serif" font-size="11" font-weight="800">⚠️ VERDICT: CAUTION</text>' +
-        '<rect x="20" y="118" width="560" height="58" rx="8" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>' +
-        '<text x="40" y="142" fill="#DC2626" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">🚨 Takata airbag recall active (critical safety)</text>' +
-        '<text x="40" y="162" fill="#7F1D1D" font-family="DM Sans,sans-serif" font-size="10.5">This model/year is affected. Check recalls.gov.au before purchasing.</text>' +
-        '<rect x="20" y="186" width="560" height="58" rx="8" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>' +
-        '<text x="40" y="210" fill="#92400E" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">⚠️ Overpriced by ~$3,200 vs market average</text>' +
-        '<text x="40" y="230" fill="#78350F" font-family="DM Sans,sans-serif" font-size="10.5">Comparable RAV4s (2019, &lt;90k km, NSW): $30,500–$33,100</text>' +
-        '<rect x="20" y="254" width="560" height="46" rx="8" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>' +
-        '<text x="40" y="282" fill="#065F46" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">✅ Service history claim appears consistent</text>' +
-        '<rect x="20" y="314" width="560" height="80" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1"/>' +
-        '<text x="40" y="338" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">💰 Hidden costs (NSW estimate)</text>' +
-        '<text x="40" y="358" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">Stamp duty: ~$1,120 · Transfer: $33 · CTP: ~$650/yr</text>' +
-        '<text x="40" y="378" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">Insurance est: ~$1,400/yr · Registration: ~$370/yr</text>' +
-        '<rect x="20" y="406" width="560" height="76" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1"/>' +
-        '<text x="40" y="430" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">❓ Questions to ask the seller</text>' +
-        '<text x="40" y="450" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">1. Has the Takata recall been addressed?</text>' +
-        '<text x="40" y="468" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">2. Can you provide the full service logbook?</text>';
-      return s;
-    }
-  },
-  property: {
-    listing: function() {
-      var s = document.createElementNS('http://www.w3.org/2000/svg','svg');
-      s.setAttribute('viewBox','0 0 600 500');
-      s.setAttribute('width','100%');
-      s.style.display = 'block';
-      s.style.background = '#fff';
-      s.innerHTML =
-        '<rect width="600" height="500" fill="#F8FAFC"/>' +
-        '<rect x="20" y="20" width="560" height="220" rx="12" fill="#E2E8F0"/>' +
-        '<text x="300" y="140" text-anchor="middle" fill="#94A3B8" font-family="DM Sans,sans-serif" font-size="18" font-weight="700">🏠 2BR Apartment — Orchard Road</text>' +
-        '<text x="300" y="170" text-anchor="middle" fill="#CBD5E1" font-family="DM Sans,sans-serif" font-size="13">Photo placeholder — demo listing</text>' +
-        '<rect x="20" y="260" width="560" height="50" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1.5"/>' +
-        '<text x="40" y="292" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="22" font-weight="800">S$1,280,000</text>' +
-        '<text x="560" y="290" text-anchor="end" fill="#64748B" font-family="DM Sans,sans-serif" font-size="12">75 sqm · 2 bed · 1 bath · Level 18</text>' +
-        '<rect x="20" y="325" width="560" height="40" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1.5"/>' +
-        '<text x="40" y="351" fill="#64748B" font-family="DM Sans,sans-serif" font-size="12">📍 District 09, Singapore · Agent listed</text>' +
-        '<rect x="20" y="380" width="560" height="100" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1.5"/>' +
-        '<text x="40" y="406" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="13" font-weight="600">Agent\'s description:</text>' +
-        '<text x="40" y="428" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11.5">"Stunning city views, walking distance to MRT.</text>' +
-        '<text x="40" y="446" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11.5">Recently renovated kitchen and bathroom. Must see!"</text>' +
-        '<text x="40" y="468" fill="#94A3B8" font-family="DM Sans,sans-serif" font-size="10">Listed 5 days ago · 128 views</text>';
-      return s;
-    },
-    report: function() {
-      var s = document.createElementNS('http://www.w3.org/2000/svg','svg');
-      s.setAttribute('viewBox','0 0 600 500');
-      s.setAttribute('width','100%');
-      s.style.display = 'block';
-      s.innerHTML =
-        '<rect width="600" height="500" fill="#F0FDF4"/>' +
-        '<rect x="20" y="16" width="560" height="44" rx="10" fill="#064E3B"/>' +
-        '<text x="40" y="44" fill="#6EE7B7" font-family="DM Sans,sans-serif" font-size="13" font-weight="800">LISTING LENS REPORT</text>' +
-        '<text x="560" y="44" text-anchor="end" fill="#6EE7B7" font-family="DM Sans,sans-serif" font-size="11">2BR Apartment — Orchard Road</text>' +
-        '<rect x="20" y="74" width="200" height="30" rx="15" fill="#FFFBEB"/>' +
-        '<text x="35" y="94" fill="#92400E" font-family="DM Sans,sans-serif" font-size="11" font-weight="800">⚠️ VERDICT: CAUTION</text>' +
-        '<rect x="20" y="118" width="560" height="58" rx="8" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>' +
-        '<text x="40" y="142" fill="#DC2626" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">🚨 Unit in en-bloc potential zone</text>' +
-        '<text x="40" y="162" fill="#7F1D1D" font-family="DM Sans,sans-serif" font-size="10.5">Building &gt;30 years old. En-bloc sale attempts in 2021 and 2023.</text>' +
-        '<rect x="20" y="186" width="560" height="58" rx="8" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>' +
-        '<text x="40" y="210" fill="#92400E" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">⚠️ Priced S$95,000 above recent comparables</text>' +
-        '<text x="40" y="230" fill="#78350F" font-family="DM Sans,sans-serif" font-size="10.5">Similar units (D09, 2BR, 70-80sqm): S$1,150,000–S$1,210,000</text>' +
-        '<rect x="20" y="254" width="560" height="46" rx="8" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>' +
-        '<text x="40" y="282" fill="#92400E" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">⚠️ Remaining lease: 61 years — may affect financing</text>' +
-        '<rect x="20" y="314" width="560" height="80" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1"/>' +
-        '<text x="40" y="338" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">💰 Hidden costs (Singapore estimate)</text>' +
-        '<text x="40" y="358" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">BSD: ~S$36,400 · ABSD (if applicable): up to 20%</text>' +
-        '<text x="40" y="378" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">Maintenance: ~S$350/month · Agent commission: 1-2%</text>' +
-        '<rect x="20" y="406" width="560" height="76" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1"/>' +
-        '<text x="40" y="430" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">❓ Questions to ask the agent</text>' +
-        '<text x="40" y="450" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">1. What is the exact remaining lease period?</text>' +
-        '<text x="40" y="468" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">2. Were there recent en-bloc attempts? At what price?</text>';
-      return s;
-    }
-  }
-};
-
-// Render initial demo
-var currentDemo = 'vehicle';
-function renderDemo(type) {
-  currentDemo = type;
-  var listingEl = document.getElementById('demoListing');
-  var reportEl = document.getElementById('demoReport');
-  listingEl.innerHTML = '';
-  reportEl.innerHTML = '';
-  listingEl.appendChild(demos[type].listing());
-  reportEl.appendChild(demos[type].report());
-  // Reset handle
-  var handle = document.getElementById('demoHandle');
-  handle.style.left = '50%';
-  reportEl.style.clipPath = 'inset(0 0 0 50%)';
+function updateDemo() {
+  // Hide all panels
+  document.querySelectorAll('.demo-panel').forEach(function(p) { p.style.display = 'none'; });
+  // Show active panel
+  var panel = document.getElementById('demo-' + currentCat + '-' + currentView);
+  if (panel) panel.style.display = 'block';
 }
-renderDemo('vehicle');
 
-// Tab switching
-document.querySelectorAll('.demo-tab').forEach(function(tab) {
-  tab.addEventListener('click', function() {
-    document.querySelectorAll('.demo-tab').forEach(function(t) { t.classList.remove('active'); });
-    tab.classList.add('active');
-    renderDemo(tab.dataset.demo);
+// Category tabs
+document.querySelectorAll('.demo-cat').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.demo-cat').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    currentCat = btn.dataset.cat;
+    updateDemo();
   });
 });
 
-// Slider drag logic
-(function() {
-  var slider = document.getElementById('demoSlider');
-  var handle = document.getElementById('demoHandle');
-  var report = document.getElementById('demoReport');
-  var dragging = false;
-
-  function updateSlider(x) {
-    var rect = slider.getBoundingClientRect();
-    var pct = Math.max(0, Math.min(1, (x - rect.left) / rect.width));
-    var pctStr = (pct * 100) + '%';
-    handle.style.left = pctStr;
-    report.style.clipPath = 'inset(0 0 0 ' + pctStr + ')';
-  }
-
-  slider.addEventListener('mousedown', function(e) { dragging = true; updateSlider(e.clientX); });
-  window.addEventListener('mousemove', function(e) { if (dragging) { e.preventDefault(); updateSlider(e.clientX); } });
-  window.addEventListener('mouseup', function() { dragging = false; });
-
-  slider.addEventListener('touchstart', function(e) { dragging = true; updateSlider(e.touches[0].clientX); }, { passive: true });
-  window.addEventListener('touchmove', function(e) { if (dragging) { updateSlider(e.touches[0].clientX); } }, { passive: true });
-  window.addEventListener('touchend', function() { dragging = false; });
-})();
+// View toggle (listing / report)
+document.querySelectorAll('.demo-toggle-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.demo-toggle-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    currentView = btn.dataset.view;
+    updateDemo();
+  });
+});
 </script>
 </body>
 </html>
