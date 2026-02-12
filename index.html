@@ -133,6 +133,20 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
   max-width: 640px;
   margin: 0 auto;
 }
+.intro-cta {
+  display: inline-block;
+  margin-top: 1.2rem;
+  padding: 0.7rem 1.8rem;
+  border-radius: 10px;
+  background: var(--emerald-deep);
+  color: var(--white);
+  font-family: var(--font);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.intro-cta:hover { background: var(--emerald-dark); transform: translateY(-1px); }
 
 /* ============================================================
    TOP BAR — Google Translate
@@ -312,39 +326,40 @@ body { top: 0 !important; }
 }
 
 /* ============================================================
-   COMING SOON CATEGORIES
+   WE ANALYSE EVERYTHING
    ============================================================ */
-.card--coming {
+.card--everything {
   grid-column: 1 / -1;
   background: var(--white);
   border: 1.5px solid var(--gray-100);
   padding: 2rem 2.2rem;
 }
-.coming-header h2 {
+.everything-header h2 {
   font-size: 1.3rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   margin-bottom: 0.25rem;
 }
-.coming-header h2 em {
+.everything-header h2 em {
   font-style: normal;
   color: var(--emerald);
 }
-.coming-header > p {
+.everything-header > p {
   font-size: 0.85rem;
   color: var(--slate-500);
   margin-bottom: 1.3rem;
+  line-height: 1.6;
 }
-.coming-grid {
+.everything-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 @media (max-width: 640px) {
-  .coming-grid { grid-template-columns: repeat(3, 1fr); }
+  .everything-grid { grid-template-columns: repeat(3, 1fr); }
 }
-.coming-item {
+.everything-item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -355,34 +370,37 @@ body { top: 0 !important; }
   background: var(--snow);
   position: relative;
 }
-.coming-icon { font-size: 1.8rem; }
-.coming-name {
+.everything-item--specialist {
+  border-color: var(--emerald);
+  background: var(--emerald-pale);
+}
+.everything-item--any {
+  border-style: dashed;
+  border-color: var(--slate-400);
+}
+.everything-icon { font-size: 1.8rem; }
+.everything-name {
   font-size: 0.72rem;
   font-weight: 700;
   color: var(--slate-700);
 }
-.coming-tag {
+.everything-tag {
   font-size: 0.55rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 0.15rem 0.45rem;
   border-radius: 100px;
-  background: var(--amber-pale);
-  color: #92400E;
 }
-.coming-privacy {
-  font-size: 0.68rem;
-  color: var(--slate-400);
-  display: block;
-  margin-top: 0.3rem;
+.everything-tag--specialist {
+  background: var(--emerald);
+  color: var(--white);
 }
-.coming-privacy-link {
-  color: var(--slate-400);
-  text-decoration: underline;
-  transition: color 0.15s;
+.everything-footer {
+  font-size: 0.82rem;
+  color: var(--slate-500);
+  font-weight: 500;
 }
-.coming-privacy-link:hover { color: var(--emerald); }
 
 /* ============================================================
    INTERACTIVE DEMO — side by side
@@ -474,6 +492,23 @@ body { top: 0 !important; }
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 0.8rem;
+  position: relative;
+}
+.demo-listing-photo .zoom-hint {
+  display: none;
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background: rgba(0,0,0,0.55);
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  pointer-events: none;
+}
+@media (max-width: 768px) {
+  .demo-listing-photo .zoom-hint { display: block; }
 }
 /* Image lightbox */
 .demo-listing-photo img {
@@ -757,6 +792,7 @@ body { top: 0 !important; }
   padding: 0.8rem 1.2rem;
   background: var(--snow);
   border-top: 1px solid var(--gray-100);
+  text-align: center;
 }
 .demo-full-footer p {
   font-size: 0.68rem;
@@ -1027,8 +1063,9 @@ function googleTranslateInit() {
 
   <!-- 2. WHAT IS IT -->
   <div class="card card--intro">
-    <h2 translate="yes">who is <em>Listing Lens?</em></h2>
+    <h2 translate="yes">what is <em>Listing Lens?</em></h2>
     <p translate="yes">Listing Lens is a buyer intelligence tool. You upload screenshots of any car or property listing — from any marketplace, any country — and we deliver a detailed report exposing red flags, hidden costs, and what the seller isn't telling you. One report. Five dollars. Under a minute.</p>
+    <a href="/dashboard.html" class="intro-cta" translate="yes">get your report — $5</a>
   </div>
 
 
@@ -1075,7 +1112,7 @@ function googleTranslateInit() {
       <div>
         <span class="demo-col-label demo-col-label--listing">📸 the listing</span>
         <div class="demo-panel demo-listing">
-          <div class="demo-listing-photo"><img src="https://listinglens.app/jeep-2026-1.jpg" alt="2015 Jeep Wrangler listing"></div>
+          <div class="demo-listing-photo"><img src="https://listinglens.app/jeep-2026-1.jpg" alt="2015 Jeep Wrangler listing"><span class="zoom-hint">tap to zoom</span></div>
           <div class="demo-listing-price" translate="no">$22,500 <small style="font-size:0.55em;font-weight:600;color:var(--slate-400)">Excl. Govt. Charges</small></div>
           <div class="demo-listing-title">2015 Jeep Wrangler Unlimited Sport Auto 4x4 MY15</div>
           <div class="demo-listing-meta">📍 NSW · Private seller · 156,000 km · Petrol · Automatic</div>
@@ -1211,6 +1248,7 @@ function googleTranslateInit() {
 
       <div class="demo-full-footer">
         <p>This report was generated by Listing Lens using AI analysis. It is not legal or financial advice. Always conduct your own due diligence.</p>
+        <a href="/dashboard.html" class="demo-cta-btn" style="margin-top:0.8rem;" translate="yes">get your report — $5</a>
       </div>
     </div>
 
@@ -1219,7 +1257,7 @@ function googleTranslateInit() {
       <div>
         <span class="demo-col-label demo-col-label--listing">📸 the listing</span>
         <div class="demo-panel demo-listing">
-          <div class="demo-listing-photo"><img src="https://listinglens.app/apartment-2026-1.jpg" alt="Property listing"></div>
+          <div class="demo-listing-photo"><img src="https://listinglens.app/apartment-2026-1.jpg" alt="Property listing"><span class="zoom-hint">tap to zoom</span></div>
           <div class="demo-listing-price" translate="no">$655,000 <small style="font-size:0.55em;font-weight:600;color:var(--slate-400)">Brand New</small></div>
           <div class="demo-listing-title">108/125 Arthur Street, Parramatta NSW 2150</div>
           <div class="demo-listing-meta">📍 Parramatta · 2 bed · 1 bath · 1 car · Apartment</div>
@@ -1355,6 +1393,7 @@ function googleTranslateInit() {
 
       <div class="demo-full-footer">
         <p>This report was generated by Listing Lens using AI analysis. It is not legal or financial advice. Always conduct your own due diligence.</p>
+        <a href="/dashboard.html" class="demo-cta-btn" style="margin-top:0.8rem;" translate="yes">get your report — $5</a>
       </div>
     </div>
 
@@ -1384,44 +1423,57 @@ function googleTranslateInit() {
   </div>
 
 
-  <!-- 6. COMING SOON CATEGORIES -->
-  <div class="card card--coming" id="comingCard">
-    <div class="coming-header">
-      <h2 translate="yes">more categories <em>launching soon.</em></h2>
-      <p translate="yes">specialist reports tailored to each category — same $5, same depth.</p>
+  <!-- 6. WE ANALYSE EVERYTHING -->
+  <div class="card card--everything" id="everythingCard">
+    <div class="everything-header">
+      <h2 translate="yes">we analyse <em>everything.</em></h2>
+      <p translate="yes">vehicles and property get specialist reports with tailored checks — recalls, registration, stamp duty, strata, government records. But if it has a price and a listing, upload it.</p>
     </div>
-    <div class="coming-grid">
-      <div class="coming-item">
-        <span class="coming-icon">⛵</span>
-        <span class="coming-name" translate="yes">boats</span>
-        <span class="coming-tag" translate="yes">soon</span>
+    <div class="everything-grid">
+      <div class="everything-item everything-item--specialist">
+        <span class="everything-icon">🚗</span>
+        <span class="everything-name" translate="yes">vehicles</span>
+        <span class="everything-tag everything-tag--specialist" translate="yes">specialist</span>
       </div>
-      <div class="coming-item">
-        <span class="coming-icon">⌚</span>
-        <span class="coming-name" translate="yes">watches</span>
-        <span class="coming-tag" translate="yes">soon</span>
+      <div class="everything-item everything-item--specialist">
+        <span class="everything-icon">🏠</span>
+        <span class="everything-name" translate="yes">property</span>
+        <span class="everything-tag everything-tag--specialist" translate="yes">specialist</span>
       </div>
-      <div class="coming-item">
-        <span class="coming-icon">💻</span>
-        <span class="coming-name" translate="yes">electronics</span>
-        <span class="coming-tag" translate="yes">soon</span>
+      <div class="everything-item">
+        <span class="everything-icon">⛵</span>
+        <span class="everything-name" translate="yes">boats</span>
       </div>
-      <div class="coming-item">
-        <span class="coming-icon">💍</span>
-        <span class="coming-name" translate="yes">jewellery</span>
-        <span class="coming-tag" translate="yes">soon</span>
+      <div class="everything-item">
+        <span class="everything-icon">🏍️</span>
+        <span class="everything-name" translate="yes">motorcycles</span>
       </div>
-      <div class="coming-item">
-        <span class="coming-icon">🏍️</span>
-        <span class="coming-name" translate="yes">motorcycles</span>
-        <span class="coming-tag" translate="yes">soon</span>
+      <div class="everything-item">
+        <span class="everything-icon">💻</span>
+        <span class="everything-name" translate="yes">electronics</span>
       </div>
-      <div class="coming-item">
-        <span class="coming-icon">🎸</span>
-        <span class="coming-name" translate="yes">instruments</span>
-        <span class="coming-tag" translate="yes">soon</span>
+      <div class="everything-item">
+        <span class="everything-icon">⌚</span>
+        <span class="everything-name" translate="yes">watches</span>
+      </div>
+      <div class="everything-item">
+        <span class="everything-icon">💍</span>
+        <span class="everything-name" translate="yes">jewellery</span>
+      </div>
+      <div class="everything-item">
+        <span class="everything-icon">🚜</span>
+        <span class="everything-name" translate="yes">machinery</span>
+      </div>
+      <div class="everything-item">
+        <span class="everything-icon">🎸</span>
+        <span class="everything-name" translate="yes">instruments</span>
+      </div>
+      <div class="everything-item everything-item--any">
+        <span class="everything-icon">📦</span>
+        <span class="everything-name" translate="yes">anything else</span>
       </div>
     </div>
+    <p class="everything-footer" translate="yes">same price. same depth. if a seller's hiding something, we'll find it.</p>
   </div>
 
 
