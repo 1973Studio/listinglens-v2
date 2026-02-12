@@ -2,1063 +2,1253 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<script>if(!new URLSearchParams(window.location.search).get('token'))window.location.href='/';</script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>Listing Lens — Your Report</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listing Lens — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg-cream: #FFFFFF;
-  --bg-soft: #F9FAFB;
-  --bg-cloud: #F1F5F9;
-  --text-primary: #0F172A;
-  --text-secondary: #64748B;
-  --text-muted: #94A3B8;
-  --teal: #10B981;
-  --teal-hot: #34D399;
-  --teal-light: #6EE7B7;
-  --teal-pale: #D1FAE5;
-  --teal-deep: #059669;
-  --teal-dark: #064E3B;
-  
-  
+  --white: #FFFFFF;
+  --snow: #F9FAFB;
+  --gray-100: #E5E7EB;
+  --gray-200: #D1D5DB;
+  --slate-900: #0F172A;
+  --slate-800: #1E293B;
+  --slate-700: #334155;
+  --slate-500: #64748B;
+  --slate-400: #94A3B8;
+  --emerald: #10B981;
+  --emerald-light: #6EE7B7;
+  --emerald-pale: #D1FAE5;
+  --emerald-deep: #059669;
+  --emerald-dark: #064E3B;
   --red: #DC2626;
   --red-pale: #FEF2F2;
-  --white: #fff;
-  --border: #E5E7EB;
+  --amber: #F59E0B;
+  --amber-pale: #FFFBEB;
+  --blue-pale: #EFF6FF;
   --font: 'DM Sans', system-ui, -apple-system, sans-serif;
 }
 
-html {
-  font-family: var(--font);
-  -webkit-font-smoothing: antialiased;
-  font-size: 14px;
-  line-height: 1.5;
-  background: var(--bg-cream);
-}
-body { margin: 0; color: var(--text-primary); min-height: 100svh; }
+html { font-family: var(--font); -webkit-font-smoothing: antialiased; background: var(--snow); color: var(--slate-900); }
+body { margin: 0; padding: 1.2rem; min-height: 100vh; }
+@media (min-width: 768px) { body { padding: 2rem; } }
 
 /* ============================================================
-   TOP BAR
+   BENTO GRID
+   ============================================================ */
+.bento {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (min-width: 768px) {
+  .bento {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ============================================================
+   BASE CARD
+   ============================================================ */
+.card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 1.8rem;
+  border: 1.5px solid var(--gray-100);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  opacity: 0;
+  animation: fadeUp 0.4s ease forwards;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   TOP BAR — nav back to home
    ============================================================ */
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--slate-900);
+  margin: -1.2rem -1.2rem 1.2rem;
+  padding: 0 1.2rem;
+}
+@media (min-width: 768px) {
+  .topbar { margin: -2rem -2rem 2rem; padding: 0 2rem; }
+}
+.topbar-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  background: var(--white);
 }
 .topbar-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.topbar-icon {
-  width: 32px; height: 32px;
-  border-radius: 8px;
-  background: var(--text-primary);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
-}
-.topbar-name {
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--text-primary);
-}
-.topbar-status {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.8rem;
-  color: var(--teal);
-  font-weight: 600;
-}
-.topbar-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--teal-hot);
-  animation: pulse 2s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-/* ============================================================
-   MAIN CONTENT
-   ============================================================ */
-.dashboard {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
-}
-
-/* Ephemeral banner */
-.ephemeral-banner {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.8rem;
-  background: #FEF2F2;
-  border: 1px solid #FECACA;
-  border-radius: 12px;
-  padding: 1rem 1.2rem;
-  margin-bottom: 2rem;
-}
-.ephemeral-icon {
-  font-size: 1.2rem;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.ephemeral-text {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.55;
-}
-.ephemeral-text strong { color: #991B1B; }
-
-/* Welcome */
-.welcome {
-  margin-bottom: 2.5rem;
-}
-.welcome h1 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
-  margin-bottom: 0.5rem;
-}
-.welcome p {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-/* Step indicator */
-.steps {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-}
-.step-bar {
-  flex: 1;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--bg-cloud);
-  transition: background 0.3s ease;
-}
-.step-bar.active { background: var(--teal); }
-.step-bar.complete { background: var(--teal-light); }
-
-/* ============================================================
-   COUNTRY SELECTOR
-   ============================================================ */
-.country-card {
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--white);
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-  transition: all 0.2s ease;
-}
-.country-card.complete { border-color: var(--teal-light); }
-.country-card-header {
-  padding: 1.2rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.country-card-left {
-  display: flex; align-items: center; gap: 0.8rem;
-}
-.country-card-number {
-  width: 48px; height: 48px; border-radius: 50%;
-  background: var(--bg-soft);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem; font-weight: 700; color: var(--text-muted);
-  flex-shrink: 0;
-}
-.country-card.complete .country-card-number {
-  background: var(--teal-pale); color: var(--teal);
-}
-.country-card-title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
-.country-card-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
-.country-card-body { padding: 1.5rem; }
-
-.country-select-wrapper {
-  position: relative;
-}
-.country-search {
-  width: 100%;
-  padding: 1rem 1.2rem 1rem 3.2rem;
-  border: 2px solid var(--bg-cloud);
-  border-radius: 12px;
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--text-primary);
-  background: var(--bg-cream);
-  outline: none;
-  transition: all 0.2s ease;
-}
-.country-search:focus {
-  border-color: var(--teal-light);
-  background: rgba(209,250,229,0.08);
-}
-.country-search::placeholder { color: var(--text-muted); }
-.country-flag {
-  position: absolute;
-  left: 1.2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.3rem;
-  pointer-events: none;
-}
-.country-results {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0; right: 0;
-  background: var(--white);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
-  max-height: 220px;
-  overflow-y: auto;
-  z-index: 20;
-  display: none;
-}
-.country-results.open { display: block; }
-.country-result {
-  padding: 0.7rem 1.2rem;
-  cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  transition: background 0.1s;
-}
-.country-result:first-child { border-radius: 12px 12px 0 0; }
-.country-result:last-child { border-radius: 0 0 12px 12px; }
-.country-result:hover,
-.country-result.highlighted { background: var(--teal-pale); }
-.country-result-flag { font-size: 1.2rem; }
-.country-helper {
-  margin-top: 0.8rem;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.4rem;
-}
-.country-helper svg {
-  width: 14px; height: 14px; flex-shrink: 0; margin-top: 2px;
-  stroke: var(--teal-light); fill: none; stroke-width: 2;
-}
-
-/* ============================================================
-   UPLOAD CARDS
-   ============================================================ */
-.upload-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.upload-card {
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--white);
-  overflow: hidden;
-  transition: all 0.2s ease;
-}
-.upload-card.complete {
-  border-color: var(--teal-light);
-}
-.upload-card.locked {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-.upload-card-header {
-  padding: 1.2rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.upload-card-left {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-}
-.upload-card-number {
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  background: var(--bg-soft);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  flex-shrink: 0;
-}
-.upload-card.complete .upload-card-number {
-  background: var(--teal-pale);
-  color: var(--teal);
-}
-.upload-card-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-.upload-card-subtitle {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-.upload-card-badge {
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 4px 10px;
-  border-radius: 6px;
-}
-.badge-required { background: var(--teal-pale); color: var(--teal-deep); }
-.badge-recommended { background: var(--amber-pale); color: #92400E; }
-.badge-done { background: var(--teal-pale); color: var(--teal); }
-
-.upload-card-body {
-  padding: 1.5rem;
-}
-
-/* Drop zone inside card */
-.card-drop {
-  border: 2px dashed var(--teal-light);
-  border-radius: 12px;
-  padding: 2rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background: #F0FDF4;
-}
-.card-drop:hover {
-  border-color: var(--teal);
-  background: #DCFCE7;
-}
-.card-drop-icon {
-  width: 44px; height: 44px;
-  border-radius: 12px;
-  background: var(--teal-pale);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px;
-}
-.card-drop-text {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-.card-drop-hint {
+  color: var(--white);
   font-size: 0.78rem;
-  color: var(--text-muted);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.topbar-brand:hover { color: var(--emerald-light); }
+.topbar-back {
+  color: var(--slate-400);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.topbar-back:hover { color: var(--white); }
+
+/* ============================================================
+   HEADER CARD — title bar
+   ============================================================ */
+.card--header {
+  grid-column: 1 / -1;
+  background: var(--slate-900);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 1rem 1.4rem;
+  position: sticky;
+  top: 48px;
+  z-index: 90;
+  border-radius: 14px;
+  margin-bottom: 0;
+}
+.card--header h1 {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.card--header h1 em {
+  font-style: normal;
+  color: var(--emerald);
+}
+.card--header .header-steps {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+.header-step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  transition: background 0.3s, transform 0.3s;
+}
+.header-step-dot.active {
+  background: var(--emerald);
+  transform: scale(1.4);
+}
+.header-step-dot.done {
+  background: var(--emerald-deep);
+}
+.header-step-labels {
+  display: flex;
+  gap: 0.15rem;
+  margin-left: 0.6rem;
+}
+.header-step-label {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.3);
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  transition: color 0.3s;
+}
+.header-step-label.active {
+  color: var(--emerald-light);
+}
+.header-step-label.done {
+  color: rgba(255,255,255,0.5);
 }
 
-/* Uploaded preview */
-.card-preview {
-  display: none;
-  border-radius: 12px;
-  overflow: hidden;
-  position: relative;
+/* Completed state — after payment */
+.card--header.completed {
+  padding: 0.6rem 1.4rem;
+  background: var(--emerald-dark);
 }
-.card-preview img {
+.card--header.completed h1 { display: none; }
+.card--header.completed .header-steps { width: 100%; justify-content: center; }
+.card--header.completed .header-step-dot { background: var(--emerald-light); }
+.card--header.completed .header-step-label { color: var(--emerald-light); font-size: 0.58rem; }
+.card--header.completed .completed-msg {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--white);
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  justify-content: center;
+}
+.completed-msg { display: none; }
+.card--header.completed .header-steps { display: none; }
+.card--header.completed .completed-msg { display: flex; }
+
+/* ============================================================
+   STEP 1 — WHERE ARE YOU BUYING
+   ============================================================ */
+.card--country {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  animation-delay: 0.06s;
+}
+.card--country .step-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--emerald-pale);
+  color: var(--emerald-deep);
+  font-size: 1rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.card--country .step-content { flex: 1; min-width: 0; }
+.card--country h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+}
+.card--country .step-sub {
+  font-size: 0.82rem;
+  color: var(--slate-500);
+  margin-bottom: 1rem;
+}
+.country-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+  margin-bottom: 0.8rem;
+}
+.country-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.8rem;
+  border: 1.5px solid var(--gray-100);
+  border-radius: 10px;
+  background: var(--white);
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--slate-900);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.country-btn:hover { border-color: var(--emerald); background: var(--emerald-pale); }
+.country-btn.selected {
+  border-color: var(--emerald);
+  background: var(--emerald-pale);
+  color: var(--emerald-dark);
+}
+.country-btn .cb-flag { font-size: 1.1rem; }
+.country-other-wrap {
+  position: relative;
+  max-width: 280px;
+}
+.country-other-input {
+  width: 100%;
+  padding: 0.55rem 0.8rem;
+  border: 1.5px solid var(--gray-100);
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 0.8rem;
+  color: var(--slate-900);
+  background: var(--snow);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.country-other-input:focus { border-color: var(--emerald); background: var(--white); }
+.country-other-input::placeholder { color: var(--slate-400); }
+
+/* ============================================================
+   STEP 2 — WHAT ARE YOU SCANNING
+   ============================================================ */
+.card--category-pick {
+  grid-column: 1 / -1;
+  animation-delay: 0.12s;
+}
+.category-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 1rem;
+}
+@media (max-width: 640px) {
+  .category-options { grid-template-columns: 1fr; }
+}
+.cat-option {
+  border: 1.5px solid var(--gray-100);
+  border-radius: 16px;
+  padding: 1.6rem 1.2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--white);
+}
+.cat-option:hover { border-color: var(--emerald); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.05); }
+.cat-option.selected {
+  border-color: var(--emerald);
+  background: var(--emerald-pale);
+}
+.cat-option .cat-icon {
+  font-size: 2rem;
+  margin-bottom: 0.7rem;
   display: block;
 }
-.card-preview-overlay {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: 0.8rem 1rem;
-  background: linear-gradient(transparent, rgba(0,0,0,0.6));
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.card-preview-name {
-  color: white;
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-.card-preview-change {
-  color: white;
-  font-size: 0.75rem;
-  text-decoration: underline;
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-family: inherit;
-}
-
-/* What we're looking for helper */
-.card-helper {
-  margin-top: 1rem;
-  padding: 1rem;
-  background: var(--bg-cream);
-  border-radius: 10px;
-  border: 1px solid var(--border);
-}
-.card-helper-title {
-  font-size: 0.78rem;
+.cat-option .cat-name {
+  font-size: 1rem;
   font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
 }
-.card-helper-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+.cat-option .cat-sub {
+  font-size: 0.75rem;
+  color: var(--slate-500);
 }
-.card-helper-list li {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
+.cat-option.selected .cat-sub { color: var(--emerald-deep); }
+
+/* ============================================================
+   STEP 3 — UPLOAD SLOTS
+   ============================================================ */
+.card--upload {
+  grid-column: 1 / -1;
+  animation-delay: 0.18s;
+}
+.upload-slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 1rem;
+}
+@media (max-width: 640px) {
+  .upload-slots { grid-template-columns: 1fr; }
+}
+.upload-slot {
+  border: 1.5px solid var(--gray-100);
+  border-radius: 16px;
+  padding: 1.2rem;
+  background: var(--white);
+  transition: border-color 0.2s;
+}
+.upload-slot.has-file {
+  border-color: var(--emerald);
+}
+.slot-label {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  margin-bottom: 0.6rem;
 }
-.card-helper-list li::before {
-  content: '';
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--teal-light);
-  flex-shrink: 0;
-}
-
-/* ============================================================
-   GENERATE BUTTON
-   ============================================================ */
-.generate-section {
-  margin-bottom: 2rem;
-}
-.generate-btn {
-  width: 100%;
-  padding: 1.1rem;
-  border: none;
-  border-radius: 14px;
-  background: var(--teal);
-  color: white;
-  font-family: inherit;
-  font-size: 1.1rem;
-  font-weight: 700;
-  cursor: pointer;
+.slot-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  background: var(--emerald-pale);
+  color: var(--emerald-deep);
+  font-size: 0.72rem;
+  font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 12px rgba(16,185,129,0.25);
 }
-.generate-btn:hover {
-  background: var(--teal-deep);
-  box-shadow: 0 4px 20px rgba(16,185,129,0.35);
-}
-.generate-btn:disabled {
-  background: var(--bg-cloud);
-  color: var(--text-muted);
-  cursor: not-allowed;
-  box-shadow: none;
-}
-.generate-btn svg { width: 20px; height: 20px; fill: currentColor; }
-
-.generate-note {
-  text-align: center;
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  margin-top: 0.8rem;
-}
-
-/* ============================================================
-   REPORT OUTPUT (hidden until generated)
-   ============================================================ */
-.report-output {
-  display: none;
-  margin-bottom: 2rem;
-}
-.report-output.visible { display: block; }
-
-.report-output-header {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 1.5rem;
-}
-.report-output-header h2 {
-  font-size: 1.3rem;
-  font-weight: 700;
-}
-.report-done-badge {
-  font-size: 0.7rem;
+.slot-tag {
+  font-size: 0.62rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 4px 10px;
-  border-radius: 6px;
-  background: var(--teal-pale);
-  color: var(--teal);
+  padding: 0.2rem 0.55rem;
+  border-radius: 100px;
 }
-
-/* Reuse report styles from main site */
-.report { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: white; }
-.report-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
-.report-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--bg-soft); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-.report-meta h3 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
-.report-meta p { font-size: 11px; color: var(--text-muted); }
-.intel-block { padding: 18px 24px; border-bottom: 1px solid var(--border); }
-.intel-block:last-child { border-bottom: none; }
-.intel-block h4 { font-size: 13px; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-.badge { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 7px; border-radius: 4px; }
-.badge--critical { background: var(--red-pale); color: var(--red); border: 1px solid #FECACA; }
-.badge--info { background: var(--teal-pale); color: var(--teal-deep); border: 1px solid var(--teal-light); }
-.intel-list { list-style: none; }
-.intel-list li { font-size: 12px; line-height: 1.6; color: var(--text-secondary); padding: 6px 0; border-bottom: 1px solid var(--bg-soft); display: flex; gap: 8px; }
-.intel-list li:last-child { border-bottom: none; }
-.intel-list li::before { content: '→'; color: var(--bg-cloud); flex-shrink: 0; }
-.intel-list li strong { color: var(--text-primary); }
-.report-verdict { padding: 18px 24px; background: var(--teal-pale); border-top: 1px solid var(--teal-light); font-size: 12px; font-weight: 600; color: var(--teal-deep); line-height: 1.55; }
-
-/* Download / actions */
-.report-actions {
-  display: flex;
-  gap: 0.8rem;
-  margin-top: 1.5rem;
+.slot-tag--required { background: var(--red-pale); color: var(--red); }
+.slot-tag--recommended { background: var(--amber-pale); color: #92400E; }
+.slot-tag--optional { background: var(--blue-pale); color: #2563EB; }
+.slot-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  margin-bottom: 0.15rem;
 }
-.action-btn {
-  flex: 1;
-  padding: 0.8rem;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--white);
-  font-family: inherit;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  cursor: pointer;
+.slot-hint {
+  font-size: 0.75rem;
+  color: var(--slate-400);
+  margin-bottom: 0.8rem;
+}
+.slot-dropzone {
+  border: 2px dashed var(--gray-200);
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
   text-align: center;
-  transition: all 0.15s ease;
+  cursor: pointer;
+  background: var(--snow);
+  position: relative;
+  transition: all 0.2s;
 }
-.action-btn:hover { border-color: var(--teal-light); color: var(--teal); }
-.action-btn--primary {
-  background: var(--teal);
-  color: white;
-  border-color: var(--teal);
+.slot-dropzone:hover {
+  border-color: var(--emerald);
+  background: var(--emerald-pale);
 }
-.action-btn--primary:hover { background: var(--teal-deep); }
+.slot-drop-icon { font-size: 1.5rem; display: block; margin-bottom: 0.3rem; }
+.slot-drop-text { font-size: 0.78rem; color: var(--slate-500); font-weight: 600; }
+.slot-dropzone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.slot-preview {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  border: 1.5px solid var(--emerald);
+}
+.slot-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+.slot-remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-/* Data deletion notice */
-.deletion-notice {
-  margin-top: 2rem;
-  padding: 1rem 1.2rem;
-  background: var(--red-pale);
-  border: 1px solid #FECACA;
-  border-radius: 10px;
+/* ============================================================
+   STEP 4 — QUICK SCAN (teaser)
+   ============================================================ */
+.card--scan {
+  grid-column: 1 / -1;
+  animation-delay: 0.24s;
+  display: none;
+}
+.card--scan.visible { display: block; }
+.scan-loading {
+  text-align: center;
+  padding: 2rem;
+}
+.scan-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--gray-100);
+  border-top-color: var(--emerald);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 1rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.scan-loading p {
+  font-size: 0.88rem;
+  color: var(--slate-500);
+}
+.scan-result {
+  display: none;
+}
+.scan-result.visible { display: block; }
+.scan-flags {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 1.2rem;
+}
+.scan-flag {
   display: flex;
   align-items: flex-start;
   gap: 0.6rem;
-  font-size: 0.8rem;
-  color: var(--text-secondary);
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
   line-height: 1.5;
 }
-.deletion-notice strong { color: var(--red); }
+.scan-flag--red { background: var(--red-pale); color: var(--red); }
+.scan-flag--amber { background: var(--amber-pale); color: #92400E; }
+.scan-flag--green { background: var(--emerald-pale); color: var(--emerald-dark); }
+.scan-flag .sf-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+.scan-teaser {
+  padding: 1.2rem;
+  background: var(--snow);
+  border-radius: 12px;
+  border: 1.5px solid var(--gray-100);
+  text-align: center;
+}
+.scan-teaser p {
+  font-size: 0.85rem;
+  color: var(--slate-500);
+  margin-bottom: 0.8rem;
+}
+.scan-teaser p strong {
+  color: var(--slate-900);
+}
 
 /* ============================================================
-   LOADING STATE
+   PAYMENT + FULL REPORT BUTTON
    ============================================================ */
-.loading-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(250,250,247,0.92);
-  backdrop-filter: blur(4px);
-  z-index: 100;
-  flex-direction: column;
+.btn-primary {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.9rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--slate-900);
+  color: var(--white);
+  font-family: var(--font);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
 }
-.loading-overlay.visible { display: flex; }
-.loading-spinner {
-  width: 48px; height: 48px;
-  border: 4px solid var(--bg-cloud);
-  border-top-color: var(--teal);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+.btn-primary:hover { background: var(--slate-700); transform: translateY(-1px); }
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
-.loading-text {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text-primary);
+.btn-primary--green {
+  background: var(--emerald-deep);
 }
-.loading-sub {
+.btn-primary--green:hover { background: var(--emerald-dark); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1.2rem;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--slate-900);
+  font-family: var(--font);
   font-size: 0.85rem;
-  color: var(--text-muted);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: var(--emerald); background: var(--emerald-pale); }
+
+/* ============================================================
+   STEP 5 — FULL REPORT
+   ============================================================ */
+.card--report {
+  grid-column: 1 / -1;
+  animation-delay: 0.3s;
+  display: none;
+}
+.card--report.visible { display: block; }
+.report-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+.report-verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.verdict--red { background: var(--red-pale); color: var(--red); }
+.verdict--amber { background: var(--amber-pale); color: #92400E; }
+.verdict--green { background: var(--emerald-pale); color: var(--emerald-deep); }
+
+.report-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.report-section {
+  border: 1.5px solid var(--gray-100);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.report-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem 1.2rem;
+  cursor: pointer;
+  background: var(--snow);
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: background 0.15s;
+  user-select: none;
+}
+.report-section-header:hover { background: var(--emerald-pale); }
+.report-section-header .rs-icon { font-size: 1.1rem; }
+.report-section-header .rs-arrow {
+  margin-left: auto;
+  font-size: 0.7rem;
+  color: var(--slate-400);
+  transition: transform 0.2s;
+}
+.report-section.open .rs-arrow { transform: rotate(180deg); }
+.report-section-body {
+  padding: 0 1.2rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+.report-section.open .report-section-body {
+  padding: 1rem 1.2rem;
+  max-height: 1000px;
+}
+.report-section-body p {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--slate-700);
 }
 
-/* Footer */
-.dash-footer {
-  padding: 1.5rem;
-  text-align: center;
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  border-top: 1px solid var(--border);
+/* ============================================================
+   DELIVERY CARD — email + download
+   ============================================================ */
+.card--delivery {
+  grid-column: 1 / -1;
+  display: none;
+  animation-delay: 0.36s;
 }
+.card--delivery.visible { display: block; }
+.delivery-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 1rem;
+}
+@media (max-width: 640px) {
+  .delivery-options { grid-template-columns: 1fr; }
+}
+.delivery-option {
+  padding: 1.4rem;
+  border: 1.5px solid var(--gray-100);
+  border-radius: 14px;
+  text-align: center;
+  transition: all 0.2s;
+}
+.delivery-option:hover { border-color: var(--emerald); }
+.delivery-option .do-icon { font-size: 1.8rem; margin-bottom: 0.6rem; display: block; }
+.delivery-option h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.3rem; }
+.delivery-option p { font-size: 0.75rem; color: var(--slate-500); margin-bottom: 0.8rem; }
+.email-input-wrap {
+  display: flex;
+  gap: 6px;
+}
+.email-input {
+  flex: 1;
+  padding: 0.5rem 0.7rem;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 8px;
+  font-family: var(--font);
+  font-size: 0.8rem;
+  outline: none;
+  min-width: 0;
+}
+.email-input:focus { border-color: var(--emerald); }
+.email-send {
+  padding: 0.5rem 0.9rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--emerald-deep);
+  color: var(--white);
+  font-family: var(--font);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.email-send:hover { background: var(--emerald-dark); }
+
+/* ============================================================
+   PRIVACY REMINDER — small footer
+   ============================================================ */
+.card--privacy-sm {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #064E3B 0%, #065F46 100%);
+  color: var(--white);
+  padding: 1.2rem 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.78rem;
+  animation-delay: 0.42s;
+}
+.card--privacy-sm .priv-icon { font-size: 1.2rem; flex-shrink: 0; }
+.card--privacy-sm p { color: var(--emerald-light); font-weight: 500; }
+.card--privacy-sm strong { color: var(--white); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.card--footer {
+  grid-column: 1 / -1;
+  background: transparent;
+  border: none;
+  padding: 1rem 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  color: var(--slate-400);
+  animation-delay: 0.48s;
+}
+.card--footer:hover { transform: none; box-shadow: none; }
+.card--footer a { color: var(--slate-400); text-decoration: none; }
+.card--footer a:hover { color: var(--emerald); }
+
+/* ============================================================
+   STEP HEADER SHARED
+   ============================================================ */
+.step-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.2rem;
+}
+.step-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--emerald-pale);
+  color: var(--emerald-deep);
+  font-size: 1rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.step-badge.done {
+  background: var(--emerald-deep);
+  color: var(--white);
+}
+.step-info h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.2rem;
+}
+.step-info .step-sub {
+  font-size: 0.82rem;
+  color: var(--slate-500);
+}
+
+/* ============================================================
+   HIDDEN STATE
+   ============================================================ */
+.step-hidden { display: none !important; }
+
 </style>
 </head>
 <body>
 
 <!-- TOP BAR -->
 <div class="topbar">
-  <a href="/" class="topbar-brand" style="text-decoration:none;">
-    <span class="topbar-name">LISTING LENS</span>
-  </a>
-  <div class="topbar-status">
-    <div class="topbar-dot"></div>
-    Session active
+  <div class="topbar-inner">
+    <a href="/" class="topbar-brand">LISTING LENS</a>
+    <a href="/" class="topbar-back">← back to home</a>
   </div>
 </div>
 
-<div class="dashboard">
+<div class="bento">
 
-  <!-- Ephemeral warning -->
-  <div class="ephemeral-banner">
-    <span class="ephemeral-icon">⏱️</span>
-    <div class="ephemeral-text">
-      <strong>This is your temporary workspace.</strong> 
-      Everything here lives in your browser only — once your report is generated and downloaded, 
-      all images and data are permanently deleted. Nothing is saved.
-    </div>
-  </div>
-
-  <!-- Welcome -->
-  <div class="welcome">
-    <h1>Let's build your vehicle report.</h1>
-    <p>Tell us where you are, then upload two screenshots of the same listing — the more we see, the more we find.</p>
-  </div>
-
-  <!-- Progress steps (4: country, img1, img2, generate) -->
-  <div class="steps" id="stepBars">
-    <div class="step-bar" id="step0"></div>
-    
-    <div class="step-bar" id="step1"></div>
-    <div class="step-bar" id="step2"></div>
-    <div class="step-bar" id="step3"></div>
-  </div>
-
-  <!-- COUNTRY SELECTOR -->
-  <div class="country-card" id="countryCard">
-    <div class="country-card-header">
-      <div class="country-card-left">
-        <div class="country-card-number">1</div>
-        <div>
-          <div class="country-card-title">Where are you?</div>
-          <div class="country-card-subtitle">So we can check local recalls, laws &amp; costs</div>
-        </div>
+  <!-- HEADER — sticky progress bar -->
+  <div class="card card--header">
+    <h1>scan your <em>listing.</em></h1>
+    <div class="header-steps">
+      <div class="header-step-dot active" data-step="1"></div>
+      <div class="header-step-dot" data-step="2"></div>
+      <div class="header-step-dot" data-step="3"></div>
+      <div class="header-step-dot" data-step="4"></div>
+      <div class="header-step-labels">
+        <span class="header-step-label active" data-step="1">country</span>
+        <span class="header-step-label" data-step="2">type</span>
+        <span class="header-step-label" data-step="3">upload</span>
+        <span class="header-step-label" data-step="4">scan</span>
       </div>
-      <span class="upload-card-badge badge-required" id="badgeCountry">Required</span>
     </div>
-    <div class="country-card-body">
-      <div class="country-select-wrapper">
-        <span class="country-flag" id="selectedFlag">🌍</span>
-        <input type="text" class="country-search" id="countrySearch" placeholder="start typing your country..." autocomplete="off">
-        <div class="country-results" id="countryResults"></div>
+    <div class="completed-msg">✅ report ready — scroll down to view</div>
+  </div>
+
+  <!-- STEP 1: COUNTRY -->
+  <div class="card card--country" id="step1">
+    <div class="step-badge" id="badge1">1</div>
+    <div class="step-content">
+      <h2 translate="yes">where are you buying?</h2>
+      <p class="step-sub" translate="yes">we'll tailor your report to local laws, taxes, and databases.</p>
+      <div class="country-grid" id="countryGrid">
+        <button class="country-btn" data-code="AU" data-name="Australia"><span class="cb-flag">🇦🇺</span>Australia</button>
+        <button class="country-btn" data-code="JP" data-name="Japan"><span class="cb-flag">🇯🇵</span>Japan</button>
+        <button class="country-btn" data-code="HK" data-name="Hong Kong"><span class="cb-flag">🇭🇰</span>Hong Kong</button>
+        <button class="country-btn" data-code="KR" data-name="South Korea"><span class="cb-flag">🇰🇷</span>S. Korea</button>
+        <button class="country-btn" data-code="NZ" data-name="New Zealand"><span class="cb-flag">🇳🇿</span>NZ</button>
+        <button class="country-btn" data-code="SG" data-name="Singapore"><span class="cb-flag">🇸🇬</span>Singapore</button>
       </div>
-      <div class="country-helper">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-        <span>This helps us find region-specific recalls, consumer laws, and local market pricing.</span>
+      <div class="country-other-wrap">
+        <input type="text" class="country-other-input" id="countryOther" placeholder="or type another country..." autocomplete="off">
       </div>
     </div>
   </div>
 
-  <!-- UPLOAD CARDS -->
-  <div class="upload-cards">
-
-    <!-- Card 1: The listing overview -->
-    <div class="upload-card" id="card1">
-      <div class="upload-card-header">
-        <div class="upload-card-left">
-          <div class="upload-card-number">2</div>
-          <div>
-            <div class="upload-card-title">The listing overview</div>
-            <div class="upload-card-subtitle">The main image and price</div>
-          </div>
-        </div>
-        <span class="upload-card-badge badge-required" id="badge1">Required</span>
-      </div>
-      <div class="upload-card-body">
-        <div class="card-drop" id="drop1" onclick="triggerUpload(1)">
-          <div class="card-drop-icon">📸</div>
-          <span class="card-drop-text">Upload the screenshot you showed us</span>
-          <span class="card-drop-hint">Tap to browse · the same image from before</span>
-        </div>
-        <div class="card-preview" id="preview1">
-          <img id="img1" src="" alt="Screenshot 1">
-          <div class="card-preview-overlay">
-            <span class="card-preview-name" id="name1"></span>
-            <button class="card-preview-change" onclick="triggerUpload(1)">Change</button>
-          </div>
-        </div>
-        <div class="card-helper">
-          <div class="card-helper-title">What we're looking for</div>
-          <ul class="card-helper-list">
-            <li>Main photo of the item</li>
-            <li>Price or asking price</li>
-            <li>Title and headline details</li>
-            <li>Seller name or location</li>
-          </ul>
-        </div>
+  <!-- STEP 2: CATEGORY -->
+  <div class="card card--category-pick" id="step2">
+    <div class="step-header">
+      <div class="step-badge" id="badge2">2</div>
+      <div class="step-info">
+        <h2 translate="yes">what are you scanning?</h2>
+        <p class="step-sub" translate="yes">pick a category so we search the right databases.</p>
       </div>
     </div>
-
-    <!-- Card 2: The details -->
-    <div class="upload-card" id="card2">
-      <div class="upload-card-header">
-        <div class="upload-card-left">
-          <div class="upload-card-number">3</div>
-          <div>
-            <div class="upload-card-title">The fine print</div>
-            <div class="upload-card-subtitle">Scroll down and screenshot the details</div>
-          </div>
-        </div>
-        <span class="upload-card-badge badge-recommended" id="badge2">Recommended</span>
+    <div class="category-options">
+      <div class="cat-option" data-cat="vehicle">
+        <span class="cat-icon">🚗</span>
+        <div class="cat-name" translate="yes">Vehicle</div>
+        <div class="cat-sub" translate="yes">car, ute, SUV, bike</div>
       </div>
-      <div class="upload-card-body">
-        <div class="card-drop" id="drop2" onclick="triggerUpload(2)">
-          <div class="card-drop-icon">📋</div>
-          <span class="card-drop-text">Upload the second screenshot</span>
-          <span class="card-drop-hint">Scroll down in the listing and capture the details</span>
-        </div>
-        <div class="card-preview" id="preview2">
-          <img id="img2" src="" alt="Screenshot 2">
-          <div class="card-preview-overlay">
-            <span class="card-preview-name" id="name2"></span>
-            <button class="card-preview-change" onclick="triggerUpload(2)">Change</button>
-          </div>
-        </div>
-        <div class="card-helper">
-          <div class="card-helper-title">What we're looking for</div>
-          <ul class="card-helper-list">
-            <li>Description text and specifications</li>
-            <li>Features list or inclusions</li>
-            <li>Condition notes, history, modifications</li>
-            <li>Terms, fees, or fine print</li>
-          </ul>
-        </div>
+      <div class="cat-option" data-cat="property">
+        <span class="cat-icon">🏠</span>
+        <div class="cat-name" translate="yes">Property</div>
+        <div class="cat-sub" translate="yes">house, apartment, land</div>
+      </div>
+      <div class="cat-option" data-cat="other">
+        <span class="cat-icon">📦</span>
+        <div class="cat-name" translate="yes">Everything else</div>
+        <div class="cat-sub" translate="yes">more categories coming soon</div>
       </div>
     </div>
-
   </div>
 
-  <!-- Generate button -->
-  <div class="generate-section">
-    <button class="generate-btn" id="generateBtn" disabled onclick="generateReport()">
-      <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
-      Generate my report
-    </button>
-    <p class="generate-note">Takes about 15–30 seconds. Both images are analysed together.</p>
-  </div>
-
-  <!-- Report output (hidden initially) -->
-  <div class="report-output" id="reportOutput">
-    <div class="report-output-header">
-      <h2>Your Report</h2>
-      <span class="report-done-badge">Complete</span>
-    </div>
-
-    <div id="reportContent">
-      <!-- Report gets inserted here by JS -->
-    </div>
-
-    <div class="report-actions">
-      <button class="action-btn action-btn--primary">Save as PDF</button>
-      <button class="action-btn">Copy to clipboard</button>
-    </div>
-
-    <div class="deletion-notice">
-      <span>🗑️</span>
-      <div>
-        <strong>Your data will be deleted.</strong> 
-        Once you leave this page, both screenshots and your report are permanently removed. 
-        Save or download your report now if you want to keep it.
+  <!-- STEP 3: UPLOAD -->
+  <div class="card card--upload" id="step3">
+    <div class="step-header">
+      <div class="step-badge" id="badge3">3</div>
+      <div class="step-info">
+        <h2 translate="yes">upload your screenshots</h2>
+        <p class="step-sub" translate="yes">more screenshots = more detail in your report.</p>
       </div>
     </div>
+    <div class="upload-slots">
+
+      <!-- Slot 1: Required -->
+      <div class="upload-slot" id="slot1">
+        <div class="slot-label">
+          <span class="slot-num">1</span>
+          <span class="slot-tag slot-tag--required" translate="yes">required</span>
+        </div>
+        <div class="slot-title" translate="yes">main listing</div>
+        <div class="slot-hint" translate="yes">the photo, price, and headline</div>
+        <div class="slot-dropzone" data-slot="1">
+          <span class="slot-drop-icon">📸</span>
+          <span class="slot-drop-text" translate="yes">tap to upload</span>
+          <input type="file" accept="image/*" data-slot="1">
+        </div>
+        <div class="slot-preview" data-slot="1" style="display:none;">
+          <img alt="Screenshot 1">
+          <button class="slot-remove" data-slot="1">✕</button>
+        </div>
+      </div>
+
+      <!-- Slot 2: Recommended -->
+      <div class="upload-slot" id="slot2">
+        <div class="slot-label">
+          <span class="slot-num">2</span>
+          <span class="slot-tag slot-tag--recommended" translate="yes">recommended</span>
+        </div>
+        <div class="slot-title" translate="yes">details & specs</div>
+        <div class="slot-hint" translate="yes">mileage, features, condition notes</div>
+        <div class="slot-dropzone" data-slot="2">
+          <span class="slot-drop-icon">📋</span>
+          <span class="slot-drop-text" translate="yes">tap to upload</span>
+          <input type="file" accept="image/*" data-slot="2">
+        </div>
+        <div class="slot-preview" data-slot="2" style="display:none;">
+          <img alt="Screenshot 2">
+          <button class="slot-remove" data-slot="2">✕</button>
+        </div>
+      </div>
+
+      <!-- Slot 3: Optional -->
+      <div class="upload-slot" id="slot3">
+        <div class="slot-label">
+          <span class="slot-num">3</span>
+          <span class="slot-tag slot-tag--optional" translate="yes">optional</span>
+        </div>
+        <div class="slot-title" translate="yes">extra info</div>
+        <div class="slot-hint" translate="yes">seller profile, location, anything else</div>
+        <div class="slot-dropzone" data-slot="3">
+          <span class="slot-drop-icon">📎</span>
+          <span class="slot-drop-text" translate="yes">tap to upload</span>
+          <input type="file" accept="image/*" data-slot="3">
+        </div>
+        <div class="slot-preview" data-slot="3" style="display:none;">
+          <img alt="Screenshot 3">
+          <button class="slot-remove" data-slot="3">✕</button>
+        </div>
+      </div>
+
+    </div>
+    <div style="margin-top:1.2rem;">
+      <button class="btn-primary" id="scanBtn" disabled translate="yes">🔍 quick scan — free preview</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: QUICK SCAN RESULTS -->
+  <div class="card card--scan" id="step4">
+    <div class="step-header">
+      <div class="step-badge" id="badge4">4</div>
+      <div class="step-info">
+        <h2 translate="yes">quick scan</h2>
+        <p class="step-sub" translate="yes">here's a preview of what we found.</p>
+      </div>
+    </div>
+
+    <div class="scan-loading" id="scanLoading">
+      <div class="scan-spinner"></div>
+      <p translate="yes">scanning your listing...</p>
+    </div>
+
+    <div class="scan-result" id="scanResult">
+      <div class="scan-flags" id="scanFlags">
+        <!-- populated by JS -->
+      </div>
+      <div class="scan-teaser">
+        <p translate="yes"><strong>Want the full picture?</strong> Hidden costs, fair value estimate, questions to ask the seller, and a detailed verdict.</p>
+        <button class="btn-primary btn-primary--green" id="payBtn" translate="yes">🔓 unlock full report — $5</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: FULL REPORT -->
+  <div class="card card--report" id="step5">
+    <div class="report-header">
+      <h2 translate="yes">📋 your full report</h2>
+      <div class="report-verdict verdict--amber" id="reportVerdict">⚠️ CAUTION</div>
+    </div>
+    <div class="report-sections" id="reportSections">
+      <!-- populated by JS — collapsible sections -->
+    </div>
+  </div>
+
+  <!-- DELIVERY -->
+  <div class="card card--delivery" id="deliveryCard">
+    <div class="step-header">
+      <div class="step-badge done">✓</div>
+      <div class="step-info">
+        <h2 translate="yes">save your report</h2>
+        <p class="step-sub" translate="yes">download it or get a copy emailed to you.</p>
+      </div>
+    </div>
+    <div class="delivery-options">
+      <div class="delivery-option">
+        <span class="do-icon">📥</span>
+        <h3 translate="yes">download PDF</h3>
+        <p translate="yes">save to your device</p>
+        <button class="btn-secondary" id="downloadBtn" translate="yes">download report</button>
+      </div>
+      <div class="delivery-option">
+        <span class="do-icon">📧</span>
+        <h3 translate="yes">email a copy</h3>
+        <p translate="yes">sent from noreply@listinglens.app — we never see or store your address. (<a href="/privacy.html" style="color:var(--slate-500);text-decoration:underline;" translate="yes">find out more</a>)</p>
+        <div class="email-input-wrap">
+          <input type="email" class="email-input" id="emailInput" placeholder="your@email.com">
+          <button class="email-send" id="emailSend" translate="yes">send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIVACY -->
+  <div class="card card--privacy-sm">
+    <span class="priv-icon">🔒</span>
+    <p translate="yes"><strong>Your privacy is sacred.</strong> Screenshots are analysed and deleted. We never see or store your email address.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="card card--footer">
+    <div class="notranslate">LISTING LENS © 2026</div>
+    <div><a href="/" translate="yes">Home</a> · <a href="/terms" translate="yes">Terms</a></div>
   </div>
 
 </div>
-
-<!-- Loading overlay -->
-<div class="loading-overlay" id="loadingOverlay">
-  <div class="loading-spinner"></div>
-  <div class="loading-text">Building your report...</div>
-  <div class="loading-sub">Cross-referencing both screenshots now</div>
-</div>
-
-<!-- Footer -->
-<div class="dash-footer">
-  <a href="/privacy" style="color:var(--text-muted);text-decoration:none;">Privacy Policy</a> · 
-  <a href="/terms" style="color:var(--text-muted);text-decoration:none;">Terms</a> · 
-  © 2026 Listing Lens
-</div>
-
-<!-- Hidden file inputs -->
-<input type="file" id="fileInput1" accept="image/*" style="display:none" onchange="handleUpload(1, this)">
-<input type="file" id="fileInput2" accept="image/*" style="display:none" onchange="handleUpload(2, this)">
 
 <script>
-var uploaded = [false, false];
-var countrySelected = false;
-var selectedCountryName = '';
-var selectedCountryCode = '';
-
-// Country data — comprehensive list
-var countries = [
-  {code:'AU',flag:'🇦🇺',name:'Australia'},{code:'NZ',flag:'🇳🇿',name:'New Zealand'},
-  {code:'US',flag:'🇺🇸',name:'United States'},{code:'CA',flag:'🇨🇦',name:'Canada'},
-  {code:'GB',flag:'🇬🇧',name:'United Kingdom'},{code:'IE',flag:'🇮🇪',name:'Ireland'},
-  {code:'DE',flag:'🇩🇪',name:'Germany'},{code:'FR',flag:'🇫🇷',name:'France'},
-  {code:'NL',flag:'🇳🇱',name:'Netherlands'},{code:'BE',flag:'🇧🇪',name:'Belgium'},
-  {code:'IT',flag:'🇮🇹',name:'Italy'},{code:'ES',flag:'🇪🇸',name:'Spain'},
-  {code:'PT',flag:'🇵🇹',name:'Portugal'},{code:'AT',flag:'🇦🇹',name:'Austria'},
-  {code:'CH',flag:'🇨🇭',name:'Switzerland'},{code:'SE',flag:'🇸🇪',name:'Sweden'},
-  {code:'NO',flag:'🇳🇴',name:'Norway'},{code:'DK',flag:'🇩🇰',name:'Denmark'},
-  {code:'FI',flag:'🇫🇮',name:'Finland'},{code:'PL',flag:'🇵🇱',name:'Poland'},
-  {code:'CZ',flag:'🇨🇿',name:'Czech Republic'},{code:'RO',flag:'🇷🇴',name:'Romania'},
-  {code:'GR',flag:'🇬🇷',name:'Greece'},{code:'HU',flag:'🇭🇺',name:'Hungary'},
-  {code:'HR',flag:'🇭🇷',name:'Croatia'},{code:'BG',flag:'🇧🇬',name:'Bulgaria'},
-  {code:'RS',flag:'🇷🇸',name:'Serbia'},{code:'SK',flag:'🇸🇰',name:'Slovakia'},
-  {code:'SI',flag:'🇸🇮',name:'Slovenia'},{code:'LT',flag:'🇱🇹',name:'Lithuania'},
-  {code:'LV',flag:'🇱🇻',name:'Latvia'},{code:'EE',flag:'🇪🇪',name:'Estonia'},
-  {code:'SG',flag:'🇸🇬',name:'Singapore'},{code:'HK',flag:'🇭🇰',name:'Hong Kong'},
-  {code:'JP',flag:'🇯🇵',name:'Japan'},{code:'KR',flag:'🇰🇷',name:'South Korea'},
-  {code:'TW',flag:'🇹🇼',name:'Taiwan'},{code:'MY',flag:'🇲🇾',name:'Malaysia'},
-  {code:'TH',flag:'🇹🇭',name:'Thailand'},{code:'PH',flag:'🇵🇭',name:'Philippines'},
-  {code:'ID',flag:'🇮🇩',name:'Indonesia'},{code:'VN',flag:'🇻🇳',name:'Vietnam'},
-  {code:'IN',flag:'🇮🇳',name:'India'},{code:'BD',flag:'🇧🇩',name:'Bangladesh'},
-  {code:'LK',flag:'🇱🇰',name:'Sri Lanka'},{code:'PK',flag:'🇵🇰',name:'Pakistan'},
-  {code:'AE',flag:'🇦🇪',name:'United Arab Emirates'},{code:'SA',flag:'🇸🇦',name:'Saudi Arabia'},
-  {code:'IL',flag:'🇮🇱',name:'Israel'},{code:'EG',flag:'🇪🇬',name:'Egypt'},
-  {code:'ZA',flag:'🇿🇦',name:'South Africa'},{code:'NG',flag:'🇳🇬',name:'Nigeria'},
-  {code:'KE',flag:'🇰🇪',name:'Kenya'},{code:'GH',flag:'🇬🇭',name:'Ghana'},
-  {code:'MA',flag:'🇲🇦',name:'Morocco'},{code:'TN',flag:'🇹🇳',name:'Tunisia'},
-  {code:'MX',flag:'🇲🇽',name:'Mexico'},{code:'BR',flag:'🇧🇷',name:'Brazil'},
-  {code:'AR',flag:'🇦🇷',name:'Argentina'},{code:'CL',flag:'🇨🇱',name:'Chile'},
-  {code:'CO',flag:'🇨🇴',name:'Colombia'},{code:'PE',flag:'🇵🇪',name:'Peru'},
-  {code:'EC',flag:'🇪🇨',name:'Ecuador'},{code:'UY',flag:'🇺🇾',name:'Uruguay'},
-  {code:'CR',flag:'🇨🇷',name:'Costa Rica'},{code:'PA',flag:'🇵🇦',name:'Panama'},
-  {code:'DO',flag:'🇩🇴',name:'Dominican Republic'},{code:'PR',flag:'🇵🇷',name:'Puerto Rico'},
-  {code:'JM',flag:'🇯🇲',name:'Jamaica'},{code:'TT',flag:'🇹🇹',name:'Trinidad and Tobago'},
-  {code:'IS',flag:'🇮🇸',name:'Iceland'},{code:'LU',flag:'🇱🇺',name:'Luxembourg'},
-  {code:'MT',flag:'🇲🇹',name:'Malta'},{code:'CY',flag:'🇨🇾',name:'Cyprus'},
-  {code:'QA',flag:'🇶🇦',name:'Qatar'},{code:'BH',flag:'🇧🇭',name:'Bahrain'},
-  {code:'KW',flag:'🇰🇼',name:'Kuwait'},{code:'OM',flag:'🇴🇲',name:'Oman'},
-  {code:'JO',flag:'🇯🇴',name:'Jordan'},{code:'LB',flag:'🇱🇧',name:'Lebanon'},
-  {code:'MM',flag:'🇲🇲',name:'Myanmar'},{code:'KH',flag:'🇰🇭',name:'Cambodia'},
-  {code:'LA',flag:'🇱🇦',name:'Laos'},{code:'NP',flag:'🇳🇵',name:'Nepal'},
-  {code:'FJ',flag:'🇫🇯',name:'Fiji'},{code:'PG',flag:'🇵🇬',name:'Papua New Guinea'},
-  {code:'CN',flag:'🇨🇳',name:'China'},{code:'RU',flag:'🇷🇺',name:'Russia'},
-  {code:'TR',flag:'🇹🇷',name:'Turkey'},{code:'UA',flag:'🇺🇦',name:'Ukraine'}
-];
-
-// Aliases for common searches
-var aliases = {
-  'usa':'United States','us':'United States','america':'United States','uk':'United Kingdom',
-  'england':'United Kingdom','britain':'United Kingdom','uae':'United Arab Emirates',
-  'emirates':'United Arab Emirates','dubai':'United Arab Emirates','ksa':'Saudi Arabia',
-  'oz':'Australia','aussie':'Australia','nz':'New Zealand','kiwi':'New Zealand',
-  'deutschland':'Germany','espana':'Spain','brasil':'Brazil','nippon':'Japan',
-  'holland':'Netherlands','south korea':'South Korea','rok':'South Korea',
-  'czech':'Czech Republic','czechia':'Czech Republic'
+// ============================================================
+// STATE
+// ============================================================
+var state = {
+  country: null,
+  category: null,
+  slots: { 1: null, 2: null, 3: null },
+  step: 1
 };
 
-var searchInput = document.getElementById('countrySearch');
-var resultsDiv = document.getElementById('countryResults');
-var highlightIndex = -1;
-
-searchInput.addEventListener('input', function() {
-  var q = this.value.trim().toLowerCase();
-  highlightIndex = -1;
-  if (q.length < 1) { resultsDiv.classList.remove('open'); return; }
-
-  // Check aliases first
-  var aliasMatch = aliases[q];
-
-  var matches = countries.filter(function(c) {
-    if (aliasMatch && c.name === aliasMatch) return true;
-    return c.name.toLowerCase().indexOf(q) > -1 || c.code.toLowerCase() === q;
+// ============================================================
+// COUNTRY SELECTION
+// ============================================================
+document.querySelectorAll('.country-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.country-btn').forEach(function(b) { b.classList.remove('selected'); });
+    btn.classList.add('selected');
+    state.country = { code: btn.dataset.code, name: btn.dataset.name };
+    try { localStorage.setItem('ll_country', JSON.stringify(state.country)); } catch(e) {}
+    document.getElementById('badge1').classList.add('done');
+    document.getElementById('badge1').textContent = '✓';
+    updateDots();
   });
+});
 
-  // Sort: starts-with first, then contains
-  matches.sort(function(a, b) {
-    var aStarts = a.name.toLowerCase().indexOf(q) === 0 ? 0 : 1;
-    var bStarts = b.name.toLowerCase().indexOf(q) === 0 ? 0 : 1;
-    return aStarts - bStarts || a.name.localeCompare(b.name);
+// Load saved country
+try {
+  var saved = JSON.parse(localStorage.getItem('ll_country'));
+  if (saved) {
+    var match = document.querySelector('.country-btn[data-code="' + saved.code + '"]');
+    if (match) { match.click(); }
+  }
+} catch(e) {}
+
+// ============================================================
+// CATEGORY SELECTION
+// ============================================================
+document.querySelectorAll('.cat-option').forEach(function(opt) {
+  opt.addEventListener('click', function() {
+    document.querySelectorAll('.cat-option').forEach(function(o) { o.classList.remove('selected'); });
+    opt.classList.add('selected');
+    state.category = opt.dataset.cat;
+    document.getElementById('badge2').classList.add('done');
+    document.getElementById('badge2').textContent = '✓';
+    updateDots();
   });
-
-  if (matches.length === 0) {
-    resultsDiv.innerHTML = '<div class="country-result" style="color:var(--text-muted);cursor:default;">No matches found</div>';
-    resultsDiv.classList.add('open');
-    return;
-  }
-
-  resultsDiv.innerHTML = matches.slice(0, 8).map(function(c, i) {
-    return '<div class="country-result" data-code="' + c.code + '" data-flag="' + c.flag + '" data-name="' + c.name + '">' +
-      '<span class="country-result-flag">' + c.flag + '</span>' + c.name + '</div>';
-  }).join('');
-  resultsDiv.classList.add('open');
 });
 
-searchInput.addEventListener('keydown', function(e) {
-  var items = resultsDiv.querySelectorAll('.country-result[data-code]');
-  if (!items.length) return;
+// ============================================================
+// FILE UPLOAD — 3 separate slots
+// ============================================================
+var scanBtn = document.getElementById('scanBtn');
 
-  if (e.key === 'ArrowDown') {
-    e.preventDefault();
-    highlightIndex = Math.min(highlightIndex + 1, items.length - 1);
-    updateHighlight(items);
-  } else if (e.key === 'ArrowUp') {
-    e.preventDefault();
-    highlightIndex = Math.max(highlightIndex - 1, 0);
-    updateHighlight(items);
-  } else if (e.key === 'Enter' && highlightIndex >= 0) {
-    e.preventDefault();
-    selectCountry(items[highlightIndex]);
-  }
-});
+// Files stored in RAM only — never persisted
 
-function updateHighlight(items) {
-  items.forEach(function(el, i) {
-    el.classList.toggle('highlighted', i === highlightIndex);
+document.querySelectorAll('.slot-dropzone input[type="file"]').forEach(function(input) {
+  input.addEventListener('change', function() {
+    var slotNum = this.dataset.slot;
+    if (this.files.length > 0) {
+      var file = this.files[0];
+      if (!file.type.startsWith('image/')) return;
+      if (file.size > 10 * 1024 * 1024) { alert('File too large — max 10MB'); return; }
+
+      state.slots[slotNum] = file;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var slot = document.getElementById('slot' + slotNum);
+        var dropzone = slot.querySelector('.slot-dropzone');
+        var preview = slot.querySelector('.slot-preview');
+        preview.querySelector('img').src = e.target.result;
+        dropzone.style.display = 'none';
+        preview.style.display = 'block';
+        slot.classList.add('has-file');
+        updateScanBtn();
+      };
+      reader.readAsDataURL(file);
+    }
   });
-}
-
-resultsDiv.addEventListener('click', function(e) {
-  var el = e.target.closest('.country-result[data-code]');
-  if (el) selectCountry(el);
 });
 
-function selectCountry(el) {
-  selectedCountryCode = el.dataset.code;
-  selectedCountryName = el.dataset.name;
-  var flag = el.dataset.flag;
-
-  searchInput.value = selectedCountryName;
-  document.getElementById('selectedFlag').textContent = flag;
-  resultsDiv.classList.remove('open');
-
-  countrySelected = true;
-  var card = document.getElementById('countryCard');
-  card.classList.add('complete');
-  var badge = document.getElementById('badgeCountry');
-  badge.textContent = 'Done';
-  badge.className = 'upload-card-badge badge-done';
-  updateProgress();
-}
-
-// Close results on outside click
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.country-select-wrapper')) {
-    resultsDiv.classList.remove('open');
-  }
+document.querySelectorAll('.slot-remove').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var slotNum = this.dataset.slot;
+    state.slots[slotNum] = null;
+    var slot = document.getElementById('slot' + slotNum);
+    var dropzone = slot.querySelector('.slot-dropzone');
+    var preview = slot.querySelector('.slot-preview');
+    var input = dropzone.querySelector('input[type="file"]');
+    input.value = '';
+    dropzone.style.display = 'block';
+    preview.style.display = 'none';
+    slot.classList.remove('has-file');
+    updateScanBtn();
+  });
 });
 
-function triggerUpload(n) {
-  document.getElementById('fileInput' + n).click();
-}
-
-function handleUpload(n, input) {
-  if (!input.files || !input.files[0]) return;
-  var file = input.files[0];
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    var img = document.getElementById('img' + n);
-    img.src = e.target.result;
-    document.getElementById('preview' + n).style.display = 'block';
-    document.getElementById('drop' + n).style.display = 'none';
-    document.getElementById('name' + n).textContent = file.name;
-    var card = document.getElementById('card' + n);
-    card.classList.add('complete');
-    var badge = document.getElementById('badge' + n);
-    badge.textContent = 'Done';
-    badge.className = 'upload-card-badge badge-done';
-    uploaded[n - 1] = true;
-    updateProgress();
-  };
-  reader.readAsDataURL(file);
-}
-
-function updateProgress() {
-  var s0 = document.getElementById('step0');
-  var s1 = document.getElementById('step1');
-  var s2 = document.getElementById('step2');
-  var btn = document.getElementById('generateBtn');
-
-  if (countrySelected) s0.className = 'step-bar complete';
-  if (uploaded[0]) s1.className = 'step-bar complete';
-  if (uploaded[1]) s2.className = 'step-bar complete';
-
-  // Enable generate if country + at least image 1
-  btn.disabled = !(countrySelected && uploaded[0]);
-
-  if (countrySelected && uploaded[0] && uploaded[1]) {
-    s0.className = 'step-bar active';
-    s1.className = 'step-bar active';
-    s2.className = 'step-bar active';
+function updateScanBtn() {
+  var hasRequired = state.slots[1] !== null;
+  scanBtn.disabled = !hasRequired;
+  if (hasRequired) {
+    document.getElementById('badge3').classList.add('done');
+    document.getElementById('badge3').textContent = '✓';
+  } else {
+    document.getElementById('badge3').classList.remove('done');
+    document.getElementById('badge3').textContent = '3';
   }
+  updateDots();
 }
 
-function generateReport() {
-  var countryName = selectedCountryName || 'your region';
+function getUploadedFiles() {
+  // Returns array of files in RAM — for sending to API
+  return [state.slots[1], state.slots[2], state.slots[3]].filter(Boolean);
+}
 
-  document.getElementById('loadingOverlay').classList.add('visible');
-  document.getElementById('step3').className = 'step-bar active';
+// ============================================================
+// QUICK SCAN (demo)
+// ============================================================
+scanBtn.addEventListener('click', function() {
+  if (!state.country) { alert('Please select your country first.'); return; }
+  if (!state.category) { alert('Please select a category first.'); return; }
+  if (!state.slots[1]) { alert('Please upload at least the main listing screenshot.'); return; }
 
-  document.querySelector('.loading-sub').textContent =
-    'Analysing vehicle listing · Checking ' + countryName + ' recalls & regulations';
+  var step4 = document.getElementById('step4');
+  step4.classList.add('visible');
+  step4.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
+  // Simulate scan
   setTimeout(function() {
-    document.getElementById('loadingOverlay').classList.remove('visible');
-    var output = document.getElementById('reportOutput');
-    output.classList.add('visible');
+    document.getElementById('scanLoading').style.display = 'none';
+    document.getElementById('scanResult').classList.add('visible');
 
-    document.getElementById('reportContent').innerHTML = '<div class="report">' +
-      '<div class="report-header"><div class="report-icon">🔎</div><div class="report-meta"><h3>Analysis Complete</h3><p>Vehicle · ' + countryName + ' · Based on ' + (uploaded[1] ? '2 screenshots' : '1 screenshot') + ' · Generated just now</p></div></div>' +
-      '<div class="intel-block"><h4><span class="badge badge--critical">Critical</span> Issues Found</h4>' +
-      '<ul class="intel-list">' +
-      '<li><span><strong>Your full report would appear here.</strong> In production, this is generated from analysis of your uploaded screenshots.</span></li>' +
-      '<li><span><strong>Vehicle-specific analysis</strong> tailored to ' + countryName + ' including local recalls, consumer protection laws, and market pricing.</span></li>' +
-      '</ul></div>' +
-      '<div class="report-verdict">This is a preview of the report layout. The real version includes safety recalls, hidden costs, mechanical issues, questions to ask, and a fair value estimate for ' + countryName + '.</div>' +
-      '</div>';
+    // Demo flags
+    var flagsEl = document.getElementById('scanFlags');
+    var demoFlags = [];
+    if (state.category === 'vehicle') {
+      demoFlags = [
+        { type: 'red', icon: '🚨', text: 'Active recall detected — Takata airbag (critical safety)' },
+        { type: 'amber', icon: '⚠️', text: 'Price appears 8-12% above market average for this model, year, and mileage' },
+        { type: 'green', icon: '✅', text: 'Service history mentions appear consistent with age' }
+      ];
+    } else if (state.category === 'property') {
+      demoFlags = [
+        { type: 'red', icon: '🚨', text: 'Government rectification order found for this address' },
+        { type: 'amber', icon: '⚠️', text: 'Area identified as high-density oversupply zone' },
+        { type: 'amber', icon: '⚠️', text: 'Price above comparable recent sales in the area' }
+      ];
+    } else {
+      demoFlags = [
+        { type: 'amber', icon: '⚠️', text: 'Price is above average for similar listings' },
+        { type: 'green', icon: '✅', text: 'Seller appears to be a registered business' }
+      ];
+    }
 
-    output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    flagsEl.innerHTML = demoFlags.map(function(f) {
+      return '<div class="scan-flag scan-flag--' + f.type + '">' +
+        '<span class="sf-icon">' + f.icon + '</span>' +
+        '<span>' + f.text + '</span></div>';
+    }).join('');
 
-    document.querySelector('.country-card').style.display = 'none';
-    document.querySelector('.upload-cards').style.display = 'none';
-    document.querySelector('.generate-section').style.display = 'none';
-  }, 3000);
+    updateDots();
+  }, 2500);
+});
+
+// ============================================================
+// PAY BUTTON (demo)
+// ============================================================
+document.getElementById('payBtn').addEventListener('click', function() {
+  // In production: redirect to Airwallex → on return, generate full report
+  var header = document.querySelector('.card--header');
+  header.classList.add('completed');
+
+  var step5 = document.getElementById('step5');
+  var delivery = document.getElementById('deliveryCard');
+  step5.classList.add('visible');
+  delivery.classList.add('visible');
+  step5.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Demo report sections
+  var sectionsEl = document.getElementById('reportSections');
+  var sections = [
+    { icon: '🚨', title: 'Red Flags & Safety', body: 'Full report content will appear here after payment is processed. This section covers all identified safety concerns, recalls, and critical issues.' },
+    { icon: '💰', title: 'Hidden Costs', body: 'Stamp duty, transfer fees, registration, insurance estimates, and ongoing costs that aren\'t in the listing price.' },
+    { icon: '📊', title: 'Market Analysis', body: 'Comparable listings, recent sales data, price trend analysis, and fair value estimate with confidence range.' },
+    { icon: '❓', title: 'Questions to Ask', body: 'Specific questions tailored to this listing that you should ask the seller before committing.' },
+    { icon: '⚖️', title: 'Your Rights', body: 'Consumer protection laws, cooling-off periods, warranty obligations, and disclosure requirements in your jurisdiction.' },
+    { icon: '✅', title: 'Verdict & Fair Value', body: 'Overall assessment with buy/caution/avoid recommendation and estimated fair value range.' }
+  ];
+
+  sectionsEl.innerHTML = sections.map(function(s, i) {
+    return '<div class="report-section' + (i === 0 ? ' open' : '') + '">' +
+      '<div class="report-section-header" onclick="this.parentElement.classList.toggle(\'open\')">' +
+      '<span class="rs-icon">' + s.icon + '</span>' + s.title +
+      '<span class="rs-arrow">▼</span></div>' +
+      '<div class="report-section-body"><p>' + s.body + '</p></div></div>';
+  }).join('');
+});
+
+// ============================================================
+// PROGRESS DOTS
+// ============================================================
+function updateDots() {
+  var dots = document.querySelectorAll('.header-step-dot');
+  var labels = document.querySelectorAll('.header-step-label');
+  var step = 1;
+  if (state.country) step = 2;
+  if (state.country && state.category) step = 3;
+  if (state.slots && state.slots[1]) step = 3;
+  if (document.getElementById('scanResult').classList.contains('visible')) step = 4;
+
+  dots.forEach(function(dot, i) {
+    dot.classList.remove('active', 'done');
+    if (i + 1 < step) dot.classList.add('done');
+    if (i + 1 === step) dot.classList.add('active');
+  });
+  labels.forEach(function(label, i) {
+    label.classList.remove('active', 'done');
+    if (i + 1 < step) label.classList.add('done');
+    if (i + 1 === step) label.classList.add('active');
+  });
+}
+
+// ============================================================
+// TOKEN CHECK (temporary security)
+// ============================================================
+if (!new URLSearchParams(window.location.search).get('token')) {
+  // For dev/demo, allow access. In production, uncomment:
+  // window.location.href = '/';
 }
 </script>
+
 </body>
 </html>
