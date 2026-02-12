@@ -452,7 +452,18 @@ body { top: 0 !important; }
   width: 100%;
   height: 160px;
   object-fit: cover;
+  object-position: top;
   display: block;
+}
+.demo-listing-photo--second {
+  margin-top: 0.8rem;
+  margin-bottom: 0;
+  border: 1.5px solid var(--gray-100);
+}
+.demo-listing-photo--second img {
+  height: 180px;
+  object-fit: cover;
+  object-position: top;
 }
 .demo-listing-price {
   font-size: 1.3rem;
@@ -972,6 +983,7 @@ function googleTranslateInit() {
           <div class="demo-listing-title">2015 Jeep Wrangler Unlimited Sport Auto 4x4 MY15</div>
           <div class="demo-listing-meta">📍 NSW · Private seller · 156,000 km · Petrol · Automatic</div>
           <div class="demo-listing-desc">"Rego plate: check with seller. Rego expiry: February 2026. Roadworthy provided at pick-up."</div>
+          <div class="demo-listing-photo demo-listing-photo--second"><img src="https://listinglens.app/jeep-2026-2.jpg" alt="2015 Jeep Wrangler car details"></div>
         </div>
       </div>
       <div>
@@ -1115,6 +1127,7 @@ function googleTranslateInit() {
           <div class="demo-listing-title">108/125 Arthur Street, Parramatta NSW 2150</div>
           <div class="demo-listing-meta">📍 Parramatta · 2 bed · 1 bath · 1 car · Apartment</div>
           <div class="demo-listing-desc">"Developed by a reputable team — developed and built with proven structural integrity and independent quality oversight."</div>
+          <div class="demo-listing-photo demo-listing-photo--second"><img src="https://listinglens.app/apartment-2026-2.jpg" alt="Property listing details"></div>
         </div>
       </div>
       <div>
@@ -1126,15 +1139,15 @@ function googleTranslateInit() {
           </div>
           <div class="demo-flag demo-flag--red">
             <span class="demo-flag-icon">🚨</span>
-            <div><strong>Developer/builder subject to legal proceedings</strong><small>"Proven structural integrity" claim contradicted by court records</small></div>
+            <div><strong>Rectification Order for load-bearing defects (June 2023)</strong><small>NSW Fair Trading issued order under RAB Act 2020. "Proven structural integrity" claim is false.</small></div>
           </div>
           <div class="demo-flag demo-flag--red">
             <span class="demo-flag-icon">🚨</span>
-            <div><strong>Photos are not this apartment</strong><small>Images are from Apt 208 ($675k, one floor up) and digitally styled</small></div>
+            <div><strong>Photos are not this apartment</strong><small>Images from Apt 208 ($675k, one floor up) and digitally styled</small></div>
           </div>
           <div class="demo-flag demo-flag--amber">
             <span class="demo-flag-icon">⚠️</span>
-            <div><strong>No developer name disclosed</strong><small>"Reputable team" — but who? Independent research required.</small></div>
+            <div><strong>Developer name hidden from listing</strong><small>Citibuild Design & Construction — named on other listings but omitted here</small></div>
           </div>
           <div class="demo-info-card">
             <h4>💰 Hidden costs</h4>
@@ -1142,7 +1155,7 @@ function googleTranslateInit() {
           </div>
           <div class="demo-info-card">
             <h4>❓ Ask the agent</h4>
-            <p>Who is the developer? What are the court proceedings? Can I inspect the actual unit?</p>
+            <p>Why isn't Citibuild named on this listing? What is the status of the rectification order? Can I inspect Unit 108?</p>
           </div>
         </div>
       </div>
@@ -1159,7 +1172,7 @@ function googleTranslateInit() {
         <div class="demo-full-verdict-icon">🚨</div>
         <div>
           <strong>VERDICT: HIGH RISK — DO NOT PROCEED WITHOUT INDEPENDENT LEGAL ADVICE</strong>
-          <p>This listing contains multiple critical red flags including unverified structural integrity claims that are directly contradicted by public court records, misleading photographs, and undisclosed developer identity.</p>
+          <p>This listing contains multiple critical red flags. NSW Fair Trading issued a Building Work Rectification Order in June 2023 for serious load-bearing defects at this address — yet the listing claims "proven structural integrity." The developer (Citibuild Design & Construction Pty Ltd) is not named. The photographs shown are of a different, more expensive apartment. Do not proceed without independent building inspection and legal advice.</p>
         </div>
       </div>
 
@@ -1167,8 +1180,8 @@ function googleTranslateInit() {
         <h4>🚨 Critical findings</h4>
 
         <div class="demo-full-flag demo-full-flag--red">
-          <strong>Developer/builder subject to active legal proceedings for structural defects</strong>
-          <p>The listing claims "developed and built with proven structural integrity and independent quality oversight." Public court records reveal the developer/builder is currently subject to legal proceedings relating to structural defects in their developments. This directly contradicts the listing's claims. Buyers should obtain independent legal and building advice before proceeding.</p>
+          <strong>NSW Fair Trading issued a Building Work Rectification Order (June 2023) for serious load-bearing defects</strong>
+          <p>In June 2023, NSW Fair Trading issued a Building Work Rectification Order for 125-129 Arthur Street under the Residential Apartment Buildings Act 2020. The order relates to serious structural load-bearing defects in the building. The listing's claim of "proven structural integrity and independent quality oversight" directly contradicts this government enforcement action. The builder is Citibuild Design & Construction Pty Ltd (ABN 78 610 243 564) and the original developer was S & A Property Holdings Pty Ltd.</p>
         </div>
 
         <div class="demo-full-flag demo-full-flag--red">
@@ -1177,8 +1190,8 @@ function googleTranslateInit() {
         </div>
 
         <div class="demo-full-flag demo-full-flag--red">
-          <strong>Developer identity not disclosed</strong>
-          <p>The listing refers only to "a reputable team" without naming the developer, builder, or certifier. In a brand new development, the identity of the builder and their track record is critical. The deliberate omission raises serious questions.</p>
+          <strong>Developer identity deliberately omitted from this listing</strong>
+          <p>This listing refers only to "a reputable team" without naming anyone. However, other listings in the same building (e.g. Unit 101 on Allhomes) name the developer as Citibuild Design & Construction Pty Ltd and Madad Property Group. The deliberate omission from this listing, combined with the building's rectification order history, raises serious transparency concerns.</p>
         </div>
       </div>
 
@@ -1217,12 +1230,12 @@ function googleTranslateInit() {
       <div class="demo-full-section">
         <h4>❓ Questions to ask before purchasing</h4>
         <div class="demo-full-questions">
-          <div class="demo-full-q">1. Who is the developer and builder? What is their ABN and licence number?</div>
-          <div class="demo-full-q">2. What are the details of the current legal proceedings?</div>
-          <div class="demo-full-q">3. Can I inspect the actual Unit 108, not a display unit or different apartment?</div>
+          <div class="demo-full-q">1. Why is the developer (Citibuild Design & Construction) not named on this listing?</div>
+          <div class="demo-full-q">2. What is the current status of the NSW Fair Trading Building Work Rectification Order issued June 2023?</div>
+          <div class="demo-full-q">3. Can I inspect the actual Unit 108, not Apartment 208 or a display unit?</div>
           <div class="demo-full-q">4. Can I see the independent quality oversight report referenced in the listing?</div>
-          <div class="demo-full-q">5. What is the building's defect liability period and has anything been lodged?</div>
-          <div class="demo-full-q">6. Can I review the draft strata by-laws and budget before purchase?</div>
+          <div class="demo-full-q">5. What was S & A Property Holdings' role, and why are they no longer involved?</div>
+          <div class="demo-full-q">6. Has the rectification of load-bearing defects been completed and signed off by Building Commission NSW?</div>
         </div>
       </div>
 
@@ -1234,11 +1247,12 @@ function googleTranslateInit() {
       <div class="demo-full-section">
         <h4>🔗 Sources used in this report</h4>
         <div class="demo-full-sources">
-          <a href="https://www.caselaw.nsw.gov.au/" target="_blank" rel="noopener">NSW Caselaw — developer/builder legal proceedings referenced in this report</a>
-          <a href="https://www.fairtrading.nsw.gov.au/housing-and-property/building-and-renovating/building-defects/serious-defects-in-buildings" target="_blank" rel="noopener">NSW Fair Trading — Serious Building Defects Register (125 Arthur St check)</a>
-          <a href="https://www.revenue.nsw.gov.au/taxes-duties-levies-royalties/transfer-duty" target="_blank" rel="noopener">Revenue NSW — Stamp duty estimate based on $655,000 purchase price</a>
-          <a href="https://legislation.nsw.gov.au/view/html/inforce/current/act-1989-147" target="_blank" rel="noopener">Home Building Act 1989 (NSW) — Defect liability periods (s18E: 6yr structural, 2yr non-structural)</a>
-          <a href="https://www.domain.com.au/" target="_blank" rel="noopener">Domain.com.au — Comparable sales data for Parramatta 2BR apartments</a>
+          <a href="https://www.fairtrading.nsw.gov.au/help-centre/online-tools/rab-act-orders-register" target="_blank" rel="noopener">NSW Fair Trading — RAB Act Orders Register (search 125-129 Arthur Street for Building Work Rectification Order, June 2023)</a>
+          <a href="https://www.allhomes.com.au/unit-101-125-129-arthur-street-parramatta-nsw-2150" target="_blank" rel="noopener">Allhomes — Unit 101/125-129 Arthur St listing (names Citibuild Design & Construction Pty Ltd as developer, omitted from the listing we analysed)</a>
+          <a href="https://buy.nsw.gov.au/supplier/profile/169777" target="_blank" rel="noopener">buy.nsw.gov.au — Citibuild Design & Construction Pty Ltd (ABN 78 610 243 564)</a>
+          <a href="https://businesspapers.parracity.nsw.gov.au/Open/2022/04/LPP_19042022_AGN_711_AT_files/LPP_19042022_AGN_711_AT_Attachment_10582_6.PDF" target="_blank" rel="noopener">Parramatta Council — S.4.55 Planning Report for 125-129 Arthur St (prepared for Citibuild, DA/776/2014)</a>
+          <a href="https://www.planningalerts.org.au/applications/1126410" target="_blank" rel="noopener">Planning Alerts — DA history for 125 Arthur St (original 7 storeys modified to add 2 additional storeys)</a>
+          <a href="https://www.fairtrading.nsw.gov.au/housing-and-property/building-and-renovating/resolving-building-disputes/building-dispute-intervention" target="_blank" rel="noopener">NSW Fair Trading — What building work rectification orders mean for buyers</a>
         </div>
       </div>
 
