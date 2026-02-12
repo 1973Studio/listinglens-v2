@@ -179,53 +179,32 @@ body { top: 0 !important; }
   border-radius: 18px 18px 0 0;
   overflow: hidden;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .card-visual img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 25%;
-  opacity: 0.55;
-  transition: opacity 0.3s ease, transform 0.4s ease;
+  transition: transform 0.4s ease;
 }
 .card--category:hover .card-visual img {
-  opacity: 0.7;
   transform: scale(1.03);
 }
-.card-visual-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(15,23,42,0.3) 0%, rgba(15,23,42,0.85) 100%);
+
+.card-finding {
+  font-size: 0.82rem;
+  color: var(--slate-700);
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--gray-100);
+  margin-bottom: 0.6rem;
+  line-height: 1.5;
 }
-.card-visual-badge {
-  position: absolute;
-  top: 1.2rem;
-  left: 1.2rem;
-  padding: 0.35rem 0.9rem;
-  border-radius: 100px;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(12px);
-  color: var(--white);
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+.card-finding strong {
+  color: var(--slate-900);
 }
-.card-visual-finding {
-  position: absolute;
-  bottom: 1.2rem;
-  left: 1.2rem;
-  right: 1.2rem;
-  color: var(--white);
-  font-size: 0.85rem;
+.card-finding span {
+  color: var(--emerald-deep);
   font-weight: 600;
-  line-height: 1.4;
-}
-.card-visual-finding span {
-  color: var(--emerald-light);
 }
 
 .card-body {
@@ -306,62 +285,236 @@ body { top: 0 !important; }
 }
 
 /* ============================================================
-   EVERYTHING ELSE CARD
+   COMING SOON CATEGORIES
    ============================================================ */
-.card--else {
-  grid-column: span 2;
-  background: #EFF6FF;
-  border: 1.5px solid #BFDBFE;
+.card--coming {
+  grid-column: 1 / -1;
+  background: var(--white);
+  border: 1.5px solid var(--gray-100);
+  padding: 2rem 2.2rem;
+}
+.coming-header h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+}
+.coming-header h2 em {
+  font-style: normal;
+  color: var(--emerald);
+}
+.coming-header > p {
+  font-size: 0.85rem;
+  color: var(--slate-500);
+  margin-bottom: 1.3rem;
+}
+.coming-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 640px) {
+  .coming-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.coming-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1rem 0.5rem;
+  border: 1.5px solid var(--gray-100);
+  border-radius: 14px;
+  background: var(--snow);
+  position: relative;
+}
+.coming-icon { font-size: 1.8rem; }
+.coming-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--slate-700);
+}
+.coming-tag {
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.45rem;
+  border-radius: 100px;
+  background: var(--amber-pale);
+  color: #92400E;
+}
+.coming-privacy {
+  font-size: 0.68rem;
+  color: var(--slate-400);
+  display: block;
+  margin-top: 0.3rem;
+}
+.coming-privacy-link {
+  color: var(--slate-400);
+  text-decoration: underline;
+  transition: color 0.15s;
+}
+.coming-privacy-link:hover { color: var(--emerald); }
+
+/* ============================================================
+   INTERACTIVE DEMO — before/after slider
+   ============================================================ */
+.card--demo {
+  grid-column: 1 / -1;
+  background: var(--white);
+  border: 2px solid var(--emerald);
+  padding: 2.2rem;
+  overflow: hidden;
+}
+.demo-header h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.3rem;
+}
+.demo-header h2 em {
+  font-style: normal;
+  color: var(--emerald);
+}
+.demo-header p {
+  font-size: 0.88rem;
+  color: var(--slate-500);
+  margin-bottom: 1.2rem;
+}
+/* Demo tabs */
+.demo-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+.demo-tab {
+  padding: 0.45rem 0.9rem;
+  border: 1.5px solid var(--gray-100);
+  border-radius: 100px;
+  font-family: var(--font);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--slate-700);
+  background: var(--white);
   cursor: pointer;
+  transition: all 0.15s;
   display: flex;
   align-items: center;
-  gap: 1.2rem;
-  color: var(--slate-900);
+  gap: 0.35rem;
 }
-.card--else:hover { 
-  border-color: #3B82F6; 
-  background: #DBEAFE;
+.demo-tab:hover { border-color: var(--emerald); }
+.demo-tab.active {
+  background: var(--emerald-pale);
+  border-color: var(--emerald);
+  color: var(--emerald-dark);
 }
-.card--else .else-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  background: rgba(59,130,246,0.1);
+/* Slider container */
+.demo-slider {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  cursor: ew-resize;
+  border: 1.5px solid var(--gray-100);
+}
+.demo-layer {
+  width: 100%;
+  display: block;
+}
+.demo-layer--listing {
+  display: block;
+}
+.demo-layer--report {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: inset(0 0 0 50%);
+  transition: clip-path 0.05s ease-out;
+}
+.demo-slider-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  background: var(--emerald);
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
+  transition: left 0.05s ease-out;
+}
+.demo-slider-handle::before {
+  content: '◀ ▶';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--emerald);
+  color: var(--white);
+  font-size: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  flex-shrink: 0;
+  letter-spacing: 0.15em;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
-.card--else .else-text h3 {
-  font-size: 1rem;
+.demo-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.2rem 0;
+  font-size: 0.68rem;
   font-weight: 700;
-  margin-bottom: 0.15rem;
-  color: #1E3A5F;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--slate-400);
 }
-.card--else .else-text p {
-  font-size: 0.82rem;
-  color: #3B6BA5;
+.demo-label-report { color: var(--emerald-deep); }
+/* CTA below slider */
+.demo-cta {
+  margin-top: 1.2rem;
+  padding: 1.2rem;
+  background: var(--snow);
+  border-radius: 12px;
+  border: 1.5px solid var(--gray-100);
+  text-align: center;
 }
-.card--else .else-cta {
-  margin-left: auto;
-  padding: 0.5rem 1.1rem;
-  border-radius: 8px;
-  background: var(--slate-900);
+.demo-cta p {
+  font-size: 0.88rem;
+  color: var(--slate-500);
+  margin-bottom: 0.8rem;
+}
+.demo-cta p strong { color: var(--slate-900); }
+.demo-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--emerald-deep);
   color: var(--white);
   font-family: var(--font);
-  font-size: 0.78rem;
+  font-size: 0.95rem;
   font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
   text-decoration: none;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: background 0.2s;
 }
-.card--else:hover .else-cta { background: var(--slate-700); }
-
-@media (max-width: 480px) {
-  .card--else { flex-wrap: wrap; }
-  .card--else .else-cta { margin-left: 0; margin-top: 0.5rem; width: 100%; text-align: center; }
+.demo-cta-btn:hover { background: var(--emerald-dark); transform: translateY(-1px); }
+.demo-hint {
+  font-size: 0.7rem;
+  color: var(--slate-400);
+  margin-top: 0.6rem;
+  display: block;
+  text-align: center;
 }
 
 /* ============================================================
@@ -545,24 +698,22 @@ function googleTranslateInit() {
 
   <!-- 1. HERO — full width -->
   <div class="card card--hero">
-    <div class="brand">LISTING LENS</div>
-    <h1>don't buy<br><em>blind.</em></h1>
-    <p>screenshot any listing. we'll tell you <strong>what's really wrong with it, what it's actually worth, and exactly what to ask the seller.</strong></p>
+    <div class="brand notranslate">LISTING LENS</div>
+    <h1 translate="yes">don't buy<br><em>blind.</em></h1>
+    <p translate="yes">screenshot any listing. we'll tell you <strong>what's really wrong with it, what it's actually worth, and exactly what to ask the seller.</strong></p>
   </div>
 
   <!-- 2. VEHICLE CARD -->
   <div class="card card--category" onclick="window.location.hash='vehicle'">
     <div class="card-visual">
       <img src="https://listinglens.app/jeep-2026-1.png" alt="2015 Jeep Wrangler listing">
-      <div class="card-visual-overlay"></div>
-      <div class="card-visual-badge">🚗 Real report</div>
-      <div class="card-visual-finding">"<span>Takata airbag recall active</span> — saved $4,500 off the asking price"</div>
     </div>
     <div class="card-body">
-      <div class="card-category-label">Vehicles</div>
-      <div class="card-category-title">cars, utes, SUVs, bikes</div>
-      <div class="card-category-desc">Recalls, hidden costs, mechanical issues, market comparisons, fair value estimate, and a verdict.</div>
-      <a class="card-category-cta" href="#vehicle">scan a vehicle listing →</a>
+      <div class="card-finding" translate="yes">🚗 <strong>Real report:</strong> "<span>Takata airbag recall active</span> — saved $4,500 off the asking price"</div>
+      <div class="card-category-label" translate="yes">Vehicles</div>
+      <div class="card-category-title" translate="yes">cars, utes, SUVs, bikes</div>
+      <div class="card-category-desc" translate="yes">Recalls, hidden costs, mechanical issues, market comparisons, fair value estimate, and a verdict.</div>
+      <a class="card-category-cta" href="#vehicle" translate="yes">scan a vehicle listing →</a>
     </div>
   </div>
 
@@ -570,87 +721,147 @@ function googleTranslateInit() {
   <div class="card card--category" onclick="window.location.hash='property'">
     <div class="card-visual">
       <img src="https://listinglens.app/apartment2-screenshot.jpg" alt="Parramatta apartment listing">
-      <div class="card-visual-overlay"></div>
-      <div class="card-visual-badge">🏠 Real report</div>
-      <div class="card-visual-finding">"<span>Structural defect on the NSW Fair Trading register</span> — $70k overpriced"</div>
     </div>
     <div class="card-body">
-      <div class="card-category-label">Property</div>
-      <div class="card-category-title">houses, apartments, land</div>
-      <div class="card-category-desc">Developer history, strata & body corp, hidden costs, comparable sales, oversupply risk, and a verdict.</div>
-      <a class="card-category-cta" href="#property">scan a property listing →</a>
+      <div class="card-finding" translate="yes">🏠 <strong>Real report:</strong> "<span>Structural defect on the NSW Fair Trading register</span> — $70k overpriced"</div>
+      <div class="card-category-label" translate="yes">Property</div>
+      <div class="card-category-title" translate="yes">houses, apartments, land</div>
+      <div class="card-category-desc" translate="yes">Developer history, strata & body corp, hidden costs, comparable sales, oversupply risk, and a verdict.</div>
+      <a class="card-category-cta" href="#property" translate="yes">scan a property listing →</a>
     </div>
   </div>
 
   <!-- 4–5. STAT CARDS -->
   <div class="card card--stat">
-    <div class="stat-number stat-number--green">$5</div>
-    <div class="stat-label">per report</div>
+    <div class="stat-number stat-number--green notranslate">$5</div>
+    <div class="stat-label" translate="yes">per report</div>
   </div>
 
   <div class="card card--stat">
-    <div class="stat-number">15s</div>
-    <div class="stat-label">per report</div>
+    <div class="stat-number notranslate">⚡</div>
+    <div class="stat-label" translate="yes">report created in less than a minute</div>
   </div>
 
-  <!-- 6. EVERYTHING ELSE -->
-  <div class="card card--else" onclick="window.location.hash='other'">
-    <div class="else-icon">🛒</div>
-    <div class="else-text">
-      <h3>other purchases</h3>
-      <p>electronics, watches, jewellery, furniture — anything with a price tag.</p>
+  <!-- 6. COMING SOON CATEGORIES -->
+  <div class="card card--coming" id="comingCard">
+    <div class="coming-header">
+      <h2 translate="yes">more categories <em>launching soon.</em></h2>
+      <p translate="yes">specialist reports tailored to each category — same $5, same depth.</p>
     </div>
-    <a class="else-cta" href="#other">scan a listing →</a>
+    <div class="coming-grid">
+      <div class="coming-item">
+        <span class="coming-icon">⛵</span>
+        <span class="coming-name" translate="yes">boats</span>
+        <span class="coming-tag" translate="yes">soon</span>
+      </div>
+      <div class="coming-item">
+        <span class="coming-icon">⌚</span>
+        <span class="coming-name" translate="yes">watches</span>
+        <span class="coming-tag" translate="yes">soon</span>
+      </div>
+      <div class="coming-item">
+        <span class="coming-icon">💻</span>
+        <span class="coming-name" translate="yes">electronics</span>
+        <span class="coming-tag" translate="yes">soon</span>
+      </div>
+      <div class="coming-item">
+        <span class="coming-icon">💍</span>
+        <span class="coming-name" translate="yes">jewellery</span>
+        <span class="coming-tag" translate="yes">soon</span>
+      </div>
+      <div class="coming-item">
+        <span class="coming-icon">🏍️</span>
+        <span class="coming-name" translate="yes">motorcycles</span>
+        <span class="coming-tag" translate="yes">soon</span>
+      </div>
+      <div class="coming-item">
+        <span class="coming-icon">🎸</span>
+        <span class="coming-name" translate="yes">instruments</span>
+        <span class="coming-tag" translate="yes">soon</span>
+      </div>
+    </div>
   </div>
 
-  <!-- 7. PRIVACY — full width dark -->
+  <!-- 7. INTERACTIVE DEMO -->
+  <div class="card card--demo" id="demoCard">
+    <div class="demo-header">
+      <h2 translate="yes">see it in <em>action.</em></h2>
+      <p translate="yes">drag the slider to reveal what a real Listing Lens report looks like.</p>
+    </div>
+
+    <div class="demo-tabs" id="demoTabs">
+      <button class="demo-tab active" data-demo="vehicle">🚗 vehicle</button>
+      <button class="demo-tab" data-demo="property">🏠 property</button>
+    </div>
+
+    <!-- VEHICLE DEMO -->
+    <div class="demo-slider" id="demoSlider">
+      <div class="demo-layer demo-layer--listing" id="demoListing"></div>
+      <div class="demo-layer demo-layer--report" id="demoReport"></div>
+      <div class="demo-slider-handle" id="demoHandle"></div>
+    </div>
+
+    <div class="demo-labels">
+      <span translate="yes">← listing screenshot</span>
+      <span class="demo-label-report" translate="yes">your report →</span>
+    </div>
+
+    <span class="demo-hint" translate="yes">👆 drag the green handle to compare</span>
+
+    <div class="demo-cta">
+      <p translate="yes"><strong>Want this for your listing?</strong> Upload your screenshots, get your report in under a minute.</p>
+      <a href="/dashboard.html" class="demo-cta-btn" translate="yes">get your report — $5</a>
+    </div>
+  </div>
+
+  <!-- 8. PRIVACY — full width dark -->
   <div class="card card--privacy">
-    <h2>we go out of our way to <em>forget you.</em></h2>
+    <h2 translate="yes">we go out of our way to <em>forget you.</em></h2>
     <div class="privacy-tags">
-      <span class="privacy-tag">no accounts</span>
-      <span class="privacy-tag">no tracking</span>
-      <span class="privacy-tag">no cookies</span>
-      <span class="privacy-tag">data deleted after</span>
+      <span class="privacy-tag" translate="yes">no accounts</span>
+      <span class="privacy-tag" translate="yes">no tracking</span>
+      <span class="privacy-tag" translate="yes">no cookies</span>
+      <span class="privacy-tag" translate="yes">data deleted after</span>
     </div>
   </div>
 
   <!-- 8-10. HOW IT WORKS -->
   <div class="card card--step">
-    <div class="step-num">1</div>
-    <h3>find it</h3>
-    <p>Found your dream car, apartment, or house online? Before you fall in love — let us take a look.</p>
+    <div class="step-num notranslate">1</div>
+    <h3 translate="yes">find it</h3>
+    <p translate="yes">Found your dream car, apartment, or house online? Before you fall in love — let us take a look.</p>
   </div>
 
   <div class="card card--step">
-    <div class="step-num">2</div>
-    <h3>screenshot it</h3>
-    <p>Any marketplace, any country. If it has a price, we can analyse it.</p>
+    <div class="step-num notranslate">2</div>
+    <h3 translate="yes">screenshot it</h3>
+    <p translate="yes">Any marketplace, any country. If it has a price, we can analyse it.</p>
   </div>
 
   <div class="card card--step">
-    <div class="step-num">3</div>
-    <h3>we search</h3>
-    <p>Recalls, forums, market data, government databases. Real sources, not guessing.</p>
+    <div class="step-num notranslate">3</div>
+    <h3 translate="yes">we search</h3>
+    <p translate="yes">Recalls, forums, market data, government databases. Real sources, not guessing.</p>
   </div>
 
   <div class="card card--step">
-    <div class="step-num">4</div>
-    <h3>your report</h3>
-    <p>Red flags, hidden costs, questions to ask, fair value, and a clear verdict.</p>
+    <div class="step-num notranslate">4</div>
+    <h3 translate="yes">your report</h3>
+    <p translate="yes">Red flags, hidden costs, questions to ask, fair value, and a clear verdict.</p>
   </div>
 
   <!-- 11. TRUST -->
   <div class="card card--trust">
-    <blockquote>"I paid $5 and it found a structural defect that could have cost me $200,000. This should be mandatory before buying."</blockquote>
-    <cite>— what we're building towards</cite>
+    <blockquote translate="yes">"I paid $5 and it found a structural defect that could have cost me $200,000. This should be mandatory before buying."</blockquote>
+    <cite translate="yes">— what we're building towards</cite>
   </div>
 
   <!-- 12. FOOTER -->
   <div class="card card--footer">
-    <div class="footer-brand">LISTING LENS © 2026 <img src="https://flagcdn.com/w40/au.png" alt="AU" style="height:0.9em;vertical-align:middle;margin-left:0.3rem;"></div>
+    <div class="footer-brand notranslate">LISTING LENS © 2026 <img src="https://flagcdn.com/w40/au.png" alt="AU" style="height:0.9em;vertical-align:middle;margin-left:0.3rem;"></div>
     <div class="footer-links">
-      <a href="/terms">Terms & Privacy</a>
-      <a href="#" id="contactLink">Contact</a>
+      <a href="/terms" translate="yes">Terms & Privacy</a>
+      <a href="#" id="contactLink" translate="yes">Contact</a>
     </div>
   </div>
 
@@ -659,6 +870,174 @@ function googleTranslateInit() {
 <script>
 var cl = document.getElementById('contactLink');
 if (cl) cl.href = 'mai' + 'lto:hel' + 'lo@list' + 'inglens.app';
+
+// ============================================================
+// INTERACTIVE DEMO — before/after slider
+// ============================================================
+
+// Demo data — pre-built "screenshots" and "reports" as inline SVGs
+var demos = {
+  vehicle: {
+    listing: function() {
+      var s = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      s.setAttribute('viewBox','0 0 600 500');
+      s.setAttribute('width','100%');
+      s.style.display = 'block';
+      s.style.background = '#fff';
+      s.innerHTML =
+        '<rect width="600" height="500" fill="#F8FAFC"/>' +
+        '<rect x="20" y="20" width="560" height="220" rx="12" fill="#E2E8F0"/>' +
+        '<text x="300" y="140" text-anchor="middle" fill="#94A3B8" font-family="DM Sans,sans-serif" font-size="18" font-weight="700">🚗 2019 Toyota RAV4 GXL</text>' +
+        '<text x="300" y="170" text-anchor="middle" fill="#CBD5E1" font-family="DM Sans,sans-serif" font-size="13">Photo placeholder — demo listing</text>' +
+        '<rect x="20" y="260" width="560" height="50" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1.5"/>' +
+        '<text x="40" y="292" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="22" font-weight="800">$34,990</text>' +
+        '<text x="560" y="290" text-anchor="end" fill="#64748B" font-family="DM Sans,sans-serif" font-size="12">87,400 km · Automatic · SUV</text>' +
+        '<rect x="20" y="325" width="560" height="40" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1.5"/>' +
+        '<text x="40" y="351" fill="#64748B" font-family="DM Sans,sans-serif" font-size="12">📍 Parramatta, NSW · Private seller</text>' +
+        '<rect x="20" y="380" width="560" height="100" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1.5"/>' +
+        '<text x="40" y="406" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="13" font-weight="600">Seller\'s description:</text>' +
+        '<text x="40" y="428" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11.5">"Great family car, full service history, no accidents.</text>' +
+        '<text x="40" y="446" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11.5">One owner, always garaged. Brand new tyres fitted."</text>' +
+        '<text x="40" y="468" fill="#94A3B8" font-family="DM Sans,sans-serif" font-size="10">Listed 3 days ago · 42 views</text>';
+      return s;
+    },
+    report: function() {
+      var s = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      s.setAttribute('viewBox','0 0 600 500');
+      s.setAttribute('width','100%');
+      s.style.display = 'block';
+      s.innerHTML =
+        '<rect width="600" height="500" fill="#F0FDF4"/>' +
+        '<rect x="20" y="16" width="560" height="44" rx="10" fill="#064E3B"/>' +
+        '<text x="40" y="44" fill="#6EE7B7" font-family="DM Sans,sans-serif" font-size="13" font-weight="800">LISTING LENS REPORT</text>' +
+        '<text x="560" y="44" text-anchor="end" fill="#6EE7B7" font-family="DM Sans,sans-serif" font-size="11">2019 Toyota RAV4 GXL</text>' +
+        '<rect x="20" y="74" width="200" height="30" rx="15" fill="#FEF2F2"/>' +
+        '<text x="35" y="94" fill="#DC2626" font-family="DM Sans,sans-serif" font-size="11" font-weight="800">⚠️ VERDICT: CAUTION</text>' +
+        '<rect x="20" y="118" width="560" height="58" rx="8" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>' +
+        '<text x="40" y="142" fill="#DC2626" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">🚨 Takata airbag recall active (critical safety)</text>' +
+        '<text x="40" y="162" fill="#7F1D1D" font-family="DM Sans,sans-serif" font-size="10.5">This model/year is affected. Check recalls.gov.au before purchasing.</text>' +
+        '<rect x="20" y="186" width="560" height="58" rx="8" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>' +
+        '<text x="40" y="210" fill="#92400E" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">⚠️ Overpriced by ~$3,200 vs market average</text>' +
+        '<text x="40" y="230" fill="#78350F" font-family="DM Sans,sans-serif" font-size="10.5">Comparable RAV4s (2019, &lt;90k km, NSW): $30,500–$33,100</text>' +
+        '<rect x="20" y="254" width="560" height="46" rx="8" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>' +
+        '<text x="40" y="282" fill="#065F46" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">✅ Service history claim appears consistent</text>' +
+        '<rect x="20" y="314" width="560" height="80" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1"/>' +
+        '<text x="40" y="338" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">💰 Hidden costs (NSW estimate)</text>' +
+        '<text x="40" y="358" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">Stamp duty: ~$1,120 · Transfer: $33 · CTP: ~$650/yr</text>' +
+        '<text x="40" y="378" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">Insurance est: ~$1,400/yr · Registration: ~$370/yr</text>' +
+        '<rect x="20" y="406" width="560" height="76" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1"/>' +
+        '<text x="40" y="430" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">❓ Questions to ask the seller</text>' +
+        '<text x="40" y="450" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">1. Has the Takata recall been addressed?</text>' +
+        '<text x="40" y="468" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">2. Can you provide the full service logbook?</text>';
+      return s;
+    }
+  },
+  property: {
+    listing: function() {
+      var s = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      s.setAttribute('viewBox','0 0 600 500');
+      s.setAttribute('width','100%');
+      s.style.display = 'block';
+      s.style.background = '#fff';
+      s.innerHTML =
+        '<rect width="600" height="500" fill="#F8FAFC"/>' +
+        '<rect x="20" y="20" width="560" height="220" rx="12" fill="#E2E8F0"/>' +
+        '<text x="300" y="140" text-anchor="middle" fill="#94A3B8" font-family="DM Sans,sans-serif" font-size="18" font-weight="700">🏠 2BR Apartment — Orchard Road</text>' +
+        '<text x="300" y="170" text-anchor="middle" fill="#CBD5E1" font-family="DM Sans,sans-serif" font-size="13">Photo placeholder — demo listing</text>' +
+        '<rect x="20" y="260" width="560" height="50" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1.5"/>' +
+        '<text x="40" y="292" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="22" font-weight="800">S$1,280,000</text>' +
+        '<text x="560" y="290" text-anchor="end" fill="#64748B" font-family="DM Sans,sans-serif" font-size="12">75 sqm · 2 bed · 1 bath · Level 18</text>' +
+        '<rect x="20" y="325" width="560" height="40" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1.5"/>' +
+        '<text x="40" y="351" fill="#64748B" font-family="DM Sans,sans-serif" font-size="12">📍 District 09, Singapore · Agent listed</text>' +
+        '<rect x="20" y="380" width="560" height="100" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1.5"/>' +
+        '<text x="40" y="406" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="13" font-weight="600">Agent\'s description:</text>' +
+        '<text x="40" y="428" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11.5">"Stunning city views, walking distance to MRT.</text>' +
+        '<text x="40" y="446" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11.5">Recently renovated kitchen and bathroom. Must see!"</text>' +
+        '<text x="40" y="468" fill="#94A3B8" font-family="DM Sans,sans-serif" font-size="10">Listed 5 days ago · 128 views</text>';
+      return s;
+    },
+    report: function() {
+      var s = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      s.setAttribute('viewBox','0 0 600 500');
+      s.setAttribute('width','100%');
+      s.style.display = 'block';
+      s.innerHTML =
+        '<rect width="600" height="500" fill="#F0FDF4"/>' +
+        '<rect x="20" y="16" width="560" height="44" rx="10" fill="#064E3B"/>' +
+        '<text x="40" y="44" fill="#6EE7B7" font-family="DM Sans,sans-serif" font-size="13" font-weight="800">LISTING LENS REPORT</text>' +
+        '<text x="560" y="44" text-anchor="end" fill="#6EE7B7" font-family="DM Sans,sans-serif" font-size="11">2BR Apartment — Orchard Road</text>' +
+        '<rect x="20" y="74" width="200" height="30" rx="15" fill="#FFFBEB"/>' +
+        '<text x="35" y="94" fill="#92400E" font-family="DM Sans,sans-serif" font-size="11" font-weight="800">⚠️ VERDICT: CAUTION</text>' +
+        '<rect x="20" y="118" width="560" height="58" rx="8" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>' +
+        '<text x="40" y="142" fill="#DC2626" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">🚨 Unit in en-bloc potential zone</text>' +
+        '<text x="40" y="162" fill="#7F1D1D" font-family="DM Sans,sans-serif" font-size="10.5">Building &gt;30 years old. En-bloc sale attempts in 2021 and 2023.</text>' +
+        '<rect x="20" y="186" width="560" height="58" rx="8" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>' +
+        '<text x="40" y="210" fill="#92400E" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">⚠️ Priced S$95,000 above recent comparables</text>' +
+        '<text x="40" y="230" fill="#78350F" font-family="DM Sans,sans-serif" font-size="10.5">Similar units (D09, 2BR, 70-80sqm): S$1,150,000–S$1,210,000</text>' +
+        '<rect x="20" y="254" width="560" height="46" rx="8" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>' +
+        '<text x="40" y="282" fill="#92400E" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">⚠️ Remaining lease: 61 years — may affect financing</text>' +
+        '<rect x="20" y="314" width="560" height="80" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1"/>' +
+        '<text x="40" y="338" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">💰 Hidden costs (Singapore estimate)</text>' +
+        '<text x="40" y="358" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">BSD: ~S$36,400 · ABSD (if applicable): up to 20%</text>' +
+        '<text x="40" y="378" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">Maintenance: ~S$350/month · Agent commission: 1-2%</text>' +
+        '<rect x="20" y="406" width="560" height="76" rx="8" fill="#fff" stroke="#E2E8F0" stroke-width="1"/>' +
+        '<text x="40" y="430" fill="#0F172A" font-family="DM Sans,sans-serif" font-size="12" font-weight="700">❓ Questions to ask the agent</text>' +
+        '<text x="40" y="450" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">1. What is the exact remaining lease period?</text>' +
+        '<text x="40" y="468" fill="#64748B" font-family="DM Sans,sans-serif" font-size="11">2. Were there recent en-bloc attempts? At what price?</text>';
+      return s;
+    }
+  }
+};
+
+// Render initial demo
+var currentDemo = 'vehicle';
+function renderDemo(type) {
+  currentDemo = type;
+  var listingEl = document.getElementById('demoListing');
+  var reportEl = document.getElementById('demoReport');
+  listingEl.innerHTML = '';
+  reportEl.innerHTML = '';
+  listingEl.appendChild(demos[type].listing());
+  reportEl.appendChild(demos[type].report());
+  // Reset handle
+  var handle = document.getElementById('demoHandle');
+  handle.style.left = '50%';
+  reportEl.style.clipPath = 'inset(0 0 0 50%)';
+}
+renderDemo('vehicle');
+
+// Tab switching
+document.querySelectorAll('.demo-tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.demo-tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    renderDemo(tab.dataset.demo);
+  });
+});
+
+// Slider drag logic
+(function() {
+  var slider = document.getElementById('demoSlider');
+  var handle = document.getElementById('demoHandle');
+  var report = document.getElementById('demoReport');
+  var dragging = false;
+
+  function updateSlider(x) {
+    var rect = slider.getBoundingClientRect();
+    var pct = Math.max(0, Math.min(1, (x - rect.left) / rect.width));
+    var pctStr = (pct * 100) + '%';
+    handle.style.left = pctStr;
+    report.style.clipPath = 'inset(0 0 0 ' + pctStr + ')';
+  }
+
+  slider.addEventListener('mousedown', function(e) { dragging = true; updateSlider(e.clientX); });
+  window.addEventListener('mousemove', function(e) { if (dragging) { e.preventDefault(); updateSlider(e.clientX); } });
+  window.addEventListener('mouseup', function() { dragging = false; });
+
+  slider.addEventListener('touchstart', function(e) { dragging = true; updateSlider(e.touches[0].clientX); }, { passive: true });
+  window.addEventListener('touchmove', function(e) { if (dragging) { updateSlider(e.touches[0].clientX); } }, { passive: true });
+  window.addEventListener('touchend', function() { dragging = false; });
+})();
 </script>
 </body>
 </html>
