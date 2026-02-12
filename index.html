@@ -703,6 +703,7 @@ function googleTranslateInit() {
     <p translate="yes">screenshot any listing. we'll tell you <strong>what's really wrong with it, what it's actually worth, and exactly what to ask the seller.</strong></p>
   </div>
 
+
   <!-- 2. VEHICLE CARD -->
   <div class="card card--category" onclick="window.location.hash='vehicle'">
     <div class="card-visual">
@@ -716,6 +717,7 @@ function googleTranslateInit() {
       <a class="card-category-cta" href="#vehicle" translate="yes">scan a vehicle listing →</a>
     </div>
   </div>
+
 
   <!-- 3. PROPERTY CARD -->
   <div class="card card--category" onclick="window.location.hash='property'">
@@ -731,7 +733,41 @@ function googleTranslateInit() {
     </div>
   </div>
 
-  <!-- 4–5. STAT CARDS -->
+
+  <!-- 4. INTERACTIVE DEMO -->
+  <div class="card card--demo" id="demoCard">
+    <div class="demo-header">
+      <h2 translate="yes">see it in <em>action.</em></h2>
+      <p translate="yes">drag the slider to reveal what a real Listing Lens report looks like.</p>
+    </div>
+
+    <div class="demo-tabs" id="demoTabs">
+      <button class="demo-tab active" data-demo="vehicle">🚗 vehicle</button>
+      <button class="demo-tab" data-demo="property">🏠 property</button>
+    </div>
+
+    <!-- VEHICLE DEMO -->
+    <div class="demo-slider" id="demoSlider">
+      <div class="demo-layer demo-layer--listing" id="demoListing"></div>
+      <div class="demo-layer demo-layer--report" id="demoReport"></div>
+      <div class="demo-slider-handle" id="demoHandle"></div>
+    </div>
+
+    <div class="demo-labels">
+      <span translate="yes">← listing screenshot</span>
+      <span class="demo-label-report" translate="yes">your report →</span>
+    </div>
+
+    <span class="demo-hint" translate="yes">👆 drag the green handle to compare</span>
+
+    <div class="demo-cta">
+      <p translate="yes"><strong>Want this for your listing?</strong> Upload your screenshots, get your report in under a minute.</p>
+      <a href="/dashboard.html" class="demo-cta-btn" translate="yes">get your report — $5</a>
+    </div>
+  </div>
+
+
+  <!-- 5–6. STAT CARDS -->
   <div class="card card--stat">
     <div class="stat-number stat-number--green notranslate">$5</div>
     <div class="stat-label" translate="yes">per report</div>
@@ -742,7 +778,20 @@ function googleTranslateInit() {
     <div class="stat-label" translate="yes">report created in less than a minute</div>
   </div>
 
-  <!-- 6. COMING SOON CATEGORIES -->
+
+  <!-- 7. PRIVACY — full width dark -->
+  <div class="card card--privacy">
+    <h2 translate="yes">we go out of our way to <em>forget you.</em></h2>
+    <div class="privacy-tags">
+      <span class="privacy-tag" translate="yes">no accounts</span>
+      <span class="privacy-tag" translate="yes">no tracking</span>
+      <span class="privacy-tag" translate="yes">no cookies</span>
+      <span class="privacy-tag" translate="yes">data deleted after</span>
+    </div>
+  </div>
+
+
+  <!-- 8. COMING SOON CATEGORIES -->
   <div class="card card--coming" id="comingCard">
     <div class="coming-header">
       <h2 translate="yes">more categories <em>launching soon.</em></h2>
@@ -782,50 +831,8 @@ function googleTranslateInit() {
     </div>
   </div>
 
-  <!-- 7. INTERACTIVE DEMO -->
-  <div class="card card--demo" id="demoCard">
-    <div class="demo-header">
-      <h2 translate="yes">see it in <em>action.</em></h2>
-      <p translate="yes">drag the slider to reveal what a real Listing Lens report looks like.</p>
-    </div>
 
-    <div class="demo-tabs" id="demoTabs">
-      <button class="demo-tab active" data-demo="vehicle">🚗 vehicle</button>
-      <button class="demo-tab" data-demo="property">🏠 property</button>
-    </div>
-
-    <!-- VEHICLE DEMO -->
-    <div class="demo-slider" id="demoSlider">
-      <div class="demo-layer demo-layer--listing" id="demoListing"></div>
-      <div class="demo-layer demo-layer--report" id="demoReport"></div>
-      <div class="demo-slider-handle" id="demoHandle"></div>
-    </div>
-
-    <div class="demo-labels">
-      <span translate="yes">← listing screenshot</span>
-      <span class="demo-label-report" translate="yes">your report →</span>
-    </div>
-
-    <span class="demo-hint" translate="yes">👆 drag the green handle to compare</span>
-
-    <div class="demo-cta">
-      <p translate="yes"><strong>Want this for your listing?</strong> Upload your screenshots, get your report in under a minute.</p>
-      <a href="/dashboard.html" class="demo-cta-btn" translate="yes">get your report — $5</a>
-    </div>
-  </div>
-
-  <!-- 8. PRIVACY — full width dark -->
-  <div class="card card--privacy">
-    <h2 translate="yes">we go out of our way to <em>forget you.</em></h2>
-    <div class="privacy-tags">
-      <span class="privacy-tag" translate="yes">no accounts</span>
-      <span class="privacy-tag" translate="yes">no tracking</span>
-      <span class="privacy-tag" translate="yes">no cookies</span>
-      <span class="privacy-tag" translate="yes">data deleted after</span>
-    </div>
-  </div>
-
-  <!-- 8-10. HOW IT WORKS -->
+  <!-- 9-12. HOW IT WORKS -->
   <div class="card card--step">
     <div class="step-num notranslate">1</div>
     <h3 translate="yes">find it</h3>
@@ -850,13 +857,15 @@ function googleTranslateInit() {
     <p translate="yes">Red flags, hidden costs, questions to ask, fair value, and a clear verdict.</p>
   </div>
 
-  <!-- 11. TRUST -->
+
+  <!-- 13. TRUST -->
   <div class="card card--trust">
     <blockquote translate="yes">"I paid $5 and it found a structural defect that could have cost me $200,000. This should be mandatory before buying."</blockquote>
     <cite translate="yes">— what we're building towards</cite>
   </div>
 
-  <!-- 12. FOOTER -->
+
+  <!-- 14. FOOTER -->
   <div class="card card--footer">
     <div class="footer-brand notranslate">LISTING LENS © 2026 <img src="https://flagcdn.com/w40/au.png" alt="AU" style="height:0.9em;vertical-align:middle;margin-left:0.3rem;"></div>
     <div class="footer-links">
@@ -866,6 +875,7 @@ function googleTranslateInit() {
   </div>
 
 </div>
+
 
 <script>
 var cl = document.getElementById('contactLink');
