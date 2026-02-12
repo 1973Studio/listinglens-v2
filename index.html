@@ -529,16 +529,30 @@ body { top: 0 !important; }
   gap: 2rem;
   flex-wrap: wrap;
 }
+.privacy-left {
+  flex: 1;
+  min-width: 220px;
+}
 .card--privacy h2 {
   font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  flex: 1;
-  min-width: 200px;
+  margin-bottom: 0.5rem;
 }
 .card--privacy h2 em {
   font-style: normal;
   color: var(--emerald);
+}
+.privacy-sub {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+}
+.privacy-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.8rem;
 }
 .privacy-tags {
   display: flex;
@@ -553,6 +567,16 @@ body { top: 0 !important; }
   font-weight: 600;
   color: var(--emerald-light);
 }
+.privacy-link {
+  display: block;
+  margin-top: 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.privacy-link:hover { color: var(--emerald-light); }
 
 /* ============================================================
    HOW IT WORKS — 3 small cards in a row
@@ -705,7 +729,7 @@ function googleTranslateInit() {
 
 
   <!-- 2. VEHICLE CARD -->
-  <div class="card card--category" onclick="window.location.hash='vehicle'">
+  <div class="card card--category" onclick="window.location.href='/dashboard.html'">
     <div class="card-visual">
       <img src="https://listinglens.app/jeep-2026-1.png" alt="2015 Jeep Wrangler listing">
     </div>
@@ -714,13 +738,13 @@ function googleTranslateInit() {
       <div class="card-category-label" translate="yes">Vehicles</div>
       <div class="card-category-title" translate="yes">cars, utes, SUVs, bikes</div>
       <div class="card-category-desc" translate="yes">Recalls, hidden costs, mechanical issues, market comparisons, fair value estimate, and a verdict.</div>
-      <a class="card-category-cta" href="#vehicle" translate="yes">scan a vehicle listing →</a>
+      <a class="card-category-cta" href="/dashboard.html" translate="yes">get your vehicle report →</a>
     </div>
   </div>
 
 
   <!-- 3. PROPERTY CARD -->
-  <div class="card card--category" onclick="window.location.hash='property'">
+  <div class="card card--category" onclick="window.location.href='/dashboard.html'">
     <div class="card-visual">
       <img src="https://listinglens.app/apartment2-screenshot.jpg" alt="Parramatta apartment listing">
     </div>
@@ -729,7 +753,7 @@ function googleTranslateInit() {
       <div class="card-category-label" translate="yes">Property</div>
       <div class="card-category-title" translate="yes">houses, apartments, land</div>
       <div class="card-category-desc" translate="yes">Developer history, strata & body corp, hidden costs, comparable sales, oversupply risk, and a verdict.</div>
-      <a class="card-category-cta" href="#property" translate="yes">scan a property listing →</a>
+      <a class="card-category-cta" href="/dashboard.html" translate="yes">get your property report →</a>
     </div>
   </div>
 
@@ -767,31 +791,24 @@ function googleTranslateInit() {
   </div>
 
 
-  <!-- 5–6. STAT CARDS -->
-  <div class="card card--stat">
-    <div class="stat-number stat-number--green notranslate">$5</div>
-    <div class="stat-label" translate="yes">per report</div>
-  </div>
-
-  <div class="card card--stat">
-    <div class="stat-number notranslate">⚡</div>
-    <div class="stat-label" translate="yes">report created in less than a minute</div>
-  </div>
-
-
-  <!-- 7. PRIVACY — full width dark -->
+  <!-- 5. PRIVACY — replaces stats + old privacy bar -->
   <div class="card card--privacy">
-    <h2 translate="yes">we go out of our way to <em>forget you.</em></h2>
-    <div class="privacy-tags">
-      <span class="privacy-tag" translate="yes">no accounts</span>
-      <span class="privacy-tag" translate="yes">no tracking</span>
-      <span class="privacy-tag" translate="yes">no cookies</span>
-      <span class="privacy-tag" translate="yes">data deleted after</span>
+    <div class="privacy-left">
+      <h2 translate="yes">we go out of our way to <em>forget you.</em></h2>
+      <p class="privacy-sub" translate="yes">we analyse your screenshots, deliver your report, and delete everything. we don't want your data — we want you to make a smart purchase.</p>
+    </div>
+    <div class="privacy-right">
+      <div class="privacy-tags">
+        <span class="privacy-tag" translate="yes">no accounts</span>
+        <span class="privacy-tag" translate="yes">no tracking</span>
+        <span class="privacy-tag" translate="yes">no cookies</span>
+      </div>
+      <a href="/privacy" class="privacy-link" translate="yes">read our privacy promise →</a>
     </div>
   </div>
 
 
-  <!-- 8. COMING SOON CATEGORIES -->
+  <!-- 6. COMING SOON CATEGORIES -->
   <div class="card card--coming" id="comingCard">
     <div class="coming-header">
       <h2 translate="yes">more categories <em>launching soon.</em></h2>
@@ -860,8 +877,8 @@ function googleTranslateInit() {
 
   <!-- 13. TRUST -->
   <div class="card card--trust">
-    <blockquote translate="yes">"I paid $5 and it found a structural defect that could have cost me $200,000. This should be mandatory before buying."</blockquote>
-    <cite translate="yes">— what we're building towards</cite>
+    <blockquote translate="yes">"Every buyer deserves to know what they're really paying for. We built Listing Lens because the information was always out there — it was just buried, scattered, or deliberately hidden."</blockquote>
+    <cite translate="yes">— the Listing Lens team, Canberra 🇦🇺</cite>
   </div>
 
 
@@ -869,7 +886,7 @@ function googleTranslateInit() {
   <div class="card card--footer">
     <div class="footer-brand notranslate">LISTING LENS © 2026 <img src="https://flagcdn.com/w40/au.png" alt="AU" style="height:0.9em;vertical-align:middle;margin-left:0.3rem;"></div>
     <div class="footer-links">
-      <a href="/terms" translate="yes">Terms & Privacy</a>
+      <a href="/privacy" translate="yes">Privacy</a>
       <a href="#" id="contactLink" translate="yes">Contact</a>
     </div>
   </div>
