@@ -538,6 +538,174 @@ body { top: 0 !important; }
   color: var(--slate-500);
   line-height: 1.5;
 }
+/* Full expanded report */
+.demo-full-report {
+  margin-top: 1rem;
+  border: 2px solid var(--emerald);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--white);
+}
+.demo-full-header {
+  background: #064E3B;
+  padding: 0.8rem 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.demo-full-header span:first-child {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #6EE7B7;
+}
+.demo-full-badge {
+  font-size: 0.6rem;
+  font-weight: 800;
+  background: rgba(255,255,255,0.15);
+  color: #6EE7B7;
+  padding: 0.25rem 0.6rem;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+}
+.demo-full-verdict {
+  display: flex;
+  gap: 0.8rem;
+  padding: 1.2rem;
+  align-items: flex-start;
+}
+.demo-full-verdict--red {
+  background: #FEF2F2;
+  border-bottom: 2px solid #FECACA;
+}
+.demo-full-verdict-icon { font-size: 1.5rem; flex-shrink: 0; }
+.demo-full-verdict strong {
+  display: block;
+  font-size: 0.85rem;
+  color: #DC2626;
+  margin-bottom: 0.3rem;
+}
+.demo-full-verdict p {
+  font-size: 0.78rem;
+  color: #7F1D1D;
+  line-height: 1.6;
+}
+.demo-full-section {
+  padding: 1.2rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+.demo-full-section:last-of-type { border-bottom: none; }
+.demo-full-section h4 {
+  font-size: 0.85rem;
+  font-weight: 800;
+  margin-bottom: 0.8rem;
+}
+.demo-full-flag {
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 0.6rem;
+}
+.demo-full-flag--red { background: #FEF2F2; border-left: 4px solid #DC2626; }
+.demo-full-flag--amber { background: #FFFBEB; border-left: 4px solid #F59E0B; }
+.demo-full-flag strong {
+  display: block;
+  font-size: 0.8rem;
+  margin-bottom: 0.3rem;
+}
+.demo-full-flag--red strong { color: #DC2626; }
+.demo-full-flag--amber strong { color: #92400E; }
+.demo-full-flag p {
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--slate-600);
+}
+.demo-full-costs {
+  background: var(--snow);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.demo-full-cost-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+.demo-full-cost-row:last-child { border-bottom: none; }
+.demo-full-cost-row span:first-child { color: var(--slate-600); }
+.demo-full-cost-row span:last-child { font-weight: 700; color: var(--slate-900); }
+.demo-full-cost-total {
+  background: #FEF2F2;
+  font-weight: 700;
+}
+.demo-full-cost-total span:last-child { color: #DC2626; }
+.demo-full-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.demo-full-q {
+  font-size: 0.78rem;
+  color: var(--slate-600);
+  line-height: 1.5;
+  padding: 0.5rem 0.8rem;
+  background: var(--snow);
+  border-radius: 8px;
+}
+.demo-full-rights {
+  font-size: 0.78rem;
+  color: var(--slate-600);
+  line-height: 1.7;
+}
+.demo-full-sources {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.demo-full-sources a {
+  font-size: 0.75rem;
+  color: var(--emerald-deep);
+  text-decoration: none;
+  padding: 0.45rem 0.8rem;
+  background: var(--snow);
+  border-radius: 8px;
+  border: 1px solid var(--gray-100);
+  transition: all 0.15s;
+  display: block;
+}
+.demo-full-sources a:hover {
+  background: var(--emerald-pale);
+  border-color: var(--emerald);
+}
+.demo-full-footer {
+  padding: 0.8rem 1.2rem;
+  background: var(--snow);
+  border-top: 1px solid var(--gray-100);
+}
+.demo-full-footer p {
+  font-size: 0.68rem;
+  color: var(--slate-400);
+  text-align: center;
+  font-style: italic;
+}
+/* Show full report toggle */
+.demo-expand-btn {
+  display: block;
+  width: 100%;
+  margin-top: 0.8rem;
+  padding: 0.7rem;
+  border: 1.5px solid var(--emerald);
+  border-radius: 10px;
+  background: var(--emerald-pale);
+  color: var(--emerald-deep);
+  font-family: var(--font);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.demo-expand-btn:hover { background: var(--emerald); color: var(--white); }
 /* CTA below demo */
 .demo-cta {
   margin-top: 1.2rem;
@@ -799,11 +967,11 @@ function googleTranslateInit() {
       <div>
         <span class="demo-col-label demo-col-label--listing">📸 the listing</span>
         <div class="demo-panel demo-listing">
-          <div class="demo-listing-photo"><img src="https://listinglens.app/jeep-2026-1.png" alt="Vehicle listing"></div>
-          <div class="demo-listing-price" translate="no">$34,990</div>
-          <div class="demo-listing-title">2019 Toyota RAV4 GXL — Auto, SUV</div>
-          <div class="demo-listing-meta">📍 Parramatta, NSW · Private seller · 87,400 km</div>
-          <div class="demo-listing-desc">"Great family car, full service history, no accidents. One owner, always garaged."</div>
+          <div class="demo-listing-photo"><img src="https://listinglens.app/jeep-2026-1.jpg" alt="2015 Jeep Wrangler listing"></div>
+          <div class="demo-listing-price" translate="no">$22,500 <small style="font-size:0.55em;font-weight:600;color:var(--slate-400)">Excl. Govt. Charges</small></div>
+          <div class="demo-listing-title">2015 Jeep Wrangler Unlimited Sport Auto 4x4 MY15</div>
+          <div class="demo-listing-meta">📍 NSW · Private seller · 156,000 km · Petrol · Automatic</div>
+          <div class="demo-listing-desc">"Rego plate: check with seller. Rego expiry: February 2026. Roadworthy provided at pick-up."</div>
         </div>
       </div>
       <div>
@@ -815,25 +983,125 @@ function googleTranslateInit() {
           </div>
           <div class="demo-flag demo-flag--red">
             <span class="demo-flag-icon">🚨</span>
-            <div><strong>Takata airbag recall active</strong><small>Critical safety. Check recalls.gov.au</small></div>
+            <div><strong>Takata airbag recall applies to this model</strong><small>2015 Wrangler JK is affected. Check recalls.gov.au</small></div>
+          </div>
+          <div class="demo-flag demo-flag--red">
+            <span class="demo-flag-icon">🚨</span>
+            <div><strong>Registration plate hidden</strong><small>"Check with seller" — unable to verify history, finance, or write-off status</small></div>
           </div>
           <div class="demo-flag demo-flag--amber">
             <span class="demo-flag-icon">⚠️</span>
-            <div><strong>Overpriced by ~$3,200</strong><small>Comparables: $30,500–$33,100</small></div>
+            <div><strong>Registration expiring February 2026</strong><small>Expires this month. Budget for re-registration costs.</small></div>
           </div>
-          <div class="demo-flag demo-flag--green">
-            <span class="demo-flag-icon">✅</span>
-            <div><strong>Service history appears consistent</strong></div>
+          <div class="demo-flag demo-flag--amber">
+            <span class="demo-flag-icon">⚠️</span>
+            <div><strong>High fuel consumption: 11.7 L/100km</strong><small>3.6L V6 — expect ~$3,500+/yr in fuel at current prices</small></div>
           </div>
           <div class="demo-info-card">
-            <h4>💰 Hidden costs</h4>
-            <p>Stamp duty: ~$1,120 · CTP: ~$650/yr · Insurance: ~$1,400/yr</p>
+            <h4>💰 Hidden costs (NSW estimate)</h4>
+            <p>Stamp duty: ~$630 · Transfer: $33 · CTP: ~$650/yr · Rego renewal: ~$370/yr</p>
           </div>
           <div class="demo-info-card">
             <h4>❓ Ask the seller</h4>
-            <p>Has the Takata recall been addressed? Can you show the service logbook?</p>
+            <p>Why is the rego plate hidden? Has the Takata recall been done? Can you provide a PPSR report?</p>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- FULL VEHICLE REPORT -->
+    <div id="demo-vehicle-full" class="demo-full-report" style="display:none;">
+      <div class="demo-full-header">
+        <span>📋 full report — 2015 Jeep Wrangler Unlimited Sport 4x4</span>
+        <span class="demo-full-badge">DEMO REPORT</span>
+      </div>
+
+      <div class="demo-full-verdict demo-full-verdict--red">
+        <div class="demo-full-verdict-icon">🚨</div>
+        <div>
+          <strong>VERDICT: CAUTION — SIGNIFICANT RISKS IDENTIFIED</strong>
+          <p>This listing has multiple red flags including an active safety recall, hidden registration details preventing history verification, and registration expiring imminently. Do not purchase without completing all recommended checks.</p>
+        </div>
+      </div>
+
+      <div class="demo-full-section">
+        <h4>🚨 Critical findings</h4>
+
+        <div class="demo-full-flag demo-full-flag--red">
+          <strong>Takata airbag recall — confirmed for this model</strong>
+          <p>The 2015 Jeep Wrangler JK (MY2014–2016) is part of the compulsory Takata airbag recall affecting 6,733 vehicles in Australia. The passenger-side beta airbag inflator can degrade over time due to heat and humidity. In a crash, the metal inflator housing may rupture and propel fragments through the airbag toward occupants. This defect can cause serious injury or death. The recall repair is free through any authorised Jeep dealer — call 1300 133 079.</p>
+        </div>
+
+        <div class="demo-full-flag demo-full-flag--red">
+          <strong>Registration plate withheld — "Check with seller"</strong>
+          <p>The seller has deliberately hidden the registration plate number. Without it, you cannot independently verify the vehicle's history, check for outstanding finance (PPSR), confirm write-off status, or verify the odometer reading. This is a significant red flag. A legitimate seller should have no reason to withhold this information.</p>
+        </div>
+      </div>
+
+      <div class="demo-full-section">
+        <h4>⚠️ Additional concerns</h4>
+
+        <div class="demo-full-flag demo-full-flag--amber">
+          <strong>Registration expiring February 2026 — this month</strong>
+          <p>The vehicle's registration expires in February 2026. If purchasing, you will need to budget for immediate re-registration including a fresh CTP insurance policy. If registration has already lapsed, the vehicle cannot be legally driven and will need to be transported.</p>
+        </div>
+
+        <div class="demo-full-flag demo-full-flag--amber">
+          <strong>High fuel consumption: 11.7 L/100km combined</strong>
+          <p>The 3.6L Pentastar V6 is rated at 11.7 L/100km combined. At current fuel prices (~$2.00/L), driving 15,000 km/year would cost approximately $3,510 in fuel annually. Real-world consumption with off-road tyres and accessories may be higher.</p>
+        </div>
+
+        <div class="demo-full-flag demo-full-flag--amber">
+          <strong>156,000 km — approaching major service milestones</strong>
+          <p>At this mileage, the vehicle may be due for significant maintenance including transmission fluid change, differential servicing, and suspension component inspection. Jeep Wrangler JK parts can be expensive — request the full service history before committing.</p>
+        </div>
+
+        <div class="demo-full-flag demo-full-flag--amber">
+          <strong>Softtop model — check condition carefully</strong>
+          <p>Vehicle description confirms this is a Softtop variant. At 10 years old, soft tops commonly develop leaks, fading, and window cloudiness. Replacement soft tops for Wrangler Unlimited models range from $1,500–$4,000+ depending on quality.</p>
+        </div>
+      </div>
+
+      <div class="demo-full-section">
+        <h4>💰 Hidden costs (NSW estimate)</h4>
+        <div class="demo-full-costs">
+          <div class="demo-full-cost-row"><span>Stamp duty (on $22,500)</span><span>~$630</span></div>
+          <div class="demo-full-cost-row"><span>Transfer fee</span><span>$33</span></div>
+          <div class="demo-full-cost-row"><span>CTP insurance (12 months)</span><span>~$650–$750</span></div>
+          <div class="demo-full-cost-row"><span>Registration renewal</span><span>~$370</span></div>
+          <div class="demo-full-cost-row"><span>Comprehensive insurance (est.)</span><span>~$1,200–$1,800/yr</span></div>
+          <div class="demo-full-cost-row"><span>Fuel (~15,000 km/yr)</span><span>~$3,510/yr</span></div>
+          <div class="demo-full-cost-row"><span>PPSR check (recommended)</span><span>$2</span></div>
+          <div class="demo-full-cost-row demo-full-cost-total"><span>Estimated first-year costs beyond purchase</span><span>~$6,400–$7,100</span></div>
+        </div>
+      </div>
+
+      <div class="demo-full-section">
+        <h4>❓ Questions to ask before purchasing</h4>
+        <div class="demo-full-questions">
+          <div class="demo-full-q">1. Why is the registration plate hidden? Can you provide it for a PPSR check?</div>
+          <div class="demo-full-q">2. Has the Takata airbag recall been completed? Can you provide proof?</div>
+          <div class="demo-full-q">3. Can you provide the full service history and logbook?</div>
+          <div class="demo-full-q">4. Why is registration expiring — is there an issue passing inspection?</div>
+          <div class="demo-full-q">5. Are there any outstanding finance agreements on the vehicle?</div>
+          <div class="demo-full-q">6. Can I arrange an independent pre-purchase inspection?</div>
+        </div>
+      </div>
+
+      <div class="demo-full-section">
+        <h4>🔗 Sources used in this report</h4>
+        <div class="demo-full-sources">
+          <a href="https://www.productsafety.gov.au/recalls/fca-australia-pty-ltd-jeep-wrangler-jk-my2014-2016-and-chrysler-lx-300-my2014-2015-extended-recall" target="_blank" rel="noopener">ACCC Product Safety — Jeep Wrangler JK MY2014-2016 Takata airbag recall (6,733 vehicles)</a>
+          <a href="https://www.jeep.com.au/takata-airbag-recall.html" target="_blank" rel="noopener">Jeep Australia — Takata Airbag Recall (VIN check & free repair booking)</a>
+          <a href="https://www.ismyairbagsafe.com.au" target="_blank" rel="noopener">Is My Airbag Safe? — Check your vehicle by registration plate</a>
+          <a href="https://www.ppsr.gov.au" target="_blank" rel="noopener">PPSR — Personal Property Securities Register (finance & write-off check, $2)</a>
+          <a href="https://www.service.nsw.gov.au/transaction/check-vehicle-registration" target="_blank" rel="noopener">Service NSW — Check vehicle registration status</a>
+          <a href="https://www.revenue.nsw.gov.au/taxes-duties-levies-royalties/motor-vehicle-duty" target="_blank" rel="noopener">Revenue NSW — Motor vehicle stamp duty estimate based on $22,500</a>
+        </div>
+      </div>
+
+      <div class="demo-full-footer">
+        <p>This report was generated by Listing Lens using AI analysis. It is not legal or financial advice. Always conduct your own due diligence.</p>
       </div>
     </div>
 
@@ -842,11 +1110,11 @@ function googleTranslateInit() {
       <div>
         <span class="demo-col-label demo-col-label--listing">📸 the listing</span>
         <div class="demo-panel demo-listing">
-          <div class="demo-listing-photo"><img src="https://listinglens.app/apartment2-screenshot.jpg" alt="Property listing"></div>
-          <div class="demo-listing-price" translate="no">S$1,280,000</div>
-          <div class="demo-listing-title">2BR Apartment — Orchard Road, Level 18</div>
-          <div class="demo-listing-meta">📍 District 09, Singapore · Agent · 75 sqm</div>
-          <div class="demo-listing-desc">"Stunning city views, walking distance to MRT. Recently renovated. Must see!"</div>
+          <div class="demo-listing-photo"><img src="https://listinglens.app/apartment-2026-1.jpg" alt="Property listing"></div>
+          <div class="demo-listing-price" translate="no">$655,000 <small style="font-size:0.55em;font-weight:600;color:var(--slate-400)">Brand New</small></div>
+          <div class="demo-listing-title">108/125 Arthur Street, Parramatta NSW 2150</div>
+          <div class="demo-listing-meta">📍 Parramatta · 2 bed · 1 bath · 1 car · Apartment</div>
+          <div class="demo-listing-desc">"Developed by a reputable team — developed and built with proven structural integrity and independent quality oversight."</div>
         </div>
       </div>
       <div>
@@ -854,31 +1122,132 @@ function googleTranslateInit() {
         <div class="demo-panel demo-report">
           <div class="demo-report-bar">
             <span>LISTING LENS REPORT</span>
-            <span>⚠️ CAUTION</span>
+            <span>🚨 HIGH RISK</span>
           </div>
           <div class="demo-flag demo-flag--red">
             <span class="demo-flag-icon">🚨</span>
-            <div><strong>En-bloc potential zone</strong><small>Building &gt;30 yrs. Attempts in 2021, 2023.</small></div>
+            <div><strong>Developer/builder subject to legal proceedings</strong><small>"Proven structural integrity" claim contradicted by court records</small></div>
+          </div>
+          <div class="demo-flag demo-flag--red">
+            <span class="demo-flag-icon">🚨</span>
+            <div><strong>Photos are not this apartment</strong><small>Images are from Apt 208 ($675k, one floor up) and digitally styled</small></div>
           </div>
           <div class="demo-flag demo-flag--amber">
             <span class="demo-flag-icon">⚠️</span>
-            <div><strong>S$95,000 above comparables</strong><small>Similar: S$1,150,000–S$1,210,000</small></div>
-          </div>
-          <div class="demo-flag demo-flag--amber">
-            <span class="demo-flag-icon">⚠️</span>
-            <div><strong>Remaining lease: 61 years</strong><small>May affect bank financing</small></div>
+            <div><strong>No developer name disclosed</strong><small>"Reputable team" — but who? Independent research required.</small></div>
           </div>
           <div class="demo-info-card">
             <h4>💰 Hidden costs</h4>
-            <p>BSD: ~S$36,400 · ABSD: up to 20% · Maintenance: ~S$350/mo</p>
+            <p>Stamp duty: ~$24,500 · Strata: $822/qtr · Council rates · Water rates</p>
           </div>
           <div class="demo-info-card">
             <h4>❓ Ask the agent</h4>
-            <p>Exact remaining lease? Were there recent en-bloc attempts?</p>
+            <p>Who is the developer? What are the court proceedings? Can I inspect the actual unit?</p>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- FULL PROPERTY REPORT — the showstopper -->
+    <div id="demo-property-full" class="demo-full-report" style="display:none;">
+      <div class="demo-full-header">
+        <span>📋 full report — 108/125 Arthur Street, Parramatta</span>
+        <span class="demo-full-badge">DEMO REPORT</span>
+      </div>
+
+      <div class="demo-full-verdict demo-full-verdict--red">
+        <div class="demo-full-verdict-icon">🚨</div>
+        <div>
+          <strong>VERDICT: HIGH RISK — DO NOT PROCEED WITHOUT INDEPENDENT LEGAL ADVICE</strong>
+          <p>This listing contains multiple critical red flags including unverified structural integrity claims that are directly contradicted by public court records, misleading photographs, and undisclosed developer identity.</p>
+        </div>
+      </div>
+
+      <div class="demo-full-section">
+        <h4>🚨 Critical findings</h4>
+
+        <div class="demo-full-flag demo-full-flag--red">
+          <strong>Developer/builder subject to active legal proceedings for structural defects</strong>
+          <p>The listing claims "developed and built with proven structural integrity and independent quality oversight." Public court records reveal the developer/builder is currently subject to legal proceedings relating to structural defects in their developments. This directly contradicts the listing's claims. Buyers should obtain independent legal and building advice before proceeding.</p>
+        </div>
+
+        <div class="demo-full-flag demo-full-flag--red">
+          <strong>Photographs shown are not of this apartment</strong>
+          <p>The listing's own fine print states: "Online images shown are from Apartment 208 ($675,000) — an identical apartment located one floor higher. Some images have been digitally styled." You are being shown a different, more expensive apartment that has been virtually staged. The actual unit (108) may look significantly different.</p>
+        </div>
+
+        <div class="demo-full-flag demo-full-flag--red">
+          <strong>Developer identity not disclosed</strong>
+          <p>The listing refers only to "a reputable team" without naming the developer, builder, or certifier. In a brand new development, the identity of the builder and their track record is critical. The deliberate omission raises serious questions.</p>
+        </div>
+      </div>
+
+      <div class="demo-full-section">
+        <h4>⚠️ Additional concerns</h4>
+
+        <div class="demo-full-flag demo-full-flag--amber">
+          <strong>Strata management not yet active</strong>
+          <p>Strata is managed by Ace Body Corporate, Prospect — but "management commences post-strata registration." This means there is no strata history, no AGM minutes, and no maintenance records to review. You are buying blind into the body corporate.</p>
+        </div>
+
+        <div class="demo-full-flag demo-full-flag--amber">
+          <strong>Strata levy: $822.62 per quarter ($3,290/year)</strong>
+          <p>For a 2-bedroom apartment in a 64-unit building, this is on the higher end. With a brand new building facing potential structural issues, there is risk of special levies for remediation work.</p>
+        </div>
+
+        <div class="demo-full-flag demo-full-flag--amber">
+          <strong>Images digitally styled</strong>
+          <p>The listing acknowledges some images have been "digitally styled." Virtual staging can significantly misrepresent the actual finishes, fixtures, and size of rooms. Insist on inspecting the physical unit.</p>
+        </div>
+      </div>
+
+      <div class="demo-full-section">
+        <h4>💰 Hidden costs (NSW estimate)</h4>
+        <div class="demo-full-costs">
+          <div class="demo-full-cost-row"><span>Stamp duty</span><span>~$24,457</span></div>
+          <div class="demo-full-cost-row"><span>Strata levies</span><span>~$3,290/year</span></div>
+          <div class="demo-full-cost-row"><span>Council rates (Parramatta)</span><span>~$1,200–$1,600/year</span></div>
+          <div class="demo-full-cost-row"><span>Water rates</span><span>~$700–$1,000/year</span></div>
+          <div class="demo-full-cost-row"><span>Building insurance (within strata)</span><span>Included in levy</span></div>
+          <div class="demo-full-cost-row"><span>Contents insurance</span><span>~$300–$500/year</span></div>
+          <div class="demo-full-cost-row demo-full-cost-total"><span>Estimated first-year total costs beyond purchase</span><span>~$30,000–$31,000</span></div>
+        </div>
+      </div>
+
+      <div class="demo-full-section">
+        <h4>❓ Questions to ask before purchasing</h4>
+        <div class="demo-full-questions">
+          <div class="demo-full-q">1. Who is the developer and builder? What is their ABN and licence number?</div>
+          <div class="demo-full-q">2. What are the details of the current legal proceedings?</div>
+          <div class="demo-full-q">3. Can I inspect the actual Unit 108, not a display unit or different apartment?</div>
+          <div class="demo-full-q">4. Can I see the independent quality oversight report referenced in the listing?</div>
+          <div class="demo-full-q">5. What is the building's defect liability period and has anything been lodged?</div>
+          <div class="demo-full-q">6. Can I review the draft strata by-laws and budget before purchase?</div>
+        </div>
+      </div>
+
+      <div class="demo-full-section">
+        <h4>⚖️ Your rights (NSW)</h4>
+        <p class="demo-full-rights">Under NSW law, you are entitled to a 5-business-day cooling-off period after exchanging contracts. You may also be entitled to protections under the <em>Home Building Act 1989</em> for defects in buildings under 6 years old (structural) and 2 years (non-structural). We strongly recommend engaging an independent building inspector and solicitor before proceeding with this purchase.</p>
+      </div>
+
+      <div class="demo-full-section">
+        <h4>🔗 Sources used in this report</h4>
+        <div class="demo-full-sources">
+          <a href="https://www.caselaw.nsw.gov.au/" target="_blank" rel="noopener">NSW Caselaw — developer/builder legal proceedings referenced in this report</a>
+          <a href="https://www.fairtrading.nsw.gov.au/housing-and-property/building-and-renovating/building-defects/serious-defects-in-buildings" target="_blank" rel="noopener">NSW Fair Trading — Serious Building Defects Register (125 Arthur St check)</a>
+          <a href="https://www.revenue.nsw.gov.au/taxes-duties-levies-royalties/transfer-duty" target="_blank" rel="noopener">Revenue NSW — Stamp duty estimate based on $655,000 purchase price</a>
+          <a href="https://legislation.nsw.gov.au/view/html/inforce/current/act-1989-147" target="_blank" rel="noopener">Home Building Act 1989 (NSW) — Defect liability periods (s18E: 6yr structural, 2yr non-structural)</a>
+          <a href="https://www.domain.com.au/" target="_blank" rel="noopener">Domain.com.au — Comparable sales data for Parramatta 2BR apartments</a>
+        </div>
+      </div>
+
+      <div class="demo-full-footer">
+        <p>This report was generated by Listing Lens using AI analysis. It is not legal or financial advice. Always conduct your own due diligence.</p>
+      </div>
+    </div>
+
+    <button class="demo-expand-btn" id="demoExpandBtn">👇 see the full report</button>
 
     <div class="demo-cta">
       <p translate="yes"><strong>Want this for your listing?</strong> Upload your screenshots, get your report in under a minute.</p>
@@ -983,7 +1352,6 @@ function googleTranslateInit() {
     <div class="footer-brand notranslate">LISTING LENS © 2026 <img src="https://flagcdn.com/w40/au.png" alt="AU" style="height:0.9em;vertical-align:middle;margin-left:0.3rem;"></div>
     <div class="footer-links">
       <a href="/privacy" translate="yes">Privacy</a>
-      <a href="#" id="contactLink" translate="yes">Contact</a>
     </div>
   </div>
 
@@ -991,20 +1359,43 @@ function googleTranslateInit() {
 
 
 <script>
-var cl = document.getElementById('contactLink');
-if (cl) cl.href = 'mai' + 'lto:hel' + 'lo@list' + 'inglens.app';
+// ============================================================
+// DEMO — category switcher + full report toggle
+// ============================================================
+var expandBtn = document.getElementById('demoExpandBtn');
+var vehicleFull = document.getElementById('demo-vehicle-full');
+var propertyFull = document.getElementById('demo-property-full');
+var currentCat = 'vehicle';
 
-// ============================================================
-// DEMO — category switcher
-// ============================================================
+function hideAllFull() {
+  vehicleFull.style.display = 'none';
+  propertyFull.style.display = 'none';
+  expandBtn.textContent = '👇 see the full report';
+  expandBtn.style.display = 'block';
+}
+
 document.querySelectorAll('.demo-cat').forEach(function(btn) {
   btn.addEventListener('click', function() {
     document.querySelectorAll('.demo-cat').forEach(function(b) { b.classList.remove('active'); });
     btn.classList.add('active');
-    var cat = btn.dataset.cat;
+    currentCat = btn.dataset.cat;
     document.querySelectorAll('.demo-compare').forEach(function(d) { d.style.display = 'none'; });
-    document.getElementById('demo-' + cat).style.display = 'grid';
+    document.getElementById('demo-' + currentCat).style.display = 'grid';
+    hideAllFull();
   });
+});
+
+expandBtn.addEventListener('click', function() {
+  var fullReport = currentCat === 'vehicle' ? vehicleFull : propertyFull;
+  if (fullReport.style.display === 'none') {
+    hideAllFull();
+    fullReport.style.display = 'block';
+    expandBtn.textContent = '👆 hide full report';
+    fullReport.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    fullReport.style.display = 'none';
+    expandBtn.textContent = '👇 see the full report';
+  }
 });
 </script>
 </body>
