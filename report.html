@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Report — Listing Lens</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #FFFFFF;
+  --snow: #F9FAFB;
+  --gray-100: #E5E7EB;
+  --gray-200: #D1D5DB;
+  --slate-900: #0F172A;
+  --slate-800: #1E293B;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-500: #64748B;
+  --slate-400: #94A3B8;
+  --emerald: #10B981;
+  --emerald-light: #6EE7B7;
+  --emerald-pale: #D1FAE5;
+  --emerald-deep: #059669;
+  --emerald-dark: #064E3B;
+  --red: #DC2626;
+  --red-pale: #FEF2F2;
+  --amber: #F59E0B;
+  --font: 'DM Sans', system-ui, -apple-system, sans-serif;
+}
+
+html { font-family: var(--font); -webkit-font-smoothing: antialiased; background: var(--snow); color: var(--slate-900); }
+body { margin: 0; padding: 1rem; min-height: 100vh; }
+@media (min-width: 768px) { body { padding: 2rem; } }
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.report-wrapper {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   TOP BAR
+   ============================================================ */
+.report-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+.report-logo {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--slate-900);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.report-logo em {
+  font-style: normal;
+}
+.report-topbar-meta {
+  font-size: 0.7rem;
+  color: var(--slate-400);
+  text-align: right;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   LOADING STATE
+   ============================================================ */
+.report-loading {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+.report-loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--gray-100);
+  border-top-color: var(--emerald);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 1.5rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.report-loading h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.report-loading-step {
+  font-size: 0.85rem;
+  color: var(--slate-500);
+  margin-bottom: 0.3rem;
+  transition: all 0.3s;
+}
+.report-loading-step.active {
+  color: var(--emerald-deep);
+  font-weight: 600;
+}
+.report-loading-step.done {
+  color: var(--slate-400);
+}
+.report-loading-step.done::before {
+  content: '✓ ';
+  color: var(--emerald);
+}
+
+/* ============================================================
+   ERROR STATE
+   ============================================================ */
+.report-error {
+  text-align: center;
+  padding: 4rem 1rem;
+  display: none;
+}
+.report-error-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+.report-error h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--red);
+}
+.report-error p {
+  font-size: 0.85rem;
+  color: var(--slate-500);
+  line-height: 1.6;
+  max-width: 400px;
+  margin: 0 auto 1.5rem;
+}
+.report-error-btn {
+  display: inline-block;
+  padding: 0.7rem 1.8rem;
+  background: var(--slate-900);
+  color: var(--white);
+  font-family: var(--font);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.report-error-btn:hover { background: var(--emerald-deep); }
+
+/* ============================================================
+   REPORT CARD
+   ============================================================ */
+.report-card {
+  border: 2px solid var(--emerald);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--white);
+  display: none;
+}
+
+/* Header bar */
+.report-header {
+  background: var(--slate-900);
+  padding: 1.2rem;
+}
+.report-header-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--slate-400);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.report-header-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.3;
+  margin-bottom: 0.3rem;
+}
+.report-header-meta {
+  font-size: 0.78rem;
+  color: var(--slate-400);
+  line-height: 1.4;
+}
+.report-header-category {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  background: rgba(255,255,255,0.1);
+  color: var(--slate-400);
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-top: 0.6rem;
+}
+
+/* Verdict */
+.report-verdict {
+  display: flex;
+  gap: 0.8rem;
+  padding: 1.2rem;
+  align-items: flex-start;
+}
+.report-verdict--red { background: #FEF2F2; border-bottom: 2px solid #FECACA; }
+.report-verdict--amber { background: #FFFBEB; border-bottom: 2px solid #FDE68A; }
+.report-verdict--green { background: #F0FDF4; border-bottom: 2px solid #BBF7D0; }
+.report-verdict-icon { font-size: 1.5rem; flex-shrink: 0; }
+.report-verdict strong {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+}
+.report-verdict--red strong { color: #DC2626; }
+.report-verdict--amber strong { color: #92400E; }
+.report-verdict--green strong { color: #065F46; }
+.report-verdict p {
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+.report-verdict--red p { color: #7F1D1D; }
+.report-verdict--amber p { color: #78350F; }
+.report-verdict--green p { color: #064E3B; }
+
+/* Sections */
+.report-section {
+  padding: 1.2rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+.report-section:last-of-type { border-bottom: none; }
+.report-section h4 {
+  font-size: 0.85rem;
+  font-weight: 800;
+  margin-bottom: 0.8rem;
+}
+
+/* Flags */
+.report-flag {
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 0.6rem;
+}
+.report-flag--red { background: #FEF2F2; border-left: 4px solid #DC2626; }
+.report-flag--amber { background: #FFFBEB; border-left: 4px solid #F59E0B; }
+.report-flag--green { background: #F0FDF4; border-left: 3px solid #10B981; }
+.report-flag strong {
+  display: block;
+  font-size: 0.8rem;
+  margin-bottom: 0.3rem;
+}
+.report-flag--red strong { color: #DC2626; }
+.report-flag--amber strong { color: #92400E; }
+.report-flag--green strong { color: #065F46; }
+.report-flag p {
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--slate-600);
+}
+
+/* Costs table */
+.report-costs {
+  background: var(--snow);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.report-cost-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+.report-cost-row:last-child { border-bottom: none; }
+.report-cost-row span:first-child { color: var(--slate-600); }
+.report-cost-row span:last-child { font-weight: 700; color: var(--slate-900); }
+.report-cost-total { background: #FEF2F2; font-weight: 700; }
+.report-cost-total span:last-child { color: #DC2626; }
+
+/* Questions */
+.report-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.report-question {
+  font-size: 0.78rem;
+  color: var(--slate-600);
+  line-height: 1.5;
+  padding: 0.5rem 0.8rem;
+  background: var(--snow);
+  border-radius: 8px;
+}
+
+/* Rights / general text */
+.report-text {
+  font-size: 0.78rem;
+  color: var(--slate-600);
+  line-height: 1.7;
+}
+
+/* Sources */
+.report-sources {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.report-sources a {
+  font-size: 0.75rem;
+  color: var(--emerald-deep);
+  text-decoration: none;
+  padding: 0.45rem 0.8rem;
+  background: var(--snow);
+  border-radius: 8px;
+  border: 1px solid var(--gray-100);
+  transition: all 0.15s;
+  display: block;
+  word-break: break-word;
+}
+.report-sources a:hover {
+  background: var(--emerald-pale);
+  border-color: var(--emerald);
+}
+
+/* Footer disclaimer */
+.report-footer {
+  padding: 0.8rem 1.2rem;
+  background: var(--snow);
+  border-top: 1px solid var(--gray-100);
+  text-align: center;
+}
+.report-footer p {
+  font-size: 0.68rem;
+  color: var(--slate-400);
+  font-style: italic;
+}
+
+/* ============================================================
+   DELIVERY CARD — below report
+   ============================================================ */
+.delivery-card {
+  margin-top: 1rem;
+  background: var(--white);
+  border: 1.5px solid var(--gray-100);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: none;
+}
+.delivery-card h3 {
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+.delivery-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.delivery-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.2rem;
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: none;
+  text-decoration: none;
+}
+.delivery-btn--pdf {
+  background: var(--slate-900);
+  color: var(--white);
+}
+.delivery-btn--pdf:hover { background: var(--emerald-deep); }
+.delivery-btn--email {
+  background: var(--white);
+  color: var(--slate-700);
+  border: 1.5px solid var(--gray-200);
+}
+.delivery-btn--email:hover {
+  border-color: var(--emerald);
+  color: var(--emerald-deep);
+}
+.delivery-email-form {
+  display: none;
+  margin-top: 0.8rem;
+}
+.delivery-email-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.15s;
+  margin-bottom: 0.5rem;
+}
+.delivery-email-input:focus { border-color: var(--emerald); }
+.delivery-email-send {
+  width: 100%;
+  padding: 0.65rem;
+  background: var(--emerald);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.delivery-email-send:hover { background: var(--emerald-deep); }
+.delivery-email-note {
+  font-size: 0.7rem;
+  color: var(--slate-400);
+  margin-top: 0.4rem;
+  text-align: center;
+}
+
+/* ============================================================
+   DATA WARNING
+   ============================================================ */
+.data-warning {
+  margin-top: 1rem;
+  padding: 1rem 1.2rem;
+  background: #FFFBEB;
+  border: 1.5px solid #FDE68A;
+  border-radius: 12px;
+  display: none;
+}
+.data-warning p {
+  font-size: 0.78rem;
+  color: #92400E;
+  line-height: 1.5;
+  text-align: center;
+}
+.data-warning strong { font-weight: 700; }
+
+/* ============================================================
+   ANOTHER REPORT CTA
+   ============================================================ */
+.another-report {
+  margin-top: 1.5rem;
+  text-align: center;
+  padding-bottom: 2rem;
+  display: none;
+}
+.another-report a {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: var(--white);
+  color: var(--slate-700);
+  font-family: var(--font);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.another-report a:hover {
+  border-color: var(--emerald);
+  color: var(--emerald-deep);
+}
+
+/* ============================================================
+   PRINT STYLES
+   ============================================================ */
+@media print {
+  body { padding: 0; background: white; }
+  .report-loading, .report-error, .delivery-card, .data-warning,
+  .another-report, .report-page-footer { display: none !important; }
+  .report-card { border: none !important; display: block !important; }
+  .report-wrapper { max-width: 100%; }
+  .report-topbar { border-bottom: 2px solid #000; }
+  .report-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .report-verdict, .report-flag, .report-cost-total {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .report-sources a { color: #000; border: 1px solid #ccc; }
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.report-page-footer {
+  text-align: center;
+  padding: 1.5rem 0 2rem;
+  margin-top: 1rem;
+  border-top: 1px solid var(--gray-100);
+}
+.report-page-footer a {
+  font-size: 0.72rem;
+  color: var(--slate-400);
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+.report-page-footer a:hover { color: var(--emerald-deep); }
+</style>
+</head>
+<body>
+
+<div class="report-wrapper">
+
+  <!-- TOP BAR -->
+  <div class="report-topbar">
+    <a href="/" class="report-logo">LISTING LENS</a>
+    <div class="report-topbar-meta">
+      <div id="reportDate"></div>
+      <div id="reportCategory"></div>
+    </div>
+  </div>
+
+  <!-- LOADING STATE — visible by default -->
+  <div class="report-loading" id="reportLoading">
+    <div class="report-loading-spinner"></div>
+    <h2>generating your report</h2>
+    <div class="report-loading-step active" id="step1">reading your screenshots...</div>
+    <div class="report-loading-step" id="step2">searching databases &amp; public records...</div>
+    <div class="report-loading-step" id="step3">analysing red flags &amp; pricing...</div>
+    <div class="report-loading-step" id="step4">writing your report...</div>
+  </div>
+
+  <!-- ERROR STATE — hidden by default -->
+  <div class="report-error" id="reportError">
+    <div class="report-error-icon">⚠️</div>
+    <h2>something went wrong</h2>
+    <p id="reportErrorMsg">We couldn't generate your report. Your payment is safe — please try again or contact us.</p>
+    <a href="/cdn-cgi/l/email-protection#472f222b2b28616471737c2b2e34332e29202b22293469263737" class="report-error-btn">contact us</a>
+  </div>
+
+  <!-- REPORT CARD — hidden until generated -->
+  <div class="report-card" id="reportCard">
+    <!-- Header -->
+    <div class="report-header">
+      <div class="report-header-label">LISTING LENS REPORT</div>
+      <div class="report-header-title" id="reportTitle"></div>
+      <div class="report-header-meta" id="reportMeta"></div>
+      <span class="report-header-category" id="reportCatBadge"></span>
+    </div>
+    <!-- Verdict — injected by JS -->
+    <div id="reportVerdict"></div>
+    <!-- Sections — injected by JS -->
+    <div id="reportSections"></div>
+    <!-- Footer -->
+    <div class="report-footer">
+      <p>This report was generated by Listing Lens using AI analysis. It is not legal, financial, or professional advice. Always conduct your own due diligence before making any purchase.</p>
+    </div>
+  </div>
+
+  <!-- DELIVERY OPTIONS — shown with report -->
+  <div class="delivery-card" id="deliveryCard">
+    <h3>📥 save your report</h3>
+    <div class="delivery-actions">
+      <button class="delivery-btn delivery-btn--pdf" id="printReport">
+        <span>🖨️</span> print / save as PDF
+      </button>
+      <button class="delivery-btn delivery-btn--email" id="emailBtn">
+        <span>📧</span> email me a copy
+      </button>
+    </div>
+    <div class="delivery-email-form" id="emailForm">
+      <input type="email" class="delivery-email-input" id="emailInput" placeholder="your email address">
+      <button class="delivery-email-send" id="emailSend">send report</button>
+      <p class="delivery-email-note">we'll send the report and then delete your email. <a href="/privacy" style="color:var(--emerald-deep);">privacy promise</a></p>
+    </div>
+  </div>
+
+  <!-- DATA WARNING — shown with report -->
+  <div class="data-warning" id="dataWarning">
+    <p><strong>⚠️ once you leave this page, your report and screenshots are permanently deleted.</strong> download or email your report before closing this tab.</p>
+  </div>
+
+  <!-- ANOTHER REPORT CTA -->
+  <div class="another-report" id="anotherReport">
+    <a href="/">← analyse another listing</a>
+  </div>
+
+  <!-- PAGE FOOTER -->
+  <div class="report-page-footer">
+    <a href="/privacy">privacy</a>
+    <a href="/terms">terms</a>
+    <a href="/cdn-cgi/l/email-protection#5c34393030337a7f6a686730352f2835323b3039322f723d2c2c">contact</a>
+  </div>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ============================================================
+   REPORT PAGE — JavaScript
+   
+   This page receives report data in one of two ways:
+   
+   1. PRODUCTION: The dashboard page calls the generate-report
+      Netlify Function, receives JSON, stores it in sessionStorage,
+      and redirects here. This page reads from sessionStorage.
+   
+   2. DEMO MODE: Add ?demo=vehicle or ?demo=property to the URL
+      to show a sample report for testing/development.
+   
+   The generate-report function will return JSON like:
+   {
+     category: "vehicle",
+     title: "2015 Jeep Wrangler Unlimited Sport 4x4",
+     country: "Australia",
+     verdict: {
+       level: "red" | "amber" | "green",
+       icon: "🚨",
+       heading: "VERDICT: CAUTION — SIGNIFICANT RISKS",
+       summary: "This listing has multiple red flags..."
+     },
+     sections: [
+       {
+         heading: "🚨 Critical findings",
+         flags: [
+           {
+             level: "red" | "amber" | "green",
+             title: "Takata airbag recall...",
+             detail: "The 2015 Jeep Wrangler..."
+           }
+         ]
+       },
+       {
+         heading: "💰 Hidden costs",
+         costs: [
+           { label: "Stamp duty", value: "~$630" },
+           { label: "Total", value: "~$5,000", isTotal: true }
+         ]
+       },
+       {
+         heading: "❓ Questions to ask",
+         questions: [
+           "Why is the rego plate hidden?",
+           "Has the Takata recall been done?"
+         ]
+       },
+       {
+         heading: "⚖️ Your rights",
+         text: "Under NSW law, you are entitled to..."
+       },
+       {
+         heading: "🔗 Sources",
+         sources: [
+           { label: "ACCC — Takata recall", url: "https://..." }
+         ]
+       }
+     ]
+   }
+   ============================================================ */
+
+// -- Utility: format today's date
+function formatDate() {
+  var d = new Date();
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+// -- Loading animation
+function animateLoading(callback) {
+  var steps = ['step1','step2','step3','step4'];
+  var delay = 800;
+  var i = 0;
+  function next() {
+    if (i > 0) {
+      document.getElementById(steps[i-1]).classList.remove('active');
+      document.getElementById(steps[i-1]).classList.add('done');
+    }
+    if (i < steps.length) {
+      document.getElementById(steps[i]).classList.add('active');
+      i++;
+      setTimeout(next, delay + Math.random() * 400);
+    } else {
+      setTimeout(callback, 300);
+    }
+  }
+  next();
+}
+
+// -- Render the report from JSON data
+function renderReport(data) {
+  // Hide loading, show report
+  document.getElementById('reportLoading').style.display = 'none';
+  document.getElementById('reportCard').style.display = 'block';
+  document.getElementById('deliveryCard').style.display = 'block';
+  document.getElementById('dataWarning').style.display = 'block';
+  document.getElementById('anotherReport').style.display = 'block';
+
+  // Top bar meta
+  document.getElementById('reportDate').textContent = formatDate();
+  document.getElementById('reportCategory').textContent = data.category || '';
+
+  // Header
+  document.getElementById('reportTitle').textContent = data.title || '';
+  var metaParts = [];
+  if (data.price) metaParts.push(data.price);
+  if (data.location) metaParts.push(data.location);
+  document.getElementById('reportMeta').textContent = metaParts.join(' · ');
+  document.getElementById('reportCatBadge').textContent = (data.category || '')
