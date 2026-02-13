@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listing Lens — 2015 Jeep Wrangler Unlimited Sport</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e1117;
+    --surface: #161b22;
+    --surface-raised: #1c2129;
+    --border: #2d333b;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #d4a84b;
+    --accent-dim: rgba(212,168,75,0.12);
+    --red: #f85149;
+    --red-dim: rgba(248,81,73,0.12);
+    --orange: #e3923a;
+    --orange-dim: rgba(227,146,58,0.12);
+    --green: #3fb950;
+    --green-dim: rgba(63,185,80,0.12);
+    --blue: #58a6ff;
+    --blue-dim: rgba(88,166,255,0.12);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 48px;
+  }
+  .header-brand {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+  .header-meta {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .header-meta span { margin-right: 16px; }
+
+  /* Verdict Banner */
+  .verdict-banner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 40px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .verdict-score {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    background: var(--orange-dim);
+    color: var(--orange);
+    border: 2px solid var(--orange);
+  }
+  .verdict-text h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .verdict-text p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 40px;
+  }
+  .section-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Spec Grid */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .spec-item {
+    background: var(--surface);
+    padding: 14px 18px;
+  }
+  .spec-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+  .spec-value {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  /* Alert Cards */
+  .alert {
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    border: 1px solid;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .alert-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .alert-red {
+    background: var(--red-dim);
+    border-color: rgba(248,81,73,0.25);
+  }
+  .alert-red .alert-icon { background: rgba(248,81,73,0.2); color: var(--red); }
+  .alert-orange {
+    background: var(--orange-dim);
+    border-color: rgba(227,146,58,0.25);
+  }
+  .alert-orange .alert-icon { background: rgba(227,146,58,0.2); color: var(--orange); }
+  .alert-blue {
+    background: var(--blue-dim);
+    border-color: rgba(88,166,255,0.25);
+  }
+  .alert-blue .alert-icon { background: rgba(88,166,255,0.2); color: var(--blue); }
+  .alert-green {
+    background: var(--green-dim);
+    border-color: rgba(63,185,80,0.25);
+  }
+  .alert-green .alert-icon { background: rgba(63,185,80,0.2); color: var(--green); }
+  .alert h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .alert p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Cost Table */
+  .cost-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .cost-table tr { background: var(--surface); }
+  .cost-table tr:nth-child(even) { background: var(--surface-raised); }
+  .cost-table tr.total-row {
+    background: var(--accent-dim);
+    font-weight: 600;
+  }
+  .cost-table td {
+    padding: 12px 18px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .cost-table tr:last-child td { border-bottom: none; }
+  .cost-table td:last-child {
+    text-align: right;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .cost-table .tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .tag-oneoff { background: var(--blue-dim); color: var(--blue); }
+  .tag-annual { background: var(--green-dim); color: var(--green); }
+
+  /* Checklist */
+  .checklist {
+    list-style: none;
+  }
+  .checklist li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    margin-top: 1px;
+  }
+
+  /* Prose */
+  .prose {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+  .prose strong { color: var(--text); font-weight: 600; }
+
+  /* Sources */
+  .sources {
+    list-style: none;
+  }
+  .sources li {
+    font-size: 13px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .sources li:last-child { border-bottom: none; }
+  .sources a {
+    color: var(--blue);
+    text-decoration: none;
+  }
+  .sources a:hover { text-decoration: underline; }
+  .source-label {
+    color: var(--text-muted);
+    margin-right: 4px;
+  }
+
+  /* Questions to ask */
+  .question-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .question-card strong {
+    display: block;
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  @media (max-width: 600px) {
+    .spec-grid { grid-template-columns: 1fr; }
+    .question-grid { grid-template-columns: 1fr; }
+    .verdict-banner { flex-direction: column; align-items: center; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-brand">Listing Lens · Vehicle Analysis</div>
+    <h1>2015 Jeep Wrangler Unlimited Sport Auto 4x4 MY15</h1>
+    <div class="header-meta">
+      <span>📍 NSW · Private Sale</span>
+      <span>💲 $22,500 excl. govt. charges</span>
+      <span>🔗 carsales.com.au</span>
+    </div>
+  </div>
+
+  <!-- Verdict -->
+  <div class="verdict-banner">
+    <div class="verdict-score">5.5</div>
+    <div class="verdict-text">
+      <h2>Proceed with Caution</h2>
+      <p>The price is roughly in line with market for the mileage, but there are several significant concerns that need to be resolved before purchasing. The registration is expiring or may already be expired (February 2026), the 3.6L Pentastar engine at 156,000 km is entering the zone where costly rocker arm and lifter failures become increasingly likely, the vehicle falls within the Takata airbag recall range, and visible aftermarket modifications raise insurance and compliance questions. This is a private sale with limited legal protections — thorough due diligence is essential.</p>
+    </div>
+  </div>
+
+  <!-- Vehicle Specs -->
+  <div class="section">
+    <div class="section-title">Vehicle Specifications</div>
+    <div class="spec-grid">
+      <div class="spec-item"><div class="spec-label">Model</div><div class="spec-value">JK Unlimited Sport Softtop 4dr</div></div>
+      <div class="spec-item"><div class="spec-label">Engine</div><div class="spec-value">3.6L V6 Pentastar (209 kW)</div></div>
+      <div class="spec-item"><div class="spec-label">Transmission</div><div class="spec-value">5-speed Automatic</div></div>
+      <div class="spec-item"><div class="spec-label">Odometer</div><div class="spec-value">156,000 km</div></div>
+      <div class="spec-item"><div class="spec-label">Fuel</div><div class="spec-value">Petrol — 11.7 L/100km combined</div></div>
+      <div class="spec-item"><div class="spec-label">Build / Compliance</div><div class="spec-value">Jan 2015 / Feb 2015</div></div>
+      <div class="spec-item"><div class="spec-label">Colour</div><div class="spec-value">Blue exterior / Black interior</div></div>
+      <div class="spec-item"><div class="spec-label">Rego Expiry</div><div class="spec-value" style="color:var(--red)">February 2026 ⚠️</div></div>
+      <div class="spec-item"><div class="spec-label">Rego Plate</div><div class="spec-value" style="color:var(--orange)">"Check with seller"</div></div>
+      <div class="spec-item"><div class="spec-label">RWC</div><div class="spec-value">Provided at pick-up</div></div>
+    </div>
+  </div>
+
+  <!-- Red Flags & Concerns -->
+  <div class="section">
+    <div class="section-title">Red Flags &amp; Key Concerns</div>
+
+    <div class="alert alert-red">
+      <div class="alert-icon">!</div>
+      <div>
+        <h3>Registration Expiring This Month</h3>
+        <p>The registration expires February 2026 — that is right now. It may already be expired or about to expire. An unregistered vehicle cannot legally be driven on public roads. You will need to factor in the cost of re-registration, CTP/greenslip, and a potential pink slip inspection. Confirm the exact expiry date and whether it will still be registered when you collect it.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-red">
+      <div class="alert-icon">!</div>
+      <div>
+        <h3>Takata Airbag Recall — Check Required</h3>
+        <p>The 2014–2016 Jeep Wrangler JK is covered by a Takata airbag recall in Australia (passenger side inflator, PRA 2018/16702). A degraded airbag inflator can rupture explosively in a crash, projecting metal fragments toward occupants. You must verify whether this vehicle has had its airbag recall completed. Use the registration plate at <strong>ismyairbagsafe.com.au</strong> or ask the seller for proof of recall completion from an authorised dealer.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-red">
+      <div class="alert-icon">!</div>
+      <div>
+        <h3>3.6L Pentastar at 156,000 km — High-Risk Mileage for Known Engine Fault</h3>
+        <p>The 3.6L Pentastar V6 in JK-generation Wranglers has a well-documented pattern of rocker arm bearing and lifter failure, which can lead to camshaft damage. This issue has been widely reported from around 60,000–160,000 km, and this vehicle is squarely in that zone. Listen carefully for any ticking noise from the engine, especially on cold start. Repair costs for this issue range from approximately $2,400–$6,500 depending on severity. Have an independent mechanic specifically check the valve train before purchase.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-orange">
+      <div class="alert-icon">⚡</div>
+      <div>
+        <h3>Registration Plate Withheld — Cannot Run PPSR</h3>
+        <p>The listing states "Check with seller" for the registration plate. Without the plate or VIN, you cannot independently run a PPSR check for finance encumbrances, write-off status, or stolen vehicle flags. Before inspecting in person, request the plate number and VIN upfront so you can run your own PPSR ($2) and airbag recall checks before committing your time.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-orange">
+      <div class="alert-icon">⚡</div>
+      <div>
+        <h3>Visible Aftermarket Modifications</h3>
+        <p>The listing photos show the vehicle has aftermarket black alloy wheels and what appears to be an aftermarket front bumper or bull bar. Ask the seller for a full list of modifications. These can affect insurance coverage (undisclosed mods may void a claim), roadworthiness compliance, and resale value. Also confirm whether the original parts are included with the sale.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-blue">
+      <div class="alert-icon">i</div>
+      <div>
+        <h3>Additional Recalls — Clockspring &amp; Emissions</h3>
+        <p>Beyond the Takata recall, 2015 JK Wranglers have been subject to recalls for a clockspring assembly fault (which can prevent driver's airbag deployment) and an emissions PCM reprogramming recall. Ask the seller or use the VIN to check with Jeep Australia (1300 133 079) or vehiclerecalls.gov.au to confirm all outstanding recalls have been completed.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-blue">
+      <div class="alert-icon">i</div>
+      <div>
+        <h3>Other Known Issues for This Model</h3>
+        <p>In addition to the valve train issue, the 2015 JK is known for: oil cooler housing leaks, TIPM (Totally Integrated Power Module) failures causing erratic electrics and fuel pump issues ($900–$1,200 to replace), brake booster failures, parking brake design issues, and head unit/radio malfunctions. A thorough pre-purchase inspection by a Jeep-specialist mechanic is strongly recommended.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Price Assessment -->
+  <div class="section">
+    <div class="section-title">Price Assessment</div>
+    <div class="prose">
+      <p>At <strong>$22,500 excl. government charges</strong>, this is priced roughly at market for a 2015 Unlimited Sport with 156,000 km. CarsGuide values the 2015 Wrangler range from approximately $12,100 to $31,900 depending on variant and condition. The carsales listing itself flags the price as "Around market price."</p>
+      <p style="margin-top:10px">For context, a dealer in South Australia is currently advertising an equivalent 2015 Unlimited Sport Auto with lower mileage (117,000 km) at $28,490. The private sale discount here reflects the higher mileage and lack of dealer warranty, but it does not account for the potential cost of engine valve train repairs ($2,400–$6,500), registration renewal, or resolving outstanding recalls. If the engine develops the ticking issue shortly after purchase, the total cost of ownership could quickly exceed the dealer-priced alternative.</p>
+      <p style="margin-top:10px"><strong>Negotiation note:</strong> Given the expiring registration, high mileage in the context of the known engine issue, and the private sale context, there is reasonable scope to negotiate below $22,500 — particularly if the seller cannot provide proof of recent valve train servicing or recall completion.</p>
+    </div>
+  </div>
+
+  <!-- Cost Estimates -->
+  <div class="section">
+    <div class="section-title">Estimated First-Year Costs Beyond Purchase Price</div>
+    <table class="cost-table">
+      <tr>
+        <td>NSW Stamp Duty <span class="tag tag-oneoff">One-off</span></td>
+        <td>~$675</td>
+      </tr>
+      <tr>
+        <td>PPSR Check <span class="tag tag-oneoff">One-off</span></td>
+        <td>$2</td>
+      </tr>
+      <tr>
+        <td>Pre-purchase Inspection <span class="tag tag-oneoff">One-off</span></td>
+        <td>$250 – $400</td>
+      </tr>
+      <tr>
+        <td>NSW Registration Renewal <span class="tag tag-annual">Annual</span></td>
+        <td>$400 – $700</td>
+      </tr>
+      <tr>
+        <td>CTP / Green Slip (NSW) <span class="tag tag-annual">Annual</span></td>
+        <td>$500 – $900</td>
+      </tr>
+      <tr>
+        <td>Comprehensive Insurance <span class="tag tag-annual">Annual</span></td>
+        <td>$1,200 – $2,200</td>
+      </tr>
+      <tr>
+        <td>Fuel (15,000 km × 11.7 L/100km × $2.00/L) <span class="tag tag-annual">Annual</span></td>
+        <td>~$3,510</td>
+      </tr>
+      <tr>
+        <td>Servicing (2 services @ ~$350–$500 each) <span class="tag tag-annual">Annual</span></td>
+        <td>$700 – $1,000</td>
+      </tr>
+      <tr class="total-row">
+        <td><strong>Estimated First-Year Costs Beyond Purchase Price</strong></td>
+        <td><strong>$7,240 – $9,390</strong></td>
+      </tr>
+    </table>
+    <p class="prose" style="margin-top:10px; font-size:12px">Stamp duty is approximate — use the <a href="https://www.service.nsw.gov.au" style="color:var(--blue)">Service NSW calculator</a> for the exact figure. Fuel estimate based on manufacturer-stated combined consumption and $2.00/L baseline. Does not include potential valve train repair ($2,400–$6,500) if the engine develops the known rocker arm issue.</p>
+  </div>
+
+  <!-- Your Rights -->
+  <div class="section">
+    <div class="section-title">Your Rights — Private Sale in NSW</div>
+    <div class="prose">
+      <p>In a private sale, the Australian Consumer Law (ACL) provides limited protections compared to buying from a business. The goods must match their description and the seller must have the legal right to sell. However, consumer guarantees regarding acceptable quality and fitness for purpose generally do not apply to private sales in the same way they apply to business sales. Your primary protections come from your own due diligence — PPSR checks, independent inspections, and getting the seller's key claims in writing before payment.</p>
+      <p style="margin-top:10px">This means if the engine fails with the known rocker arm issue a week after purchase, you would have very limited legal recourse. This makes a pre-purchase inspection not just advisable but essential.</p>
+    </div>
+  </div>
+
+  <!-- Questions to Ask -->
+  <div class="section">
+    <div class="section-title">Questions to Ask the Seller</div>
+    <div class="question-grid">
+      <div class="question-card">
+        <strong>Registration &amp; Rego Plate</strong>
+        What is the registration plate number? What is the exact registration expiry date? Will it still be registered when I collect it?
+      </div>
+      <div class="question-card">
+        <strong>VIN &amp; Recall Status</strong>
+        What is the full VIN? Have all Takata airbag and other recalls been completed? Can you provide dealer receipts?
+      </div>
+      <div class="question-card">
+        <strong>Engine History</strong>
+        Has the engine ever developed a ticking noise? Have the rocker arms, lifters, or camshafts been inspected or replaced? Any oil leaks?
+      </div>
+      <div class="question-card">
+        <strong>Modifications</strong>
+        What aftermarket parts have been fitted? Are the original wheels and bumper included? Were modifications done by a qualified workshop?
+      </div>
+      <div class="question-card">
+        <strong>Service History</strong>
+        Do you have a complete service history? Who has been servicing it — dealer or independent? When was the last oil change?
+      </div>
+      <div class="question-card">
+        <strong>Ownership &amp; Finance</strong>
+        How long have you owned it? How many previous owners? Is there any finance owing? Any insurance claims or accident history?
+      </div>
+      <div class="question-card">
+        <strong>PPSR &amp; Write-Off</strong>
+        Has the vehicle ever been declared a statutory or repairable write-off? Has it ever been registered in another state?
+      </div>
+      <div class="question-card">
+        <strong>Reason for Selling</strong>
+        Why are you selling? Are you aware of any current mechanical or electrical issues?
+      </div>
+    </div>
+  </div>
+
+  <!-- Pre-Purchase Checklist -->
+  <div class="section">
+    <div class="section-title">Pre-Purchase Checklist</div>
+    <ul class="checklist">
+      <li><div class="check-box"></div><div>Request VIN and registration plate number before attending any inspection</div></li>
+      <li><div class="check-box"></div><div>Run a PPSR check ($2 at ppsr.gov.au) for finance, write-off, and stolen status</div></li>
+      <li><div class="check-box"></div><div>Check Takata airbag recall status at ismyairbagsafe.com.au</div></li>
+      <li><div class="check-box"></div><div>Check all recalls at vehiclerecalls.gov.au using the VIN</div></li>
+      <li><div class="check-box"></div><div>Book an independent pre-purchase inspection with a Jeep/4x4 specialist — specifically request valve train and oil cooler inspection</div></li>
+      <li><div class="check-box"></div><div>Cold-start the engine yourself and listen for ticking noises from either bank</div></li>
+      <li><div class="check-box"></div><div>Verify registration status and expiry — factor in re-registration costs if expired</div></li>
+      <li><div class="check-box"></div><div>Inspect soft top for tears, window clarity, and zipper condition</div></li>
+      <li><div class="check-box"></div><div>Check all four brake callipers and rotors for rust and wear</div></li>
+      <li><div class="check-box"></div><div>Test all electrics — headlights, indicators, wipers, horn, fuel pump prime — to rule out TIPM issues</div></li>
+      <li><div class="check-box"></div><div>Confirm insurance quote with accurate modification disclosure before committing</div></li>
+      <li><div class="check-box"></div><div>Get the seller's key claims about condition, history, and modifications in writing (text/email)</div></li>
+    </ul>
+  </div>
+
+  <!-- Sources -->
+  <div class="section">
+    <div class="section-title">Sources &amp; References</div>
+    <ul class="sources">
+      <li><span class="source-label">PPSR:</span> <a href="https://www.ppsr.gov.au" target="_blank">ppsr.gov.au</a> — finance, write-off, and stolen vehicle check ($2)</li>
+      <li><span class="source-label">Takata Recall Check:</span> <a href="https://www.ismyairbagsafe.com.au" target="_blank">ismyairbagsafe.com.au</a> — check by registration plate</li>
+      <li><span class="source-label">ACCC Recall (PRA 2018/16702):</span> <a href="https://www.productsafety.gov.au/recalls/fca-australia-pty-ltd-jeep-wrangler-jk-my2014-2016-and-chrysler-lx-300-my2014-2015-extended-recall" target="_blank">productsafety.gov.au</a></li>
+      <li><span class="source-label">Vehicle Recalls Australia:</span> <a href="https://www.vehiclerecalls.gov.au" target="_blank">vehiclerecalls.gov.au</a> — check all Australian recalls by VIN</li>
+      <li><span class="source-label">Jeep Australia Recall Contact:</span> 1300 133 079 or <a href="https://www.jeep.com.au/contact-us.html" target="_blank">jeep.com.au/contact-us</a></li>
+      <li><span class="source-label">NSW Stamp Duty Calculator:</span> <a href="https://www.service.nsw.gov.au" target="_blank">service.nsw.gov.au</a></li>
+      <li><span class="source-label">ACCC Consumer Rights:</span> <a href="https://www.accc.gov.au/consumers" target="_blank">accc.gov.au/consumers</a></li>
+      <li><span class="source-label">CarsGuide Valuation:</span> <a href="https://www.carsguide.com.au/jeep/wrangler/price/2015" target="_blank">carsguide.com.au</a> — 2015 Wrangler price range $12,100–$31,900</li>
+      <li><span class="source-label">ABN Lookup:</span> <a href="https://abr.business.gov.au" target="_blank">abr.business.gov.au</a> — verify seller's business status if applicable</li>
+    </ul>
+  </div>
+
+  <div style="text-align:center; margin-top:48px; font-size:11px; color:var(--text-muted); font-family:'Space Mono',monospace; letter-spacing:1px">
+    LISTING LENS · GENERATED 14 FEB 2026 · FOR INFORMATIONAL PURPOSES ONLY
+  </div>
+
+</div>
+</body>
+</html>
