@@ -1,563 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Report — Listing Lens</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listing Lens — Diagnostic Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080a0c;
+            --surface: #111418;
+            --surface-raised: #181c22;
+            --border: rgba(255, 255, 255, 0.08);
+            --cyan: #38bdf8;
+            --red: #f87171;
+            --orange: #fb923c;
+            --green: #4ade80;
+            --text: #f1f5f9;
+            --text-dim: #94a3b8;
+            --mono: 'Space Mono', monospace;
+        }
 
-:root {
-  --bg: #0b0f14;
-  --surface: #111820;
-  --surface-raised: #161d27;
-  --surface-hover: #1a2332;
-  --border: rgba(255,255,255,0.06);
-  --border-strong: rgba(255,255,255,0.1);
-  --text: #e2e8f0;
-  --text-secondary: #94a3b8;
-  --text-dim: #64748b;
-  --cyan: #38bdf8;
-  --cyan-dim: rgba(56,189,248,0.1);
-  --cyan-glow: rgba(56,189,248,0.15);
-  --red: #f87171;
-  --red-dim: rgba(248,113,113,0.08);
-  --red-border: rgba(248,113,113,0.2);
-  --orange: #fb923c;
-  --orange-dim: rgba(251,146,60,0.08);
-  --orange-border: rgba(251,146,60,0.2);
-  --green: #4ade80;
-  --green-dim: rgba(74,222,128,0.08);
-  --green-border: rgba(74,222,128,0.2);
-  --blue: #60a5fa;
-  --blue-dim: rgba(96,165,250,0.08);
-  --blue-border: rgba(96,165,250,0.2);
-  --font: 'DM Sans', system-ui, -apple-system, sans-serif;
-  --mono: 'Space Mono', monospace;
-}
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'DM Sans', sans-serif; 
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
 
-html { font-family: var(--font); -webkit-font-smoothing: antialiased; background: var(--bg); color: var(--text); }
-body { margin: 0; min-height: 100vh; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
 
-.container { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
-@media (min-width: 768px) { .container { padding: 40px 32px 80px; } }
+        /* --- HEADER & TOPBAR --- */
+        .top-nav { 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 12px;
+        }
+        .logo { font-family: var(--mono); font-weight: 700; letter-spacing: 2px; color: var(--cyan); font-size: 14px; }
+        .timestamp { font-family: var(--mono); font-size: 10px; color: var(--text-dim); text-align: right; }
 
-/* ============================================================
-   LOADING
-   ============================================================ */
-.report-loading { text-align: center; padding: 8rem 1rem; }
-.report-loading-spinner {
-  width: 44px; height: 44px; border: 3px solid var(--border-strong);
-  border-top-color: var(--cyan); border-radius: 50%;
-  animation: spin 0.8s linear infinite; margin: 0 auto 1.5rem;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.report-loading h2 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
-.report-loading-step { font-size: 0.82rem; color: var(--text-dim); margin-bottom: 0.25rem; transition: all 0.3s; }
-.report-loading-step.active { color: var(--cyan); font-weight: 600; }
-.report-loading-step.done { color: var(--text-dim); opacity: 0.4; }
-.report-loading-step.done::before { content: '✓ '; color: var(--green); }
+        .report-header { margin-bottom: 32px; }
+        .report-header h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+        .meta-tags { display: flex; gap: 12px; font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
+        .tag { background: var(--surface-raised); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); }
 
-/* ============================================================
-   ERROR
-   ============================================================ */
-.report-error { text-align: center; padding: 8rem 1rem; display: none; }
-.report-error-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-.report-error h2 { font-size: 1rem; font-weight: 600; color: var(--red); margin-bottom: 0.5rem; }
-.report-error p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; max-width: 400px; margin: 0 auto 1.5rem; }
-.report-error-btn {
-  display: inline-block; padding: 10px 24px; background: var(--surface);
-  color: var(--text); font-family: var(--font); font-size: 0.82rem; font-weight: 600;
-  border: 1px solid var(--border-strong); border-radius: 8px; cursor: pointer; text-decoration: none;
-}
-.report-error-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+        /* --- THE HERO VERDICT --- */
+        .verdict-hero {
+            background: linear-gradient(145deg, var(--surface), var(--bg));
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .verdict-hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+        }
+        .v-red::before { background: var(--red); box-shadow: 0 0 20px var(--red); }
+        .v-amber::before { background: var(--orange); box-shadow: 0 0 20px var(--orange); }
+        .v-green::before { background: var(--green); box-shadow: 0 0 20px var(--green); }
 
-/* ============================================================
-   REPORT CONTENT
-   ============================================================ */
-.report-content { display: none; }
+        .v-badge { 
+            display: inline-block; font-family: var(--mono); font-weight: 700; 
+            padding: 6px 16px; border-radius: 100px; margin-bottom: 16px; font-size: 12px; 
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .v-badge-red { background: rgba(248, 113, 113, 0.1); color: var(--red); border: 1px solid var(--red); }
+        
+        .verdict-hero h2 { font-size: 28px; margin-bottom: 12px; }
+        .verdict-hero p { color: var(--text-dim); max-width: 600px; margin: 0 auto; font-size: 15px; }
 
-/* TOP BAR */
-.topbar {
-  display: flex; justify-content: space-between; align-items: center;
-  padding-bottom: 20px; margin-bottom: 28px; border-bottom: 1px solid var(--border);
-}
-.topbar-brand {
-  font-family: var(--mono); font-size: 11px; font-weight: 700;
-  letter-spacing: 2px; color: var(--cyan); text-decoration: none;
-}
-.topbar-meta { font-size: 11px; color: var(--text-dim); text-align: right; }
+        /* --- DATA VISUALS --- */
+        .visual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; }
+        .visual-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        .visual-card h4 { font-family: var(--mono); font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 15px; }
 
-/* HEADER */
-.report-header { margin-bottom: 24px; }
-.report-header h1 { font-size: 22px; font-weight: 700; line-height: 1.3; margin-bottom: 6px; }
-@media (min-width: 768px) { .report-header h1 { font-size: 26px; } }
-.report-header-meta { font-size: 13px; color: var(--text-secondary); display: flex; flex-wrap: wrap; gap: 14px; }
+        /* Price Gauge */
+        .gauge-container { height: 12px; background: var(--surface-raised); border-radius: 6px; position: relative; margin: 20px 0; }
+        .gauge-bar { height: 100%; width: 40%; background: var(--cyan); border-radius: 6px; opacity: 0.5; margin-left: 30%; }
+        .gauge-marker { position: absolute; top: -15px; width: 2px; height: 42px; background: var(--text); left: 55%; }
+        .gauge-labels { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10px; color: var(--text-dim); }
 
-/* VERDICT CARD */
-.verdict-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 12px; padding: 24px; margin-bottom: 28px;
-  display: flex; gap: 20px; align-items: flex-start;
-}
-@media (max-width: 600px) { .verdict-card { flex-direction: column; align-items: center; text-align: center; } }
-.verdict-ring {
-  flex-shrink: 0; width: 68px; height: 68px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; font-weight: 700; position: relative;
-}
-.verdict-ring::before {
-  content: ''; position: absolute; inset: -3px; border-radius: 50%;
-  border: 3px solid transparent; border-top-color: currentColor; border-right-color: currentColor;
-}
-.verdict-ring--red { background: var(--red-dim); color: var(--red); }
-.verdict-ring--red::before { border-top-color: var(--red); border-right-color: var(--red); }
-.verdict-ring--amber { background: var(--orange-dim); color: var(--orange); }
-.verdict-ring--amber::before { border-top-color: var(--orange); border-right-color: var(--orange); }
-.verdict-ring--green { background: var(--green-dim); color: var(--green); }
-.verdict-ring--green::before { border-top-color: var(--green); border-right-color: var(--green); }
-.verdict-body h2 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-.verdict-body p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+        /* --- SECTION CARDS --- */
+        .section-title { font-family: var(--mono); font-size: 13px; color: var(--cyan); margin: 40px 0 16px; display: flex; align-items: center; gap: 10px; }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-/* SECTION CARD */
-.section-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 12px; padding: 20px 24px; margin-bottom: 16px;
-}
-.section-card-title {
-  font-size: 11px; font-weight: 700; letter-spacing: 2px;
-  text-transform: uppercase; color: var(--text-dim); margin-bottom: 16px;
-  padding-bottom: 10px; border-bottom: 1px solid var(--border);
-}
+        .flag-card { 
+            background: var(--surface); border-radius: 12px; padding: 20px; 
+            margin-bottom: 12px; display: flex; gap: 16px; border-left: 4px solid transparent;
+        }
+        .f-red { border-left-color: var(--red); }
+        .f-amber { border-left-color: var(--orange); }
+        .f-green { border-left-color: var(--green); }
 
-/* ALERT ROWS */
-.alert-row {
-  padding: 14px 16px; border-radius: 8px; margin-bottom: 8px;
-  display: flex; gap: 12px; align-items: flex-start; border: 1px solid;
-}
-.alert-row:last-child { margin-bottom: 0; }
-.alert-dot {
-  flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; margin-top: 5px;
-}
-.ar-red { background: var(--red-dim); border-color: var(--red-border); }
-.ar-red .alert-dot { background: var(--red); box-shadow: 0 0 6px var(--red); }
-.ar-amber { background: var(--orange-dim); border-color: var(--orange-border); }
-.ar-amber .alert-dot { background: var(--orange); box-shadow: 0 0 6px var(--orange); }
-.ar-green { background: var(--green-dim); border-color: var(--green-border); }
-.ar-green .alert-dot { background: var(--green); box-shadow: 0 0 6px var(--green); }
-.ar-blue { background: var(--blue-dim); border-color: var(--blue-border); }
-.ar-blue .alert-dot { background: var(--blue); box-shadow: 0 0 6px var(--blue); }
-.alert-row h3 { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
-.ar-red h3 { color: var(--red); }
-.ar-amber h3 { color: var(--orange); }
-.ar-green h3 { color: var(--green); }
-.ar-blue h3 { color: var(--blue); }
-.alert-row p { font-size: 12.5px; color: var(--text-secondary); line-height: 1.55; }
+        .flag-card h3 { font-size: 16px; margin-bottom: 4px; }
+        .flag-card p { font-size: 14px; color: var(--text-dim); }
 
-/* SENTIMENT */
-.sentiment-summary { font-size: 13px; color: var(--text-secondary); line-height: 1.6; font-style: italic; margin-bottom: 14px; }
-.sentiment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-@media (max-width: 600px) { .sentiment-grid { grid-template-columns: 1fr; } }
-.sentiment-box {
-  background: var(--surface-raised); border-radius: 8px; padding: 14px 16px;
-  border: 1px solid var(--border);
-}
-.sentiment-box h5 {
-  font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-  text-transform: uppercase; margin-bottom: 8px;
-}
-.sentiment-box.pros h5 { color: var(--green); }
-.sentiment-box.cons h5 { color: var(--red); }
-.sentiment-box ul { list-style: none; }
-.sentiment-box li {
-  font-size: 12.5px; color: var(--text-secondary); line-height: 1.5;
-  padding: 5px 0; border-bottom: 1px solid var(--border);
-}
-.sentiment-box li:last-child { border-bottom: none; }
-.sentiment-box.pros li::before { content: '✓ '; color: var(--green); font-weight: 700; }
-.sentiment-box.cons li::before { content: '✗ '; color: var(--red); font-weight: 700; }
+        /* Checklist */
+        .check-item { 
+            display: flex; align-items: center; gap: 12px; padding: 12px; 
+            border-bottom: 1px solid var(--border); font-size: 14px; 
+        }
+        .cb { width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 6px; cursor: pointer; }
+        .cb.checked { background: var(--cyan); border-color: var(--cyan); position: relative; }
+        .cb.checked::after { content: '✓'; position: absolute; color: var(--bg); font-weight: bold; left: 4px; top: -1px; }
 
-/* COST TABLE */
-.cost-tbl { width: 100%; border-collapse: collapse; }
-.cost-tbl tr { border-bottom: 1px solid var(--border); }
-.cost-tbl tr:last-child { border-bottom: none; }
-.cost-tbl td { padding: 10px 0; font-size: 13px; color: var(--text-secondary); }
-.cost-tbl td:last-child { text-align: right; font-family: var(--mono); font-size: 12px; color: var(--text); white-space: nowrap; }
-.cost-tbl tr.cost-total td { color: var(--cyan); font-weight: 600; padding-top: 12px; border-top: 1px solid var(--border-strong); }
-.cost-tbl tr.cost-total td:last-child { color: var(--cyan); font-size: 13px; }
-.cost-tag {
-  display: inline-block; font-size: 9px; padding: 2px 5px; border-radius: 3px;
-  margin-left: 6px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase;
-  vertical-align: middle;
-}
-.cost-tag-once { background: var(--cyan-dim); color: var(--cyan); }
-.cost-tag-annual { background: var(--green-dim); color: var(--green); }
+        /* Email/Actions */
+        .action-bar { 
+            position: sticky; bottom: 20px; background: rgba(17, 20, 24, 0.9); 
+            backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; 
+            border: 1px solid var(--cyan); display: flex; justify-content: space-between; align-items: center;
+            z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .btn { 
+            background: var(--cyan); color: var(--bg); padding: 10px 20px; 
+            border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px;
+        }
 
-/* QUESTIONS */
-.q-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-@media (max-width: 600px) { .q-grid { grid-template-columns: 1fr; } }
-.q-card {
-  background: var(--surface-raised); border: 1px solid var(--border);
-  border-radius: 8px; padding: 12px 14px;
-}
-.q-card-cat { display: block; font-size: 10px; font-weight: 700; color: var(--cyan); letter-spacing: 0.5px; margin-bottom: 4px; }
-.q-card-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.45; }
-
-/* FLAT Q (backward compat) */
-.q-flat { font-size: 13px; color: var(--text-secondary); line-height: 1.5; padding: 8px 0; border-bottom: 1px solid var(--border); }
-.q-flat:last-child { border-bottom: none; }
-
-/* CHECKLIST */
-.cl-list { list-style: none; }
-.cl-list li {
-  display: flex; gap: 10px; align-items: flex-start; padding: 10px 0;
-  border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text-secondary); line-height: 1.5;
-}
-.cl-list li:last-child { border-bottom: none; }
-.cl-box {
-  flex-shrink: 0; width: 18px; height: 18px; border: 2px solid var(--border-strong);
-  border-radius: 4px; margin-top: 1px; cursor: pointer; display: flex;
-  align-items: center; justify-content: center; transition: all 0.15s;
-}
-.cl-box.checked { background: var(--cyan); border-color: var(--cyan); }
-.cl-box.checked::after { content: '✓'; color: var(--bg); font-size: 11px; font-weight: 700; }
-.cl-list li.cl-done { opacity: 0.4; text-decoration: line-through; }
-
-/* PROSE */
-.prose { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
-
-/* SOURCES */
-.src-list { list-style: none; }
-.src-list li { font-size: 12.5px; padding: 5px 0; border-bottom: 1px solid var(--border); color: var(--text-dim); }
-.src-list li:last-child { border-bottom: none; }
-.src-list a { color: var(--cyan); text-decoration: none; }
-.src-list a:hover { text-decoration: underline; }
-
-/* STAMP */
-.report-stamp {
-  text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border);
-  font-size: 10px; color: var(--text-dim); font-family: var(--mono); letter-spacing: 1.5px;
-}
-
-/* ============================================================
-   DELIVERY
-   ============================================================ */
-.delivery-card {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-  padding: 20px 24px; margin-top: 16px; display: none;
-}
-.delivery-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
-.d-actions { display: flex; gap: 8px; }
-@media (max-width: 600px) { .d-actions { flex-direction: column; } }
-.d-btn {
-  flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
-  padding: 10px 16px; border-radius: 8px; font-family: var(--font); font-size: 13px;
-  font-weight: 600; cursor: pointer; transition: all 0.15s; border: none; text-decoration: none;
-}
-.d-btn--print { background: var(--cyan-dim); color: var(--cyan); border: 1px solid rgba(56,189,248,0.2); }
-.d-btn--print:hover { background: rgba(56,189,248,0.18); }
-.d-btn--email { background: var(--surface-raised); color: var(--text-secondary); border: 1px solid var(--border-strong); }
-.d-btn--email:hover { border-color: var(--cyan); color: var(--cyan); }
-.d-email-form { display: none; margin-top: 12px; }
-.d-email-input {
-  width: 100%; padding: 10px 14px; background: var(--bg); border: 1px solid var(--border-strong);
-  border-radius: 8px; font-family: var(--font); font-size: 13px; color: var(--text);
-  outline: none; margin-bottom: 8px;
-}
-.d-email-input:focus { border-color: var(--cyan); }
-.d-email-input::placeholder { color: var(--text-dim); }
-.d-email-send {
-  width: 100%; padding: 10px; background: var(--cyan); color: var(--bg); border: none;
-  border-radius: 8px; font-family: var(--font); font-size: 13px; font-weight: 700; cursor: pointer;
-}
-.d-email-note { font-size: 11px; color: var(--text-dim); margin-top: 6px; text-align: center; }
-.d-email-note a { color: var(--cyan); text-decoration: none; }
-
-.data-warning {
-  margin-top: 12px; padding: 12px 16px; background: var(--orange-dim);
-  border: 1px solid var(--orange-border); border-radius: 8px; display: none;
-}
-.data-warning p { font-size: 12px; color: var(--orange); text-align: center; }
-
-.another-report { margin-top: 12px; text-align: center; display: none; }
-.another-report a {
-  display: inline-block; padding: 10px 24px; font-size: 13px; font-weight: 600;
-  color: var(--text-secondary); border: 1px solid var(--border-strong); border-radius: 8px;
-  text-decoration: none; transition: all 0.15s;
-}
-.another-report a:hover { border-color: var(--cyan); color: var(--cyan); }
-
-.page-footer {
-  text-align: center; padding: 20px 0 32px; margin-top: 12px; border-top: 1px solid var(--border);
-}
-.page-footer a { font-size: 11px; color: var(--text-dim); text-decoration: none; margin: 0 8px; }
-.page-footer a:hover { color: var(--cyan); }
-
-/* ============================================================
-   PRINT
-   ============================================================ */
-@media print {
-  :root {
-    --bg: #fff; --surface: #f8fafc; --surface-raised: #f1f5f9;
-    --border: #e2e8f0; --border-strong: #cbd5e1;
-    --text: #1e293b; --text-secondary: #475569; --text-dim: #64748b;
-    --cyan: #0284c7; --cyan-dim: #f0f9ff;
-    --red: #dc2626; --red-dim: #fef2f2; --red-border: #fecaca;
-    --orange: #ea580c; --orange-dim: #fff7ed; --orange-border: #fed7aa;
-    --green: #16a34a; --green-dim: #f0fdf4; --green-border: #bbf7d0;
-    --blue: #2563eb; --blue-dim: #eff6ff; --blue-border: #bfdbfe;
-  }
-  body { background: #fff; }
-  .report-loading, .report-error, .delivery-card, .data-warning,
-  .another-report, .page-footer { display: none !important; }
-  .report-content { display: block !important; }
-  .container { padding: 16px; max-width: 100%; }
-  .section-card, .verdict-card, .alert-row, .sentiment-box, .q-card, .cl-box.checked {
-    -webkit-print-color-adjust: exact; print-color-adjust: exact;
-  }
-}
-</style>
+        @media (max-width: 600px) {
+            .visual-grid { grid-template-columns: 1fr; }
+            .verdict-hero { padding: 24px; }
+        }
+    </style>
 </head>
 <body>
+
+<div class="container" id="report">
+    <nav class="top-nav">
+        <div class="logo">LISTING LENS // DIAGNOSTIC</div>
+        <div class="timestamp" id="date-stamp">FEB 2026</div>
+    </nav>
+
+    <header class="report-header">
+        <h1 id="title">2015 Jeep Wrangler Unlimited</h1>
+        <div class="meta-tags">
+            <span class="tag" id="price">$22,500</span>
+            <span class="tag" id="loc">NSW, Australia</span>
+        </div>
+    </header>
+
+    <section class="verdict-hero v-red" id="verdict-container">
+        <div class="v-badge v-badge-red">High Risk Alert</div>
+        <h2 id="v-heading">Proceed with Caution</h2>
+        <p id="v-summary">Significant mechanical and compliance risks identified. Estimated first-year maintenance exceeds market average by 40%.</p>
+    </section>
+
+    <div class="visual-grid">
+        <div class="visual-card">
+            <h4>Market Value Position</h4>
+            <div class="gauge-container">
+                <div class="gauge-bar"></div>
+                <div class="gauge-marker"></div>
+            </div>
+            <div class="gauge-labels">
+                <span>$12k</span>
+                <span>$22.5k (Target)</span>
+                <span>$31k</span>
+            </div>
+        </div>
+        <div class="visual-card">
+            <h4>Owner Sentiment</h4>
+            <div style="display: flex; gap: 4px; margin-top: 15px;">
+                <div style="flex: 7; height: 8px; background: var(--green); border-radius: 4px 0 0 4px;"></div>
+                <div style="flex: 3; height: 8px; background: var(--red); border-radius: 0 4px 4px 0;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10px; margin-top: 8px;">
+                <span>70% POSITIVE</span>
+                <span>30% NEGATIVE</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">CRITICAL FINDINGS</div>
+    <div id="critical-flags">
+        <div class="flag-card f-red">
+            <div>
+                <h3>Takata Airbag Recall</h3>
+                <p>Vehicle falls within the high-risk PRA 2018/16702 range. Rupture risk identified.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">DUE DILIGENCE CHECKLIST</div>
+    <div class="visual-card" style="padding: 0;">
+        <div class="check-item"><div class="cb"></div> Run PPSR Check (ppsr.gov.au)</div>
+        <div class="check-item"><div class="cb"></div> Listen for "Pentastar Tick" on cold start</div>
+        <div class="check-item"><div class="cb"></div> Inspect soft-top window clarity</div>
+    </div>
+
+    <div style="height: 100px;"></div>
+</div>
+
 <div class="container">
-
-  <div class="report-loading" id="reportLoading">
-    <div class="report-loading-spinner"></div>
-    <h2>generating your report</h2>
-    <div class="report-loading-step active" id="step1">reading your screenshots...</div>
-    <div class="report-loading-step" id="step2">searching databases &amp; public records...</div>
-    <div class="report-loading-step" id="step3">analysing red flags &amp; pricing...</div>
-    <div class="report-loading-step" id="step4">writing your report...</div>
-  </div>
-
-  <div class="report-error" id="reportError">
-    <div class="report-error-icon">⚠️</div>
-    <h2>something went wrong</h2>
-    <p id="reportErrorMsg">We couldn't generate your report. Your payment is safe — please try again or contact us.</p>
-    <a href="mailto:help@listinglens.app" class="report-error-btn">contact us</a>
-  </div>
-
-  <div class="report-content" id="reportContent"></div>
-
-  <div class="delivery-card" id="deliveryCard">
-    <h3>📥 Save your report</h3>
-    <div class="d-actions">
-      <button class="d-btn d-btn--print" id="printReport">🖨️ Print / PDF</button>
-      <button class="d-btn d-btn--email" id="emailBtn">📧 Email me a copy</button>
+    <div class="action-bar">
+        <div style="font-family: var(--mono); font-size: 12px;">Save report before it's deleted</div>
+        <a href="#" class="btn" onclick="window.print()">Download PDF</a>
     </div>
-    <div class="d-email-form" id="emailForm">
-      <input type="email" class="d-email-input" id="emailInput" placeholder="your email address">
-      <button class="d-email-send" id="emailSend">send report</button>
-      <p class="d-email-note">we'll send the report and delete your email. <a href="/privacy">privacy promise</a></p>
-    </div>
-  </div>
-
-  <div class="data-warning" id="dataWarning">
-    <p><strong>⚠️</strong> Once you leave this page, your report and screenshots are permanently deleted. Save before closing.</p>
-  </div>
-
-  <div class="another-report" id="anotherReport"><a href="/">← Analyse another listing</a></div>
-  <div class="page-footer"><a href="/privacy">privacy</a><a href="/terms">terms</a><a href="mailto:help@listinglens.app">contact</a></div>
 </div>
 
 <script>
-function cleanUrl(u){if(!u)return'';var m=u.match(/\[([^\]]+)\]\(([^)]+)\)/);if(m)return m[2];return u.replace(/^\[|\]$/g,'').trim();}
-function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
-function formatDate(){var d=new Date(),m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return d.getDate()+' '+m[d.getMonth()]+' '+d.getFullYear();}
-
-function animateLoading(cb){
-  var s=['step1','step2','step3','step4'],i=0;
-  (function n(){if(i>0){document.getElementById(s[i-1]).classList.remove('active');document.getElementById(s[i-1]).classList.add('done');}
-  if(i<s.length){document.getElementById(s[i]).classList.add('active');i++;setTimeout(n,800+Math.random()*400);}
-  else setTimeout(cb,300);})();
-}
-
-function arClass(l){return l==='red'?'ar-red':l==='amber'?'ar-amber':l==='green'?'ar-green':'ar-blue';}
-
-function costTag(lbl,val){
-  var t=(lbl+' '+val).toLowerCase();
-  if(/stamp|ppsr|inspection|one-off|transfer/.test(t))return'<span class="cost-tag cost-tag-once">One-off</span>';
-  if(/annual|\/year|renewal|insurance|fuel|servic|ctp|green slip|comprehen/.test(t))return'<span class="cost-tag cost-tag-annual">Annual</span>';
-  return'';
-}
-
-function renderReport(data){
-  document.getElementById('reportLoading').style.display='none';
-  document.getElementById('reportContent').style.display='block';
-  document.getElementById('deliveryCard').style.display='block';
-  document.getElementById('dataWarning').style.display='block';
-  document.getElementById('anotherReport').style.display='block';
-
-  var v=data.verdict,h='';
-
-  // TOPBAR
-  h+='<div class="topbar"><a href="/" class="topbar-brand">LISTING LENS</a><div class="topbar-meta">'+formatDate()+'<br>'+esc(data.category||'')+'</div></div>';
-
-  // HEADER
-  h+='<div class="report-header"><h1>'+esc(data.title)+'</h1><div class="report-header-meta">';
-  if(data.location)h+='<span>📍 '+esc(data.location)+'</span>';
-  if(data.price)h+='<span>💲 '+esc(data.price)+'</span>';
-  h+='</div></div>';
-
-  // VERDICT
-  h+='<div class="verdict-card">';
-  h+='<div class="verdict-ring verdict-ring--'+v.level+'">'+(v.icon?esc(v.icon):'')+'</div>';
-  h+='<div class="verdict-body"><h2>'+esc(v.heading)+'</h2><p>'+esc(v.summary)+'</p></div></div>';
-
-  // SECTIONS
-  data.sections.forEach(function(s){
-    var title=(s.heading||'').replace(/^[\u{1F300}-\u{1FAD6}\u{2600}-\u{27BF}\u{FE00}-\u{FEFF}✅⚠️🚨❓⚖️🔗💰👥]+\s*/u,'');
-    h+='<div class="section-card"><div class="section-card-title">'+esc(title)+'</div>';
-
-    if(s.flags)s.flags.forEach(function(f){
-      h+='<div class="alert-row '+arClass(f.level)+'"><div class="alert-dot"></div><div><h3>'+esc(f.title)+'</h3><p>'+esc(f.detail)+'</p></div></div>';
+    // Toggle Checkboxes
+    document.querySelectorAll('.cb').forEach(box => {
+        box.addEventListener('click', () => box.classList.toggle('checked'));
     });
-
-    if(s.ownerSentiment){
-      var o=s.ownerSentiment;
-      if(o.summary)h+='<div class="sentiment-summary">'+esc(o.summary)+'</div>';
-      h+='<div class="sentiment-grid">';
-      if(o.pros&&o.pros.length){h+='<div class="sentiment-box pros"><h5>What owners love</h5><ul>';o.pros.forEach(function(p){h+='<li>'+esc(p)+'</li>';});h+='</ul></div>';}
-      if(o.cons&&o.cons.length){h+='<div class="sentiment-box cons"><h5>Common complaints</h5><ul>';o.cons.forEach(function(c){h+='<li>'+esc(c)+'</li>';});h+='</ul></div>';}
-      h+='</div>';
-    }
-
-    if(s.costs){
-      h+='<table class="cost-tbl">';
-      s.costs.forEach(function(c){
-        var cls=c.isTotal?' class="cost-total"':'';
-        var tag=c.isTotal?'':costTag(c.label,c.value);
-        h+='<tr'+cls+'><td>'+esc(c.label)+tag+'</td><td>'+esc(c.value)+'</td></tr>';
-      });
-      h+='</table>';
-    }
-
-    if(s.questions&&s.questions.length){
-      if(typeof s.questions[0]==='object'){
-        h+='<div class="q-grid">';
-        s.questions.forEach(function(q){h+='<div class="q-card"><span class="q-card-cat">'+esc(q.category)+'</span><span class="q-card-text">'+esc(q.text)+'</span></div>';});
-        h+='</div>';
-      }else{
-        s.questions.forEach(function(q,i){h+='<div class="q-flat">'+(i+1)+'. '+esc(q)+'</div>';});
-      }
-    }
-
-    if(s.checklist){
-      h+='<ul class="cl-list">';
-      s.checklist.forEach(function(item,i){h+='<li><div class="cl-box" data-i="'+i+'"></div><div>'+esc(item)+'</div></li>';});
-      h+='</ul>';
-    }
-
-    if(s.text)h+='<div class="prose">'+esc(s.text)+'</div>';
-
-    if(s.sources){
-      h+='<ul class="src-list">';
-      s.sources.forEach(function(src){var u=cleanUrl(src.url);h+='<li>'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(src.label)+'</a>':esc(src.label))+'</li>';});
-      h+='</ul>';
-    }
-
-    h+='</div>';
-  });
-
-  h+='<div class="report-stamp">LISTING LENS · GENERATED '+formatDate().toUpperCase()+' · FOR INFORMATIONAL PURPOSES ONLY</div>';
-  document.getElementById('reportContent').innerHTML=h;
-
-  document.querySelectorAll('.cl-box').forEach(function(b){
-    b.addEventListener('click',function(){
-      this.classList.toggle('checked');
-      this.parentElement.classList.toggle('cl-done');
-    });
-  });
-}
-
-function showError(m){document.getElementById('reportLoading').style.display='none';document.getElementById('reportError').style.display='block';if(m)document.getElementById('reportErrorMsg').textContent=m;}
-
-document.getElementById('emailBtn').addEventListener('click',function(){var f=document.getElementById('emailForm');f.style.display=!f.style.display||f.style.display==='none'?'block':'none';if(f.style.display==='block')document.getElementById('emailInput').focus();});
-document.getElementById('emailSend').addEventListener('click',function(){var e=document.getElementById('emailInput').value.trim();if(!e||!e.includes('@')){document.getElementById('emailInput').style.borderColor='var(--red)';return;}var b=this;b.textContent='sending...';b.disabled=true;setTimeout(function(){b.textContent='✓ sent!';b.style.background='var(--green)';},1500);});
-document.getElementById('printReport').addEventListener('click',function(){window.print();});
-
-var demoData={vehicle:{
-  category:'Vehicle Analysis',title:'2015 Jeep Wrangler Unlimited Sport Auto 4x4 MY15',price:'$22,500 excl. govt. charges',location:'NSW · Private Sale',country:'Australia',
-  verdict:{level:'red',icon:'🚨',heading:'Proceed with Caution',summary:'The price is roughly in line with market for the mileage, but there are several significant concerns. The registration is expiring February 2026, the 3.6L Pentastar at 156,000 km is entering the zone where costly rocker arm and lifter failures become likely, the vehicle falls within the Takata airbag recall range, and visible aftermarket modifications raise insurance and compliance questions. This is a private sale with limited legal protections — thorough due diligence is essential.'},
-  sections:[
-    {heading:'🚨 Critical findings',flags:[
-      {level:'red',title:'Registration Expiring This Month',detail:'The registration expires February 2026 — that is right now. It may already be expired. An unregistered vehicle cannot legally be driven on public roads. Confirm the exact expiry date and whether it will still be registered when you collect it.'},
-      {level:'red',title:'Takata Airbag Recall — Check Required',detail:'The 2014-2016 Jeep Wrangler JK is covered by a Takata airbag recall (PRA 2018/16702). A degraded inflator can rupture in a crash, projecting metal fragments. Verify recall completion at ismyairbagsafe.com.au or ask the seller for dealer proof.'},
-      {level:'red',title:'3.6L Pentastar at 156,000 km — High-Risk Mileage',detail:'The 3.6L Pentastar has a documented pattern of rocker arm and lifter failure from 60,000-160,000 km. This vehicle is squarely in that zone. Listen for ticking on cold start. Repair costs $2,400-$6,500.'}
-    ]},
-    {heading:'⚠️ Additional concerns',flags:[
-      {level:'amber',title:'Registration Plate Withheld — Cannot Run PPSR',detail:'Listed as "Check with seller." Without plate or VIN you cannot run PPSR for finance, write-off, or stolen flags. Request these before committing your time.'},
-      {level:'amber',title:'Visible Aftermarket Modifications',detail:'Photos show aftermarket alloy wheels and what appears to be a bull bar. Undisclosed mods may void insurance claims and affect roadworthiness compliance. Ask for a full list.'},
-      {level:'amber',title:'Additional Recalls — Clockspring & Emissions',detail:'Beyond Takata, 2015 JK Wranglers have recalls for clockspring assembly fault and emissions PCM reprogramming. Confirm all completed via VIN at vehiclerecalls.gov.au.'},
-      {level:'amber',title:'TIPM, Oil Cooler & Other Known Issues',detail:'Known for: oil cooler housing leaks, TIPM failures ($900-$1,200), brake booster failures, parking brake issues. A Jeep-specialist inspection is strongly recommended.'}
-    ]},
-    {heading:'✅ Positive findings',flags:[
-      {level:'green',title:'Price Broadly In-Market',detail:'$22,500 sits within the typical private-sale range. CarsGuide values the 2015 Wrangler range from $12,100 to $31,900 depending on variant and condition.'},
-      {level:'green',title:'Seller ID Verified',detail:'CarSales shows an "ID verified" badge. Not a substitute for PPSR checks, but better than anonymous.'},
-      {level:'green',title:'Soft Top — Lower Entry Point',detail:'Soft top variant typically prices at the lower end of the Unlimited range, consistent with the ask.'}
-    ]},
-    {heading:'👥 What owners say',ownerSentiment:{
-      summary:'JK Wrangler Unlimited 3.6L owners love the off-road ability and lifestyle factor, but commonly report trade-offs in comfort, fuel economy, and front-end wear.',
-      pros:['Genuinely capable off-road with massive aftermarket support','Removable roof and doors — experience no other SUV offers','Pentastar 3.6L more reliable than earlier engines when maintained','4-door Unlimited holds stronger resale than 2-door'],
-      cons:['Real-world fuel 13-15 L/100km, worse with lift/bigger tyres','Highway noise and ride noticeably worse than comparable SUVs','Front-end steering/suspension wears frequently at higher km','Interior fit, water sealing, and rattles a consistent complaint']
-    }},
-    {heading:'💰 Hidden costs (NSW estimate)',costs:[
-      {label:'NSW Stamp Duty',value:'~$675'},
-      {label:'PPSR Check',value:'$2'},
-      {label:'Pre-purchase Inspection (4x4 specialist)',value:'$300 – $600'},
-      {label:'NSW Registration Renewal',value:'$400 – $700'},
-      {label:'CTP / Green Slip',value:'$500 – $900'},
-      {label:'Comprehensive Insurance',value:'$1,200 – $2,500'},
-      {label:'Fuel (15,000 km × 11.7 L/100km × $2.00/L)',value:'~$3,510/year'},
-      {label:'Servicing (2 × $350-$500)',value:'$700 – $1,000/year'},
-      {label:'Estimated first-year costs beyond purchase price',value:'$7,000 – $10,000',isTotal:true}
-    ]},
-    {heading:'❓ Questions to ask the seller',questions:[
-      {category:'Registration & Rego Plate',text:'What is the registration plate number and exact expiry date? Will it still be registered at collection?'},
-      {category:'VIN & Recall Status',text:'What is the full VIN? Have all Takata and other recalls been completed? Dealer receipts please.'},
-      {category:'Engine History',text:'Any ticking noise? Have rocker arms, lifters, or camshafts been inspected or replaced? Any oil leaks?'},
-      {category:'Modifications',text:'Full list of aftermarket parts fitted. Original wheels/bumper included? Workshop receipts?'},
-      {category:'Service History',text:'Complete service history available? Dealer or independent? When was the last oil change?'},
-      {category:'Ownership & Finance',text:'How long owned? Previous owners? Finance owing? Insurance claims or accident history?'},
-      {category:'PPSR & Write-Off',text:'Ever declared a write-off? Ever registered in another state?'},
-      {category:'Reason for Selling',text:'Why selling? Any current mechanical or electrical issues?'}
-    ]},
-    {heading:'✅ Pre-purchase checklist',checklist:[
-      'Request VIN and registration plate before attending any inspection',
-      'Run PPSR check ($2 at ppsr.gov.au) for finance, write-off, stolen status',
-      'Check Takata recall at ismyairbagsafe.com.au',
-      'Check all recalls at vehiclerecalls.gov.au using VIN',
-      'Book 4x4 specialist inspection — request valve train and oil cooler focus',
-      'Cold-start the engine and listen for ticking from either bank',
-      'Verify registration status and expiry — factor in re-registration cost',
-      'Inspect soft top for tears, window clarity, zipper condition',
-      'Test all electrics — lights, wipers, horn, fuel pump prime (TIPM check)',
-      'Confirm insurance quote with accurate modification disclosure',
-      'Get seller\'s key claims in writing (text/email) before any payment'
-    ]},
-    {heading:'⚖️ Your rights (Australia/NSW)',text:'In a private sale, the Australian Consumer Law (ACL) provides limited protections compared to buying from a business. The goods must match their description and the seller must have the legal right to sell. However, consumer guarantees regarding acceptable quality and fitness for purpose generally do not apply to private sales in the same way they apply to business sales. Your primary protections come from your own due diligence — PPSR checks, independent inspections, and getting the seller\'s key claims in writing before payment.'},
-    {heading:'🔗 Sources used in this report',sources:[
-      {label:'PPSR — finance, write-off, stolen check ($2)',url:'https://www.ppsr.gov.au'},
-      {label:'Is My Airbag Safe — Takata recall check',url:'https://www.ismyairbagsafe.com.au'},
-      {label:'ACCC Product Safety — Jeep JK Takata recall',url:'https://www.productsafety.gov.au/recalls/fca-australia-pty-ltd-jeep-wrangler-jk-my2014-2016'},
-      {label:'Vehicle Recalls Australia — all recalls by VIN',url:'https://www.vehiclerecalls.gov.au'},
-      {label:'Service NSW — stamp duty & rego transfer',url:'https://www.service.nsw.gov.au'},
-      {label:'ACCC consumer rights',url:'https://www.accc.gov.au/consumers'},
-      {label:'CarsGuide — 2015 Wrangler valuation $12,100-$31,900',url:'https://www.carsguide.com.au/jeep/wrangler/price/2015'}
-    ]}
-  ]
-}};
-
-(function(){
-  var p=new URLSearchParams(window.location.search),demo=p.get('demo');
-  if(demo&&demoData[demo]){animateLoading(function(){renderReport(demoData[demo]);});return;}
-  var rj=sessionStorage.getItem('listinglens_report');
-  if(rj){try{var d=JSON.parse(rj);animateLoading(function(){renderReport(d);});sessionStorage.removeItem('listinglens_report');}catch(e){showError('Couldn\'t display report.');}return;}
-  if(p.get('session')){showError('Report generation not yet connected.');return;}
-  window.location.href='/';
-})();
+    
+    // Simple date setup
+    document.getElementById('date-stamp').innerText = new Date().toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).toUpperCase();
 </script>
+
 </body>
 </html>
