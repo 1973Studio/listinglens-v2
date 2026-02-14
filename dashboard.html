@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Listing Lens — Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,10 +26,22 @@
   --emerald-dark: #064E3B;
   --red: #DC2626;
   --red-pale: #FEF2F2;
+  --red-border: #FECACA;
   --amber: #F59E0B;
   --amber-pale: #FFFBEB;
+  --amber-border: #FDE68A;
+  --orange: #EA580C;
+  --orange-pale: #FFF7ED;
+  --orange-border: #FED7AA;
+  --green: #16A34A;
+  --green-pale: #F0FDF4;
+  --green-border: #BBF7D0;
+  --blue: #2563EB;
   --blue-pale: #EFF6FF;
+  --cyan: #0284C7;
+  --cyan-bg: #F0F9FF;
   --font: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --mono: 'Space Mono', monospace;
 }
 
 html { font-family: var(--font); -webkit-font-smoothing: antialiased; background: var(--snow); color: var(--slate-900); }
@@ -39,270 +51,90 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
 /* ============================================================
    BENTO GRID
    ============================================================ */
-.bento {
-  max-width: 960px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
-@media (min-width: 768px) {
-  .bento { grid-template-columns: repeat(4, 1fr); }
-}
+.bento { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (min-width: 768px) { .bento { grid-template-columns: repeat(4, 1fr); } }
 
 /* ============================================================
    BASE CARD
    ============================================================ */
 .card {
-  background: var(--white);
-  border-radius: 20px;
-  padding: 1.8rem;
-  border: 1.5px solid var(--gray-100);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-  opacity: 0;
-  animation: fadeUp 0.4s ease forwards;
+  background: var(--white); border-radius: 20px; padding: 1.8rem;
+  border: 1.5px solid var(--gray-100); transition: transform 0.2s ease, box-shadow 0.2s ease;
+  opacity: 0; animation: fadeUp 0.4s ease forwards;
 }
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-}
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+.card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ============================================================
    TOP BAR
    ============================================================ */
 .topbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--slate-900);
-  margin: -1.2rem -1.2rem 1.2rem;
-  padding: 0 1.2rem;
+  position: sticky; top: 0; z-index: 100; background: var(--slate-900);
+  margin: -1.2rem -1.2rem 1.2rem; padding: 0 1.2rem;
 }
-@media (min-width: 768px) {
-  .topbar { margin: -2rem -2rem 2rem; padding: 0 2rem; }
-}
-.topbar-inner {
-  max-width: 960px;
-  margin: 0 auto;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.topbar-brand {
-  color: var(--white);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+@media (min-width: 768px) { .topbar { margin: -2rem -2rem 2rem; padding: 0 2rem; } }
+.topbar-inner { max-width: 960px; margin: 0 auto; height: 48px; display: flex; align-items: center; justify-content: space-between; }
+.topbar-brand { color: var(--white); font-size: 0.78rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
 .topbar-brand:hover { color: var(--emerald-light); }
-.topbar-back {
-  color: var(--slate-400);
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-}
+.topbar-back { color: var(--slate-400); font-size: 0.78rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.3rem; }
 .topbar-back:hover { color: var(--white); }
 
 /* ============================================================
    HEADER CARD — sticky progress
    ============================================================ */
 .card--header {
-  grid-column: 1 / -1;
-  background: var(--slate-900);
-  color: var(--white);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  padding: 1rem 1.4rem;
-  position: sticky;
-  top: 48px;
-  z-index: 90;
-  border-radius: 14px;
-  margin-bottom: 0;
+  grid-column: 1 / -1; background: var(--slate-900); color: var(--white);
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem;
+  padding: 1rem 1.4rem; position: sticky; top: 48px; z-index: 90; border-radius: 14px;
 }
-.card--header h1 {
-  font-size: 1rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-.card--header h1 em {
-  font-style: normal;
-  color: var(--emerald);
-}
-.card--header .header-steps {
-  display: flex;
-  gap: 0.4rem;
-  align-items: center;
-}
-.header-step-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.15);
-  transition: background 0.3s, transform 0.3s;
-}
-.header-step-dot.active {
-  background: var(--emerald);
-  transform: scale(1.4);
-}
-.header-step-dot.done {
-  background: var(--emerald-deep);
-}
-.header-step-labels {
-  display: flex;
-  gap: 0.15rem;
-  margin-left: 0.6rem;
-}
-.header-step-label {
-  font-size: 0.6rem;
-  font-weight: 600;
-  color: rgba(255,255,255,0.3);
-  padding: 0.2rem 0.45rem;
-  border-radius: 4px;
-  transition: color 0.3s;
-}
+.card--header h1 { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; }
+.card--header h1 em { font-style: normal; color: var(--emerald); }
+.card--header .header-steps { display: flex; gap: 0.4rem; align-items: center; }
+.header-step-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.15); transition: background 0.3s, transform 0.3s; }
+.header-step-dot.active { background: var(--emerald); transform: scale(1.4); }
+.header-step-dot.done { background: var(--emerald-deep); }
+.header-step-labels { display: flex; gap: 0.15rem; margin-left: 0.6rem; }
+.header-step-label { font-size: 0.6rem; font-weight: 600; color: rgba(255,255,255,0.3); padding: 0.2rem 0.45rem; border-radius: 4px; transition: color 0.3s; }
 .header-step-label.active { color: var(--emerald-light); }
 .header-step-label.done { color: rgba(255,255,255,0.5); }
-
-/* Completed state */
-.card--header.completed {
-  padding: 0.6rem 1.4rem;
-  background: var(--emerald-dark);
-}
+.card--header.completed { padding: 0.6rem 1.4rem; background: var(--emerald-dark); }
 .card--header.completed h1 { display: none; }
 .card--header.completed .header-steps { display: none; }
 .completed-msg { display: none; }
-.card--header.completed .completed-msg {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--white);
-  width: 100%;
-  justify-content: center;
-}
+.card--header.completed .completed-msg { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; font-weight: 700; color: var(--white); width: 100%; justify-content: center; }
 
 /* ============================================================
    PAYMENT CONFIRMED BANNER
    ============================================================ */
 .card--paid {
-  grid-column: 1 / -1;
-  background: var(--emerald-pale);
-  border: 1.5px solid var(--emerald);
-  padding: 1rem 1.4rem;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  animation-delay: 0.03s;
+  grid-column: 1 / -1; background: var(--emerald-pale); border: 1.5px solid var(--emerald);
+  padding: 1rem 1.4rem; display: flex; align-items: center; gap: 0.8rem; animation-delay: 0.03s;
 }
-.paid-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--emerald-deep);
-  color: var(--white);
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.paid-text {
-  flex: 1;
-}
-.paid-text strong {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--emerald-dark);
-  display: block;
-  margin-bottom: 0.1rem;
-}
-.paid-text span {
-  font-size: 0.75rem;
-  color: var(--emerald-deep);
-}
+.paid-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--emerald-deep); color: var(--white); font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.paid-text { flex: 1; }
+.paid-text strong { font-size: 0.88rem; font-weight: 700; color: var(--emerald-dark); display: block; margin-bottom: 0.1rem; }
+.paid-text span { font-size: 0.75rem; color: var(--emerald-deep); }
 
 /* ============================================================
    STEP 1 — COUNTRY
    ============================================================ */
-.card--country {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-  animation-delay: 0.06s;
-}
+.card--country { grid-column: 1 / -1; display: flex; align-items: flex-start; gap: 1.5rem; animation-delay: 0.06s; }
 .card--country .step-content { flex: 1; min-width: 0; }
-.card--country h2 {
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.25rem;
-}
-.card--country .step-sub {
-  font-size: 0.82rem;
-  color: var(--slate-500);
-  margin-bottom: 1rem;
-}
-.country-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 8px;
-  margin-bottom: 0.8rem;
-}
+.card--country h2 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.25rem; }
+.card--country .step-sub { font-size: 0.82rem; color: var(--slate-500); margin-bottom: 1rem; }
+.country-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-bottom: 0.8rem; }
 .country-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.55rem 0.8rem;
-  border: 1.5px solid var(--gray-100);
-  border-radius: 10px;
-  background: var(--white);
-  font-family: var(--font);
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--slate-900);
-  cursor: pointer;
-  transition: all 0.15s;
+  display: flex; align-items: center; gap: 0.5rem; padding: 0.55rem 0.8rem;
+  border: 1.5px solid var(--gray-100); border-radius: 10px; background: var(--white);
+  font-family: var(--font); font-size: 0.8rem; font-weight: 600; color: var(--slate-900); cursor: pointer; transition: all 0.15s;
 }
 .country-btn:hover { border-color: var(--emerald); background: var(--emerald-pale); }
-.country-btn.selected {
-  border-color: var(--emerald);
-  background: var(--emerald-pale);
-  color: var(--emerald-dark);
-}
-.country-btn .cb-flag { font-size: 1.1rem; }
-.country-other-wrap {
-  position: relative;
-  max-width: 280px;
-}
+.country-btn.selected { border-color: var(--emerald); background: var(--emerald-pale); color: var(--emerald-dark); }
+.country-btn .cb-flag { font-size: 1.2rem; line-height: 1; }
+.country-other-wrap { position: relative; max-width: 280px; }
 .country-other-input {
-  width: 100%;
-  padding: 0.55rem 0.8rem;
-  border: 1.5px solid var(--gray-100);
-  border-radius: 10px;
-  font-family: var(--font);
-  font-size: 0.8rem;
-  color: var(--slate-900);
-  background: var(--snow);
-  outline: none;
-  transition: border-color 0.2s;
+  width: 100%; padding: 0.55rem 0.8rem; border: 1.5px solid var(--gray-100); border-radius: 10px;
+  font-family: var(--font); font-size: 0.8rem; color: var(--slate-900); background: var(--snow); outline: none; transition: border-color 0.2s;
 }
 .country-other-input:focus { border-color: var(--emerald); background: var(--white); }
 .country-other-input::placeholder { color: var(--slate-400); }
@@ -310,480 +142,257 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
 /* ============================================================
    STEP 2 — CATEGORY
    ============================================================ */
-.card--category-pick {
-  grid-column: 1 / -1;
-  animation-delay: 0.12s;
-}
-.category-options {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-top: 1rem;
-}
-@media (max-width: 640px) {
-  .category-options { grid-template-columns: repeat(2, 1fr); }
-}
+.card--category-pick { grid-column: 1 / -1; animation-delay: 0.12s; }
+.category-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 1rem; }
+@media (max-width: 640px) { .category-options { grid-template-columns: repeat(2, 1fr); } }
 .cat-option {
-  border: 1.5px solid var(--gray-100);
-  border-radius: 16px;
-  padding: 1.2rem 0.8rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  background: var(--white);
-  position: relative;
+  border: 1.5px solid var(--gray-100); border-radius: 16px; padding: 1.2rem 0.8rem;
+  text-align: center; cursor: pointer; transition: all 0.2s; background: var(--white); position: relative;
 }
 .cat-option:hover { border-color: var(--emerald); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.05); }
-.cat-option.selected {
-  border-color: var(--emerald);
-  background: var(--emerald-pale);
-}
-.cat-option .cat-icon {
-  font-size: 2rem;
-  margin-bottom: 0.7rem;
-  display: block;
-}
-.cat-option .cat-name {
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 0.2rem;
-}
-.cat-option .cat-sub {
-  font-size: 0.75rem;
-  color: var(--slate-500);
-}
+.cat-option.selected { border-color: var(--emerald); background: var(--emerald-pale); }
+.cat-option .cat-icon { font-size: 2rem; margin-bottom: 0.7rem; display: block; }
+.cat-option .cat-name { font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
+.cat-option .cat-sub { font-size: 0.75rem; color: var(--slate-500); }
 .cat-option.selected .cat-sub { color: var(--emerald-deep); }
-
-/* Cat name/sub sizing */
 
 /* ============================================================
    STEP 3 — UPLOAD
    ============================================================ */
-.card--upload {
-  grid-column: 1 / -1;
-  animation-delay: 0.18s;
-}
-.upload-slots {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-top: 1rem;
-}
-@media (max-width: 640px) {
-  .upload-slots { grid-template-columns: 1fr; }
-}
-.upload-slot {
-  border: 1.5px solid var(--gray-100);
-  border-radius: 16px;
-  padding: 1.2rem;
-  background: var(--white);
-  transition: border-color 0.2s, max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
-}
-.upload-slot.has-file {
-  border-color: var(--emerald);
-}
-.slot-label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.6rem;
-}
-.slot-num {
-  width: 24px;
-  height: 24px;
-  border-radius: 8px;
-  background: var(--emerald-pale);
-  color: var(--emerald-deep);
-  font-size: 0.72rem;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.slot-tag {
-  font-size: 0.62rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0.2rem 0.55rem;
-  border-radius: 100px;
-}
+.card--upload { grid-column: 1 / -1; animation-delay: 0.18s; }
+.upload-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 1rem; }
+@media (max-width: 640px) { .upload-slots { grid-template-columns: 1fr; } }
+.upload-slot { border: 1.5px solid var(--gray-100); border-radius: 16px; padding: 1.2rem; background: var(--white); transition: border-color 0.2s; }
+.upload-slot.has-file { border-color: var(--emerald); }
+.slot-label { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; }
+.slot-num { width: 24px; height: 24px; border-radius: 8px; background: var(--emerald-pale); color: var(--emerald-deep); font-size: 0.72rem; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.slot-tag { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.2rem 0.55rem; border-radius: 100px; }
 .slot-tag--required { background: var(--red-pale); color: var(--red); }
 .slot-tag--recommended { background: var(--amber-pale); color: #92400E; }
-.slot-tag--optional { background: var(--blue-pale); color: #2563EB; }
-.slot-title {
-  font-size: 0.92rem;
-  font-weight: 700;
-  margin-bottom: 0.15rem;
-}
-.slot-hint {
-  font-size: 0.75rem;
-  color: var(--slate-400);
-  margin-bottom: 0.8rem;
-}
+.slot-tag--optional { background: var(--blue-pale); color: var(--blue); }
+.slot-title { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.15rem; }
+.slot-hint { font-size: 0.75rem; color: var(--slate-400); margin-bottom: 0.8rem; }
 .slot-dropzone {
-  border: 2px dashed var(--gray-200);
-  border-radius: 12px;
-  padding: 1.5rem 1rem;
-  text-align: center;
-  cursor: pointer;
-  background: var(--snow);
-  position: relative;
-  transition: all 0.2s;
+  border: 2px dashed var(--gray-200); border-radius: 12px; padding: 1.5rem 1rem;
+  text-align: center; cursor: pointer; background: var(--snow); position: relative; transition: all 0.2s;
 }
-.slot-dropzone:hover {
-  border-color: var(--emerald);
-  background: var(--emerald-pale);
-}
+.slot-dropzone:hover { border-color: var(--emerald); background: var(--emerald-pale); }
 .slot-drop-icon { font-size: 1.5rem; display: block; margin-bottom: 0.3rem; }
 .slot-drop-text { font-size: 0.78rem; color: var(--slate-500); font-weight: 600; }
-.slot-dropzone input[type="file"] {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-.slot-preview {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  aspect-ratio: 4/3;
-  border: 1.5px solid var(--emerald);
-}
-.slot-preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-}
-.slot-remove {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--red);
-  color: var(--white);
-  border: none;
-  font-size: 0.7rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Mobile: collapse extra slots */
-@media (max-width: 640px) {
-  .upload-slot.extra-slot {
-    display: none;
-  }
-  .upload-slot.extra-slot.revealed {
-    display: block;
-  }
-}
+.slot-dropzone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.slot-preview { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; border: 1.5px solid var(--emerald); }
+.slot-preview img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.slot-remove { position: absolute; top: 6px; right: 6px; width: 26px; height: 26px; border-radius: 50%; background: var(--red); color: var(--white); border: none; font-size: 0.7rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+@media (max-width: 640px) { .upload-slot.extra-slot { display: none; } .upload-slot.extra-slot.revealed { display: block; } }
 .add-more-btn {
-  display: none;
-  width: 100%;
-  margin-top: 0.8rem;
-  padding: 0.7rem;
-  border: 1.5px dashed var(--gray-200);
-  border-radius: 12px;
-  background: var(--snow);
-  color: var(--slate-500);
-  font-family: var(--font);
-  font-size: 0.82rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s;
+  display: none; width: 100%; margin-top: 0.8rem; padding: 0.7rem; border: 1.5px dashed var(--gray-200);
+  border-radius: 12px; background: var(--snow); color: var(--slate-500); font-family: var(--font);
+  font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.15s;
 }
 .add-more-btn:hover { border-color: var(--emerald); color: var(--emerald-deep); background: var(--emerald-pale); }
-@media (max-width: 640px) {
-  .add-more-btn { display: block; }
-  .add-more-btn.hidden { display: none; }
-}
+@media (max-width: 640px) { .add-more-btn { display: block; } .add-more-btn.hidden { display: none; } }
 
 /* ============================================================
-   STEP 4 — GENERATING REPORT (replaces old scan + pay)
+   STEP 4 — GENERATING
    ============================================================ */
-.card--generating {
-  grid-column: 1 / -1;
-  animation-delay: 0.24s;
-  display: none;
-  text-align: center;
-  padding: 3rem 2rem;
-}
+.card--generating { grid-column: 1 / -1; animation-delay: 0.24s; display: none; text-align: center; padding: 3rem 2rem; }
 .card--generating.visible { display: block; }
-.gen-spinner {
-  width: 48px;
-  height: 48px;
-  border: 3px solid var(--gray-100);
-  border-top-color: var(--emerald);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin: 0 auto 1.2rem;
-}
+.gen-spinner { width: 48px; height: 48px; border: 3px solid var(--gray-100); border-top-color: var(--emerald); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1.2rem; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.gen-status {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--slate-900);
-  margin-bottom: 0.4rem;
-}
-.gen-sub {
-  font-size: 0.82rem;
-  color: var(--slate-500);
-}
-.gen-steps {
-  margin-top: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  max-width: 340px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-}
-.gen-step {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.78rem;
-  color: var(--slate-400);
-  transition: color 0.3s;
-}
+.gen-status { font-size: 0.95rem; font-weight: 700; color: var(--slate-900); margin-bottom: 0.4rem; }
+.gen-sub { font-size: 0.82rem; color: var(--slate-500); }
+.gen-steps { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; max-width: 340px; margin-left: auto; margin-right: auto; text-align: left; }
+.gen-step { display: flex; align-items: center; gap: 0.6rem; font-size: 0.78rem; color: var(--slate-400); transition: color 0.3s; }
 .gen-step.active { color: var(--emerald-deep); font-weight: 600; }
 .gen-step.done { color: var(--slate-500); }
-.gen-step-icon {
-  width: 22px;
-  height: 22px;
-  border-radius: 6px;
-  background: var(--gray-100);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.65rem;
-  flex-shrink: 0;
-  transition: background 0.3s;
-}
+.gen-step-icon { width: 22px; height: 22px; border-radius: 6px; background: var(--gray-100); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; flex-shrink: 0; transition: background 0.3s; }
 .gen-step.active .gen-step-icon { background: var(--emerald-pale); color: var(--emerald-deep); }
 .gen-step.done .gen-step-icon { background: var(--emerald-deep); color: var(--white); }
 
 /* ============================================================
-   STEP 5 — FULL REPORT
+   STEP 5 — FULL V3.1 REPORT
    ============================================================ */
-.card--report {
-  grid-column: 1 / -1;
-  animation-delay: 0.3s;
-  display: none;
-}
+.card--report { grid-column: 1 / -1; display: none; padding: 0; background: transparent; border: none; }
+.card--report:hover { transform: none; box-shadow: none; }
 .card--report.visible { display: block; }
-.report-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-}
-.report-verdict {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.45rem 1rem;
-  border-radius: 100px;
-  font-size: 0.78rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.verdict--red { background: var(--red-pale); color: var(--red); }
-.verdict--amber { background: var(--amber-pale); color: #92400E; }
-.verdict--green { background: var(--emerald-pale); color: var(--emerald-deep); }
 
-.report-sections {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+/* Report topbar */
+.rpt-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; border-bottom: 2px solid var(--slate-900); padding-bottom: 12px; }
+.rpt-logo { font-family: var(--mono); font-weight: 700; letter-spacing: 2px; color: var(--slate-900); font-size: 14px; }
+.rpt-ts { font-family: var(--mono); font-size: 10px; color: var(--slate-500); text-align: right; }
+
+/* Report header */
+.rpt-header { margin-bottom: 24px; }
+.rpt-header h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--slate-900); margin-bottom: 8px; line-height: 1.25; }
+@media (max-width: 600px) { .rpt-header h1 { font-size: 20px; } }
+.rpt-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.rpt-tag { font-family: var(--mono); font-size: 11px; color: var(--slate-500); background: var(--white); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--gray-200); }
+
+/* Verdict hero */
+.verdict-hero {
+  background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px;
+  padding: 32px 28px; text-align: center; margin-bottom: 24px; position: relative; overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
 }
-.report-section {
-  border: 1.5px solid var(--gray-100);
-  border-radius: 14px;
-  overflow: hidden;
-}
-.report-section-header {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 1rem 1.2rem;
-  cursor: pointer;
-  background: var(--snow);
-  font-size: 0.9rem;
-  font-weight: 700;
-  transition: background 0.15s;
-  user-select: none;
-}
-.report-section-header:hover { background: var(--emerald-pale); }
-.report-section-header .rs-icon { font-size: 1.1rem; }
-.report-section-header .rs-arrow {
-  margin-left: auto;
-  font-size: 0.7rem;
-  color: var(--slate-400);
-  transition: transform 0.2s;
-}
-.report-section.open .rs-arrow { transform: rotate(180deg); }
-.report-section-body {
-  padding: 0 1.2rem;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease, padding 0.3s ease;
-}
-.report-section.open .report-section-body {
-  padding: 1rem 1.2rem;
-  max-height: 1000px;
-}
-.report-section-body p {
-  font-size: 0.85rem;
-  line-height: 1.7;
-  color: var(--slate-700);
-}
+.verdict-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; border-radius: 12px 12px 0 0; }
+.vh-red::before { background: var(--red); }
+.vh-amber::before { background: var(--orange); }
+.vh-green::before { background: var(--green); }
+.v-badge { display: inline-block; font-family: var(--mono); font-weight: 700; padding: 4px 12px; border-radius: 4px; margin-bottom: 12px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+.vb-red { background: var(--red-pale); color: var(--red); border: 1px solid var(--red-border); }
+.vb-amber { background: var(--orange-pale); color: var(--orange); border: 1px solid var(--orange-border); }
+.vb-green { background: var(--green-pale); color: var(--green); border: 1px solid var(--green-border); }
+.verdict-hero h2 { font-size: 22px; margin-bottom: 10px; color: var(--slate-900); }
+.verdict-hero p { color: var(--slate-500); max-width: 600px; margin: 0 auto; font-size: 14px; line-height: 1.6; }
+
+/* Visual grid */
+.vis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 8px; }
+@media (max-width: 600px) { .vis-grid { grid-template-columns: 1fr; } }
+.vis-card { background: var(--white); border: 1px solid var(--gray-100); border-radius: 12px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.vis-card h4 { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--slate-500); margin-bottom: 12px; }
+.gauge-track { height: 6px; background: var(--snow); border-radius: 3px; position: relative; margin: 16px 0 8px; }
+.gauge-range { height: 100%; border-radius: 3px; position: absolute; background: var(--cyan); opacity: 0.25; }
+.gauge-marker { position: absolute; top: -8px; width: 2px; height: 22px; background: var(--slate-900); }
+.gauge-labels { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 9px; color: var(--slate-500); }
+.sent-minibar { display: flex; gap: 2px; margin-top: 12px; }
+.sent-minibar-pos { height: 6px; background: var(--green); border-radius: 3px 0 0 3px; }
+.sent-minibar-neg { height: 6px; background: var(--red); border-radius: 0 3px 3px 0; }
+.sent-minilabels { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 9px; color: var(--slate-500); margin-top: 6px; }
+.safety-value { font-family: var(--mono); font-size: 20px; font-weight: 700; margin-top: 4px; }
+.safety-sub { font-size: 11px; color: var(--slate-500); margin-top: 2px; }
+
+/* Section titles */
+.sec-title { font-family: var(--mono); font-size: 11px; color: var(--slate-500); letter-spacing: 1.5px; text-transform: uppercase; margin: 32px 0 12px; display: flex; align-items: center; gap: 10px; }
+.sec-title::after { content: ''; flex: 1; height: 1px; background: var(--gray-100); }
+
+/* Flag cards */
+.flag-card { background: var(--white); border: 1px solid var(--gray-100); border-radius: 8px; padding: 14px 16px; margin-bottom: 8px; display: flex; gap: 12px; }
+.flag-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.fc-red .flag-dot { background: var(--red); box-shadow: 0 0 8px rgba(220,38,38,0.4); }
+.fc-amber .flag-dot { background: var(--orange); }
+.fc-green .flag-dot { background: var(--green); }
+.flag-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 3px; color: var(--slate-900); }
+.flag-card p { font-size: 13px; color: var(--slate-500); line-height: 1.55; }
+
+/* Sentiment detail */
+.sent-summary { font-size: 13px; color: var(--slate-500); font-style: italic; line-height: 1.6; margin-bottom: 12px; }
+.sent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 600px) { .sent-grid { grid-template-columns: 1fr; } }
+.sent-box { background: var(--snow); border: 1px solid var(--gray-100); border-radius: 8px; padding: 14px 16px; }
+.sent-box h5 { font-family: var(--mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+.sent-box.pros h5 { color: var(--green); }
+.sent-box.cons h5 { color: var(--red); }
+.sent-box ul { list-style: none; }
+.sent-box li { font-size: 12.5px; color: var(--slate-500); line-height: 1.5; padding: 5px 0; border-bottom: 1px solid var(--gray-100); }
+.sent-box li:last-child { border-bottom: none; }
+.sent-box.pros li::before { content: '\2713 '; color: var(--green); font-weight: 700; }
+.sent-box.cons li::before { content: '\2717 '; color: var(--red); font-weight: 700; }
+
+/* Cost table */
+.cost-wrap { background: var(--white); border: 1px solid var(--gray-100); border-radius: 12px; padding: 4px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.cost-tbl { width: 100%; border-collapse: collapse; }
+.cost-tbl tr { border-bottom: 1px solid var(--gray-100); }
+.cost-tbl tr:last-child { border-bottom: none; }
+.cost-tbl td { padding: 10px 0; font-size: 13px; color: var(--slate-500); }
+.cost-tbl td:last-child { text-align: right; font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--slate-900); white-space: nowrap; }
+.cost-total td { color: var(--cyan) !important; font-weight: 700 !important; padding-top: 14px; }
+.ct { display: inline-block; font-family: var(--mono); font-size: 9px; padding: 2px 5px; border-radius: 3px; margin-left: 6px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; vertical-align: middle; }
+.ct-once { background: var(--cyan-bg); color: var(--cyan); }
+.ct-yr { background: var(--green-pale); color: var(--green); }
+
+/* Question grid */
+.q-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@media (max-width: 600px) { .q-grid { grid-template-columns: 1fr; } }
+.q-card { background: var(--white); border: 1px solid var(--gray-100); border-radius: 8px; padding: 12px 14px; }
+.q-cat { display: block; font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--cyan); letter-spacing: 0.5px; margin-bottom: 3px; }
+.q-txt { font-size: 12.5px; color: var(--slate-500); line-height: 1.45; }
+.q-flat { font-size: 13px; color: var(--slate-500); padding: 8px 0; border-bottom: 1px solid var(--gray-100); }
+.q-flat:last-child { border-bottom: none; }
+
+/* Checklist */
+.cl-wrap { background: var(--white); border: 1px solid var(--gray-100); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.cl-item { display: flex; gap: 12px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--gray-100); font-size: 13px; color: var(--slate-500); }
+.cl-item:last-child { border-bottom: none; }
+.cb { flex-shrink: 0; width: 18px; height: 18px; border: 2px solid var(--gray-200); border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; position: relative; }
+.cb.checked { background: var(--slate-900); border-color: var(--slate-900); }
+.cb.checked::after { content: '\2713'; color: #fff; font-size: 11px; font-weight: 700; }
+.cl-item.done { opacity: 0.35; }
+.cl-item.done span { text-decoration: line-through; }
+
+/* Prose */
+.rpt-prose { font-size: 13px; color: var(--slate-500); line-height: 1.65; }
+
+/* Sources */
+.src-list { list-style: none; }
+.src-list li { font-size: 12px; padding: 5px 0; border-bottom: 1px solid var(--gray-100); color: var(--slate-500); }
+.src-list li:last-child { border-bottom: none; }
+.src-list a { color: var(--cyan); text-decoration: none; }
+.src-list a:hover { text-decoration: underline; }
+
+/* Report stamp */
+.rpt-stamp { text-align: center; margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--gray-100); font-family: var(--mono); font-size: 10px; color: var(--slate-500); letter-spacing: 1.5px; }
 
 /* ============================================================
-   DELIVERY CARD
+   STICKY ACTION BAR (report mode)
    ============================================================ */
-.card--delivery {
-  grid-column: 1 / -1;
-  display: none;
-  animation-delay: 0.36s;
+.action-bar {
+  position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+  width: calc(100% - 32px); max-width: 960px;
+  background: var(--slate-900); color: #fff;
+  padding: 12px 20px; border-radius: 12px;
+  display: none; justify-content: space-between; align-items: center;
+  z-index: 200; box-shadow: 0 8px 32px rgba(0,0,0,0.25);
 }
-.card--delivery.visible { display: block; }
-.delivery-options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 1rem;
+.action-bar.visible { display: flex; }
+.ab-left { display: flex; flex-direction: column; gap: 2px; }
+.ab-text { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.7); }
+.ab-id { font-family: var(--mono); font-size: 9px; color: rgba(255,255,255,0.35); letter-spacing: 0.5px; }
+.ab-btns { display: flex; gap: 8px; }
+.ab-btn { padding: 8px 16px; border-radius: 6px; font-family: var(--font); font-size: 13px; font-weight: 700; cursor: pointer; border: none; text-decoration: none; transition: all 0.15s; }
+.ab-btn--print { background: var(--cyan); color: #fff; }
+.ab-btn--print:hover { opacity: 0.85; }
+.ab-btn--email { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.15); }
+.ab-btn--email:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+/* Email overlay */
+.email-overlay {
+  display: none; position: fixed; bottom: 76px; left: 50%; transform: translateX(-50%);
+  width: calc(100% - 40px); max-width: 380px; background: var(--white);
+  border: 1px solid var(--gray-200); border-radius: 12px; padding: 20px; z-index: 201;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
 }
-@media (max-width: 640px) {
-  .delivery-options { grid-template-columns: 1fr; }
-}
-.delivery-option {
-  padding: 1.4rem;
-  border: 1.5px solid var(--gray-100);
-  border-radius: 14px;
-  text-align: center;
-  transition: all 0.2s;
-}
-.delivery-option:hover { border-color: var(--emerald); }
-.delivery-option .do-icon { font-size: 1.8rem; margin-bottom: 0.6rem; display: block; }
-.delivery-option h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.3rem; }
-.delivery-option p { font-size: 0.75rem; color: var(--slate-500); margin-bottom: 0.8rem; }
-.email-input-wrap {
-  display: flex;
-  gap: 6px;
-}
-.email-input {
-  flex: 1;
-  padding: 0.5rem 0.7rem;
-  border: 1.5px solid var(--gray-200);
-  border-radius: 8px;
-  font-family: var(--font);
-  font-size: 0.8rem;
-  outline: none;
-  min-width: 0;
-}
-.email-input:focus { border-color: var(--emerald); }
-.email-send {
-  padding: 0.5rem 0.9rem;
-  border: none;
-  border-radius: 8px;
-  background: var(--emerald-deep);
-  color: var(--white);
-  font-family: var(--font);
-  font-size: 0.78rem;
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.email-send:hover { background: var(--emerald-dark); }
+.eo-input { width: 100%; padding: 10px 14px; background: var(--snow); border: 1px solid var(--gray-200); border-radius: 8px; font-family: var(--font); font-size: 13px; color: var(--slate-900); outline: none; margin-bottom: 8px; }
+.eo-input:focus { border-color: var(--emerald); }
+.eo-input::placeholder { color: var(--slate-400); }
+.eo-send { width: 100%; padding: 10px; background: var(--slate-900); color: #fff; border: none; border-radius: 8px; font-family: var(--font); font-size: 13px; font-weight: 700; cursor: pointer; }
+.eo-note { font-size: 11px; color: var(--slate-500); margin-top: 6px; text-align: center; }
+.eo-note a { color: var(--cyan); text-decoration: none; }
 
 /* ============================================================
    BUTTONS
    ============================================================ */
 .btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  width: 100%;
-  padding: 0.9rem 1.5rem;
-  border: none;
-  border-radius: 12px;
-  background: var(--emerald-deep);
-  color: var(--white);
-  font-family: var(--font);
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  width: 100%; padding: 0.9rem 1.5rem; border: none; border-radius: 12px;
+  background: var(--emerald-deep); color: var(--white); font-family: var(--font);
+  font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
 }
 .btn-primary:hover { background: var(--emerald-dark); transform: translateY(-1px); }
-.btn-primary:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  transform: none;
-}
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  width: 100%;
-  padding: 0.75rem 1.2rem;
-  border: 1.5px solid var(--gray-200);
-  border-radius: 12px;
-  background: var(--white);
-  color: var(--slate-900);
-  font-family: var(--font);
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.btn-secondary:hover { border-color: var(--emerald); background: var(--emerald-pale); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
 /* ============================================================
-   PRIVACY REMINDER
+   PRIVACY + FOOTER
    ============================================================ */
 .card--privacy-sm {
-  grid-column: 1 / -1;
-  background: linear-gradient(135deg, #064E3B 0%, #065F46 100%);
-  color: var(--white);
-  padding: 1.2rem 1.8rem;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  font-size: 0.78rem;
-  animation-delay: 0.42s;
+  grid-column: 1 / -1; background: linear-gradient(135deg, #064E3B 0%, #065F46 100%); color: var(--white);
+  padding: 1.2rem 1.8rem; display: flex; align-items: center; gap: 0.8rem; font-size: 0.78rem; animation-delay: 0.42s;
 }
 .card--privacy-sm .priv-icon { font-size: 1.2rem; flex-shrink: 0; }
 .card--privacy-sm p { color: var(--emerald-light); font-weight: 500; }
 .card--privacy-sm strong { color: var(--white); }
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
 .card--footer {
-  grid-column: 1 / -1;
-  background: transparent;
-  border: none;
-  padding: 1rem 0.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.72rem;
-  color: var(--slate-400);
-  animation-delay: 0.48s;
+  grid-column: 1 / -1; background: transparent; border: none; padding: 1rem 0.5rem;
+  display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: var(--slate-400); animation-delay: 0.48s;
 }
 .card--footer:hover { transform: none; box-shadow: none; }
 .card--footer a { color: var(--slate-400); text-decoration: none; }
@@ -792,40 +401,32 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
 /* ============================================================
    SHARED STEP STYLES
    ============================================================ */
-.step-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 0.2rem;
-}
-.step-badge {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: var(--emerald-pale);
-  color: var(--emerald-deep);
-  font-size: 1rem;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.step-badge.done {
-  background: var(--emerald-deep);
-  color: var(--white);
-}
-.step-info h2 {
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.2rem;
-}
-.step-info .step-sub {
-  font-size: 0.82rem;
-  color: var(--slate-500);
-}
+.step-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 0.2rem; }
+.step-badge { width: 44px; height: 44px; border-radius: 12px; background: var(--emerald-pale); color: var(--emerald-deep); font-size: 1rem; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.step-badge.done { background: var(--emerald-deep); color: var(--white); }
+.step-info h2 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.2rem; }
+.step-info .step-sub { font-size: 0.82rem; color: var(--slate-500); }
 
+/* ============================================================
+   PRINT — only show report
+   ============================================================ */
+@media print {
+  body { padding: 0; background: #fff; }
+  .topbar, .card--header, .card--paid, .card--country, .card--category-pick,
+  .card--upload, .card--generating, .card--privacy-sm, .card--footer,
+  .action-bar, .email-overlay { display: none !important; }
+  .bento { display: block; }
+  .card--report { display: block !important; padding: 16px; }
+  .card--report .verdict-hero, .card--report .flag-card, .card--report .sent-box,
+  .card--report .q-card, .card--report .vis-card, .card--report .cl-wrap,
+  .card--report .cb.checked, .card--report .verdict-hero::before {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .card--report .vis-card, .card--report .cost-wrap, .card--report .cl-wrap,
+  .card--report .q-card, .card--report .sent-box, .card--report .verdict-hero, .card--report .flag-card {
+    box-shadow: none; break-inside: avoid;
+  }
+}
 </style>
 </head>
 <body>
@@ -869,213 +470,40 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
   <div class="card card--country" id="step1">
     <div class="step-badge" id="badge1">1</div>
     <div class="step-content">
-      <h2 translate="yes">where are you buying?</h2>
-      <p class="step-sub" translate="yes">we'll tailor your report to local laws, taxes, and databases.</p>
+      <h2>where are you buying?</h2>
+      <p class="step-sub">we'll tailor your report to local laws, taxes, and databases.</p>
       <div class="country-grid" id="countryGrid">
-        <button class="country-btn" data-code="AU" data-name="Australia"><span class="cb-flag">&#x1F1E6;&#x1F1FA;</span>Australia</button>
-        <button class="country-btn" data-code="JP" data-name="Japan"><span class="cb-flag">&#x1F1EF;&#x1F1F5;</span>Japan</button>
-        <button class="country-btn" data-code="HK" data-name="Hong Kong"><span class="cb-flag">&#x1F1ED;&#x1F1F0;</span>Hong Kong</button>
-        <button class="country-btn" data-code="KR" data-name="South Korea"><span class="cb-flag">&#x1F1F0;&#x1F1F7;</span>S. Korea</button>
-        <button class="country-btn" data-code="NZ" data-name="New Zealand"><span class="cb-flag">&#x1F1F3;&#x1F1FF;</span>NZ</button>
-        <button class="country-btn" data-code="SG" data-name="Singapore"><span class="cb-flag">&#x1F1F8;&#x1F1EC;</span>Singapore</button>
+        <button class="country-btn" data-code="AU" data-name="Australia"><span class="cb-flag">&#127462;&#127482;</span>Australia</button>
+        <button class="country-btn" data-code="JP" data-name="Japan"><span class="cb-flag">&#127471;&#127477;</span>Japan</button>
+        <button class="country-btn" data-code="HK" data-name="Hong Kong"><span class="cb-flag">&#127469;&#127472;</span>Hong Kong</button>
+        <button class="country-btn" data-code="KR" data-name="South Korea"><span class="cb-flag">&#127472;&#127479;</span>S. Korea</button>
+        <button class="country-btn" data-code="NZ" data-name="New Zealand"><span class="cb-flag">&#127475;&#127487;</span>NZ</button>
+        <button class="country-btn" data-code="SG" data-name="Singapore"><span class="cb-flag">&#127480;&#127468;</span>Singapore</button>
+        <button class="country-btn" data-code="US" data-name="United States"><span class="cb-flag">&#127482;&#127480;</span>USA</button>
+        <button class="country-btn" data-code="GB" data-name="United Kingdom"><span class="cb-flag">&#127468;&#127463;</span>UK</button>
+        <button class="country-btn" data-code="CA" data-name="Canada"><span class="cb-flag">&#127464;&#127462;</span>Canada</button>
       </div>
       <div class="country-other-wrap">
         <input type="text" class="country-other-input" id="countryOther" placeholder="or type another country..." autocomplete="off" list="countryList">
         <datalist id="countryList">
-          <option value="Afghanistan">
-          <option value="Albania">
-          <option value="Algeria">
-          <option value="Andorra">
-          <option value="Angola">
-          <option value="Antigua and Barbuda">
-          <option value="Argentina">
-          <option value="Armenia">
-          <option value="Austria">
-          <option value="Azerbaijan">
-          <option value="Bahamas">
-          <option value="Bahrain">
-          <option value="Bangladesh">
-          <option value="Barbados">
-          <option value="Belarus">
-          <option value="Belgium">
-          <option value="Belize">
-          <option value="Benin">
-          <option value="Bhutan">
-          <option value="Bolivia">
-          <option value="Bosnia and Herzegovina">
-          <option value="Botswana">
-          <option value="Brazil">
-          <option value="Brunei">
-          <option value="Bulgaria">
-          <option value="Burkina Faso">
-          <option value="Burundi">
-          <option value="Cambodia">
-          <option value="Cameroon">
-          <option value="Canada">
-          <option value="Cape Verde">
-          <option value="Central African Republic">
-          <option value="Chad">
-          <option value="Chile">
-          <option value="China">
-          <option value="Colombia">
-          <option value="Comoros">
-          <option value="Congo">
-          <option value="Costa Rica">
-          <option value="Croatia">
-          <option value="Cuba">
-          <option value="Cyprus">
-          <option value="Czech Republic">
-          <option value="Denmark">
-          <option value="Djibouti">
-          <option value="Dominica">
-          <option value="Dominican Republic">
-          <option value="East Timor">
-          <option value="Ecuador">
-          <option value="Egypt">
-          <option value="El Salvador">
-          <option value="Equatorial Guinea">
-          <option value="Eritrea">
-          <option value="Estonia">
-          <option value="Eswatini">
-          <option value="Ethiopia">
-          <option value="Fiji">
-          <option value="Finland">
-          <option value="France">
-          <option value="Gabon">
-          <option value="Gambia">
-          <option value="Georgia">
-          <option value="Germany">
-          <option value="Ghana">
-          <option value="Greece">
-          <option value="Grenada">
-          <option value="Guatemala">
-          <option value="Guinea">
-          <option value="Guinea-Bissau">
-          <option value="Guyana">
-          <option value="Haiti">
-          <option value="Honduras">
-          <option value="Hungary">
-          <option value="Iceland">
-          <option value="India">
-          <option value="Indonesia">
-          <option value="Iran">
-          <option value="Iraq">
-          <option value="Ireland">
-          <option value="Israel">
-          <option value="Italy">
-          <option value="Ivory Coast">
-          <option value="Jamaica">
-          <option value="Japan">
-          <option value="Jordan">
-          <option value="Kazakhstan">
-          <option value="Kenya">
-          <option value="Kiribati">
-          <option value="Kuwait">
-          <option value="Kyrgyzstan">
-          <option value="Laos">
-          <option value="Latvia">
-          <option value="Lebanon">
-          <option value="Lesotho">
-          <option value="Liberia">
-          <option value="Libya">
-          <option value="Liechtenstein">
-          <option value="Lithuania">
-          <option value="Luxembourg">
-          <option value="Madagascar">
-          <option value="Malawi">
-          <option value="Malaysia">
-          <option value="Maldives">
-          <option value="Mali">
-          <option value="Malta">
-          <option value="Marshall Islands">
-          <option value="Mauritania">
-          <option value="Mauritius">
-          <option value="Mexico">
-          <option value="Micronesia">
-          <option value="Moldova">
-          <option value="Monaco">
-          <option value="Mongolia">
-          <option value="Montenegro">
-          <option value="Morocco">
-          <option value="Mozambique">
-          <option value="Myanmar">
-          <option value="Namibia">
-          <option value="Nauru">
-          <option value="Nepal">
-          <option value="Netherlands">
-          <option value="New Zealand">
-          <option value="Nicaragua">
-          <option value="Niger">
-          <option value="Nigeria">
-          <option value="North Korea">
-          <option value="North Macedonia">
-          <option value="Norway">
-          <option value="Oman">
-          <option value="Pakistan">
-          <option value="Palau">
-          <option value="Palestine">
-          <option value="Panama">
-          <option value="Papua New Guinea">
-          <option value="Paraguay">
-          <option value="Peru">
-          <option value="Philippines">
-          <option value="Poland">
-          <option value="Portugal">
-          <option value="Qatar">
-          <option value="Romania">
-          <option value="Russia">
-          <option value="Rwanda">
-          <option value="Saint Kitts and Nevis">
-          <option value="Saint Lucia">
-          <option value="Saint Vincent and the Grenadines">
-          <option value="Samoa">
-          <option value="San Marino">
-          <option value="Sao Tome and Principe">
-          <option value="Saudi Arabia">
-          <option value="Senegal">
-          <option value="Serbia">
-          <option value="Seychelles">
-          <option value="Sierra Leone">
-          <option value="Singapore">
-          <option value="Slovakia">
-          <option value="Slovenia">
-          <option value="Solomon Islands">
-          <option value="Somalia">
-          <option value="South Africa">
-          <option value="South Korea">
-          <option value="South Sudan">
-          <option value="Spain">
-          <option value="Sri Lanka">
-          <option value="Sudan">
-          <option value="Suriname">
-          <option value="Sweden">
-          <option value="Switzerland">
-          <option value="Syria">
-          <option value="Taiwan">
-          <option value="Tajikistan">
-          <option value="Tanzania">
-          <option value="Thailand">
-          <option value="Togo">
-          <option value="Tonga">
-          <option value="Trinidad and Tobago">
-          <option value="Tunisia">
-          <option value="Turkey">
-          <option value="Turkmenistan">
-          <option value="Tuvalu">
-          <option value="Uganda">
-          <option value="Ukraine">
-          <option value="United Arab Emirates">
-          <option value="United Kingdom">
-          <option value="United States">
-          <option value="Uruguay">
-          <option value="Uzbekistan">
-          <option value="Vanuatu">
-          <option value="Vatican City">
-          <option value="Venezuela">
-          <option value="Vietnam">
-          <option value="Yemen">
-          <option value="Zambia">
-          <option value="Zimbabwe">
+          <option value="Afghanistan"><option value="Albania"><option value="Algeria"><option value="Argentina">
+          <option value="Austria"><option value="Bangladesh"><option value="Belgium"><option value="Brazil">
+          <option value="Cambodia"><option value="Chile"><option value="China"><option value="Colombia">
+          <option value="Czech Republic"><option value="Denmark"><option value="Egypt"><option value="Estonia">
+          <option value="Finland"><option value="France"><option value="Germany"><option value="Ghana">
+          <option value="Greece"><option value="Hungary"><option value="Iceland"><option value="India">
+          <option value="Indonesia"><option value="Iran"><option value="Iraq"><option value="Ireland">
+          <option value="Israel"><option value="Italy"><option value="Jamaica"><option value="Jordan">
+          <option value="Kenya"><option value="Kuwait"><option value="Latvia"><option value="Lebanon">
+          <option value="Lithuania"><option value="Luxembourg"><option value="Malaysia"><option value="Mexico">
+          <option value="Morocco"><option value="Myanmar"><option value="Nepal"><option value="Netherlands">
+          <option value="Nigeria"><option value="Norway"><option value="Oman"><option value="Pakistan">
+          <option value="Peru"><option value="Philippines"><option value="Poland"><option value="Portugal">
+          <option value="Qatar"><option value="Romania"><option value="Russia"><option value="Saudi Arabia">
+          <option value="Serbia"><option value="South Africa"><option value="Spain"><option value="Sri Lanka">
+          <option value="Sweden"><option value="Switzerland"><option value="Taiwan"><option value="Thailand">
+          <option value="Turkey"><option value="Ukraine"><option value="United Arab Emirates">
+          <option value="Uruguay"><option value="Vietnam"><option value="Zimbabwe">
         </datalist>
       </div>
     </div>
@@ -1086,56 +514,20 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
     <div class="step-header">
       <div class="step-badge" id="badge2">2</div>
       <div class="step-info">
-        <h2 translate="yes">what are you scanning?</h2>
-        <p class="step-sub" translate="yes">pick a category so we search the right databases.</p>
+        <h2>what are you scanning?</h2>
+        <p class="step-sub">pick a category so we search the right databases.</p>
       </div>
     </div>
     <div class="category-options">
-      <div class="cat-option" data-cat="vehicle">
-        <span class="cat-icon">&#x1F697;</span>
-        <div class="cat-name" translate="yes">Vehicle</div>
-        <div class="cat-sub" translate="yes">car, ute, SUV, van</div>
-      </div>
-      <div class="cat-option" data-cat="property">
-        <span class="cat-icon">&#x1F3E0;</span>
-        <div class="cat-name" translate="yes">Property</div>
-        <div class="cat-sub" translate="yes">house, apartment, land</div>
-      </div>
-      <div class="cat-option" data-cat="motorcycle">
-        <span class="cat-icon">&#x1F3CD;&#xFE0F;</span>
-        <div class="cat-name" translate="yes">Motorcycle</div>
-        <div class="cat-sub" translate="yes">motorbike, scooter</div>
-      </div>
-      <div class="cat-option" data-cat="boat">
-        <span class="cat-icon">&#x26F5;</span>
-        <div class="cat-name" translate="yes">Boat</div>
-        <div class="cat-sub" translate="yes">boat, jetski, yacht</div>
-      </div>
-      <div class="cat-option" data-cat="watch">
-        <span class="cat-icon">&#x231A;</span>
-        <div class="cat-name" translate="yes">Watch</div>
-        <div class="cat-sub" translate="yes">luxury, vintage, smart</div>
-      </div>
-      <div class="cat-option" data-cat="electronics">
-        <span class="cat-icon">&#x1F4BB;</span>
-        <div class="cat-name" translate="yes">Electronics</div>
-        <div class="cat-sub" translate="yes">phone, laptop, camera</div>
-      </div>
-      <div class="cat-option" data-cat="jewellery">
-        <span class="cat-icon">&#x1F48D;</span>
-        <div class="cat-name" translate="yes">Jewellery</div>
-        <div class="cat-sub" translate="yes">rings, necklaces, gems</div>
-      </div>
-      <div class="cat-option" data-cat="instrument">
-        <span class="cat-icon">&#x1F3B8;</span>
-        <div class="cat-name" translate="yes">Instrument</div>
-        <div class="cat-sub" translate="yes">guitar, piano, drums</div>
-      </div>
-      <div class="cat-option" data-cat="other">
-        <span class="cat-icon">&#x1F50D;</span>
-        <div class="cat-name" translate="yes">Something else</div>
-        <div class="cat-sub" translate="yes">anything not listed above</div>
-      </div>
+      <div class="cat-option" data-cat="vehicle"><span class="cat-icon">🚗</span><div class="cat-name">Vehicle</div><div class="cat-sub">car, ute, SUV, van</div></div>
+      <div class="cat-option" data-cat="property"><span class="cat-icon">🏠</span><div class="cat-name">Property</div><div class="cat-sub">house, apartment, land</div></div>
+      <div class="cat-option" data-cat="motorcycle"><span class="cat-icon">🏍️</span><div class="cat-name">Motorcycle</div><div class="cat-sub">motorbike, scooter</div></div>
+      <div class="cat-option" data-cat="boat"><span class="cat-icon">⛵</span><div class="cat-name">Boat</div><div class="cat-sub">boat, jetski, yacht</div></div>
+      <div class="cat-option" data-cat="watch"><span class="cat-icon">⌚</span><div class="cat-name">Watch</div><div class="cat-sub">luxury, vintage, smart</div></div>
+      <div class="cat-option" data-cat="electronics"><span class="cat-icon">💻</span><div class="cat-name">Electronics</div><div class="cat-sub">phone, laptop, camera</div></div>
+      <div class="cat-option" data-cat="jewellery"><span class="cat-icon">💍</span><div class="cat-name">Jewellery</div><div class="cat-sub">rings, necklaces, gems</div></div>
+      <div class="cat-option" data-cat="instrument"><span class="cat-icon">🎸</span><div class="cat-name">Instrument</div><div class="cat-sub">guitar, piano, drums</div></div>
+      <div class="cat-option" data-cat="other"><span class="cat-icon">🔍</span><div class="cat-name">Something else</div><div class="cat-sub">anything not listed</div></div>
     </div>
   </div>
 
@@ -1144,299 +536,163 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
     <div class="step-header">
       <div class="step-badge" id="badge3">3</div>
       <div class="step-info">
-        <h2 translate="yes">upload your screenshots</h2>
-        <p class="step-sub" translate="yes">more screenshots = more detail in your report.</p>
+        <h2>upload your screenshots</h2>
+        <p class="step-sub">more screenshots = more detail in your report.</p>
       </div>
     </div>
     <div class="upload-slots" id="uploadSlots">
-
-      <!-- Slot 1: Required -->
       <div class="upload-slot" id="slot1">
-        <div class="slot-label">
-          <span class="slot-num">1</span>
-          <span class="slot-tag slot-tag--required" translate="yes">required</span>
-        </div>
-        <div class="slot-title" translate="yes">main listing</div>
-        <div class="slot-hint" id="hint1" translate="yes">the photo, price, and headline</div>
-        <div class="slot-dropzone" data-slot="1">
-          <span class="slot-drop-icon">&#x1F4F8;</span>
-          <span class="slot-drop-text" translate="yes">tap to upload</span>
-          <input type="file" accept="image/*" data-slot="1">
-        </div>
-        <div class="slot-preview" data-slot="1" style="display:none;">
-          <img alt="Screenshot 1">
-          <button class="slot-remove" data-slot="1">&#x2715;</button>
-        </div>
+        <div class="slot-label"><span class="slot-num">1</span><span class="slot-tag slot-tag--required">required</span></div>
+        <div class="slot-title">main listing</div>
+        <div class="slot-hint" id="hint1">the photo, price, and headline</div>
+        <div class="slot-dropzone" data-slot="1"><span class="slot-drop-icon">📸</span><span class="slot-drop-text">tap to upload</span><input type="file" accept="image/*" data-slot="1"></div>
+        <div class="slot-preview" data-slot="1" style="display:none;"><img alt="Screenshot 1"><button class="slot-remove" data-slot="1">✕</button></div>
       </div>
-
-      <!-- Slot 2: Recommended -->
       <div class="upload-slot extra-slot" id="slot2">
-        <div class="slot-label">
-          <span class="slot-num">2</span>
-          <span class="slot-tag slot-tag--recommended" translate="yes">recommended</span>
-        </div>
-        <div class="slot-title" id="title2" translate="yes">details &amp; specs</div>
-        <div class="slot-hint" id="hint2" translate="yes">mileage, features, condition notes</div>
-        <div class="slot-dropzone" data-slot="2">
-          <span class="slot-drop-icon">&#x1F4CB;</span>
-          <span class="slot-drop-text" translate="yes">tap to upload</span>
-          <input type="file" accept="image/*" data-slot="2">
-        </div>
-        <div class="slot-preview" data-slot="2" style="display:none;">
-          <img alt="Screenshot 2">
-          <button class="slot-remove" data-slot="2">&#x2715;</button>
-        </div>
+        <div class="slot-label"><span class="slot-num">2</span><span class="slot-tag slot-tag--recommended">recommended</span></div>
+        <div class="slot-title" id="title2">details &amp; specs</div>
+        <div class="slot-hint" id="hint2">mileage, features, condition notes</div>
+        <div class="slot-dropzone" data-slot="2"><span class="slot-drop-icon">📋</span><span class="slot-drop-text">tap to upload</span><input type="file" accept="image/*" data-slot="2"></div>
+        <div class="slot-preview" data-slot="2" style="display:none;"><img alt="Screenshot 2"><button class="slot-remove" data-slot="2">✕</button></div>
       </div>
-
-      <!-- Slot 3: Optional -->
       <div class="upload-slot extra-slot" id="slot3">
-        <div class="slot-label">
-          <span class="slot-num">3</span>
-          <span class="slot-tag slot-tag--optional" translate="yes">optional</span>
-        </div>
-        <div class="slot-title" id="title3" translate="yes">extra info</div>
-        <div class="slot-hint" id="hint3" translate="yes">seller profile, location, anything else</div>
-        <div class="slot-dropzone" data-slot="3">
-          <span class="slot-drop-icon">&#x1F4CE;</span>
-          <span class="slot-drop-text" translate="yes">tap to upload</span>
-          <input type="file" accept="image/*" data-slot="3">
-        </div>
-        <div class="slot-preview" data-slot="3" style="display:none;">
-          <img alt="Screenshot 3">
-          <button class="slot-remove" data-slot="3">&#x2715;</button>
-        </div>
+        <div class="slot-label"><span class="slot-num">3</span><span class="slot-tag slot-tag--optional">optional</span></div>
+        <div class="slot-title" id="title3">extra info</div>
+        <div class="slot-hint" id="hint3">seller profile, location, anything else</div>
+        <div class="slot-dropzone" data-slot="3"><span class="slot-drop-icon">📎</span><span class="slot-drop-text">tap to upload</span><input type="file" accept="image/*" data-slot="3"></div>
+        <div class="slot-preview" data-slot="3" style="display:none;"><img alt="Screenshot 3"><button class="slot-remove" data-slot="3">✕</button></div>
       </div>
-
     </div>
-
-    <!-- Mobile: add more screenshots button -->
-    <button class="add-more-btn" id="addMoreBtn" translate="yes">+ add more screenshots for a better report</button>
-
+    <button class="add-more-btn" id="addMoreBtn">+ add more screenshots for a better report</button>
     <div style="margin-top:1.2rem;">
-      <button class="btn-primary" id="generateBtn" disabled translate="yes">generate my report</button>
+      <button class="btn-primary" id="generateBtn" disabled>generate my report</button>
     </div>
   </div>
 
-  <!-- STEP 4: GENERATING REPORT -->
+  <!-- STEP 4: GENERATING -->
   <div class="card card--generating" id="step4">
     <div class="gen-spinner"></div>
-    <div class="gen-status" translate="yes">generating your report...</div>
-    <div class="gen-sub" translate="yes">this usually takes 30&ndash;60 seconds.</div>
+    <div class="gen-status">generating your report...</div>
+    <div class="gen-sub">this usually takes 30&ndash;60 seconds.</div>
     <div class="gen-steps">
-      <div class="gen-step active" id="genStep1">
-        <span class="gen-step-icon">1</span>
-        <span translate="yes">reading your screenshots</span>
-      </div>
-      <div class="gen-step" id="genStep2">
-        <span class="gen-step-icon">2</span>
-        <span translate="yes">searching recalls, databases &amp; records</span>
-      </div>
-      <div class="gen-step" id="genStep3">
-        <span class="gen-step-icon">3</span>
-        <span translate="yes">analysing hidden costs &amp; red flags</span>
-      </div>
-      <div class="gen-step" id="genStep4">
-        <span class="gen-step-icon">4</span>
-        <span translate="yes">writing your report</span>
-      </div>
+      <div class="gen-step active" id="genStep1"><span class="gen-step-icon">1</span><span>reading your screenshots</span></div>
+      <div class="gen-step" id="genStep2"><span class="gen-step-icon">2</span><span>searching recalls, databases &amp; records</span></div>
+      <div class="gen-step" id="genStep3"><span class="gen-step-icon">3</span><span>analysing hidden costs &amp; red flags</span></div>
+      <div class="gen-step" id="genStep4"><span class="gen-step-icon">4</span><span>writing your report</span></div>
     </div>
   </div>
 
-  <!-- STEP 5: FULL REPORT -->
-  <div class="card card--report" id="step5">
-    <div class="report-header">
-      <h2 translate="yes">your report</h2>
-      <div class="report-verdict verdict--amber" id="reportVerdict">&#x26A0;&#xFE0F; CAUTION</div>
-    </div>
-    <div class="report-sections" id="reportSections">
-      <!-- populated by JS / API response -->
-    </div>
-  </div>
-
-  <!-- DELIVERY -->
-  <div class="card card--delivery" id="deliveryCard">
-    <div class="step-header">
-      <div class="step-badge done">&#10003;</div>
-      <div class="step-info">
-        <h2 translate="yes">save your report</h2>
-        <p class="step-sub" translate="yes">once you leave this page, your report and screenshots are permanently deleted.</p>
-      </div>
-    </div>
-    <div class="delivery-options">
-      <div class="delivery-option">
-        <span class="do-icon">&#x1F4E5;</span>
-        <h3 translate="yes">download PDF</h3>
-        <p translate="yes">save to your device</p>
-        <button class="btn-secondary" id="downloadBtn" translate="yes">download report</button>
-      </div>
-      <div class="delivery-option">
-        <span class="do-icon">&#x1F4E7;</span>
-        <h3 translate="yes">email a copy</h3>
-        <p translate="yes">we send it and forget your address. <a href="/privacy.html" style="color:var(--slate-500);text-decoration:underline;" translate="yes">privacy promise</a></p>
-        <div class="email-input-wrap">
-          <input type="email" class="email-input" id="emailInput" placeholder="your@email.com">
-          <button class="email-send" id="emailSend" translate="yes">send</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- STEP 5: FULL V3.1 REPORT (rendered by JS) -->
+  <div class="card card--report" id="step5"></div>
 
   <!-- PRIVACY -->
   <div class="card card--privacy-sm">
-    <span class="priv-icon">&#x1F512;</span>
-    <p translate="yes"><strong>Your privacy is sacred.</strong> Screenshots are analysed and permanently deleted. We never store your email address.</p>
+    <span class="priv-icon">🔒</span>
+    <p><strong>Your privacy is sacred.</strong> Screenshots are analysed and permanently deleted. We never store your email address.</p>
   </div>
 
   <!-- FOOTER -->
   <div class="card card--footer">
-    <div class="notranslate">LISTING LENS &copy; 2026</div>
-    <div><a href="/" translate="yes">Home</a> &middot; <a href="/terms" translate="yes">Terms</a></div>
+    <div>LISTING LENS &copy; 2026</div>
+    <div><a href="/">Home</a> &middot; <a href="/terms">Terms</a></div>
   </div>
+</div>
 
+<!-- STICKY ACTION BAR -->
+<div class="action-bar" id="actionBar">
+  <div class="ab-left">
+    <div class="ab-text">Save report before it's deleted</div>
+    <div class="ab-id" id="abId"></div>
+  </div>
+  <div class="ab-btns">
+    <button class="ab-btn ab-btn--email" id="abEmail">📧 Email</button>
+    <button class="ab-btn ab-btn--print" id="abPrint">Download PDF</button>
+  </div>
+</div>
+
+<!-- EMAIL OVERLAY -->
+<div class="email-overlay" id="emailOverlay">
+  <input type="email" class="eo-input" id="eoInput" placeholder="your email address">
+  <button class="eo-send" id="eoSend">send report</button>
+  <p class="eo-note">we'll send the report and delete your email. <a href="/privacy">privacy promise</a></p>
 </div>
 
 <script>
+/* ============================================================
+   LISTING LENS — DASHBOARD + V3.1 REPORT RENDERER
+   ============================================================ */
+
+// -- Utility
+function esc(s){ var d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
+function cleanUrl(u){ if(!u)return''; var m=u.match(/\[([^\]]+)\]\(([^)]+)\)/); if(m)return m[2]; return u.replace(/^\[|\]$/g,'').trim(); }
+function fmtDate(){ var d=new Date(), m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return d.getDate()+' '+m[d.getMonth()]+' '+d.getFullYear(); }
+function lensId(){ var c='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',r='LL-'; for(var i=0;i<4;i++)r+=c[Math.floor(Math.random()*36)]; return r+'-'+Date.now().toString(36).toUpperCase().slice(-4); }
+function stripEmoji(s){ return (s||'').replace(/^[^a-zA-Z0-9]*/,''); }
+function badgeLabel(l){ return l==='red'?'High Risk':l==='amber'?'Caution Advised':'Low Risk'; }
+function costTag(l,v){ var t=(l+' '+v).toLowerCase(); if(/stamp|ppsr|inspection|one-off|transfer/i.test(t))return '<span class="ct ct-once">One-off</span>'; if(/annual|\/year|renewal|insurance|fuel|servic|ctp|green slip|comprehen/i.test(t))return '<span class="ct ct-yr">Annual</span>'; return ''; }
+
 // ============================================================
 // STATE
 // ============================================================
-var state = {
-  country: null,
-  category: null,
-  slots: { 1: null, 2: null, 3: null },
-  step: 1
-};
+var state = { country: null, category: null, slots: { 1: null, 2: null, 3: null }, step: 1 };
 
 // ============================================================
-// DYNAMIC SLOT HINTS — change based on category
+// SLOT HINTS
 // ============================================================
 var slotHints = {
-  vehicle: {
-    title2: 'details & specs',
-    hint1: 'the photo, price, and headline',
-    hint2: 'mileage, features, service history',
-    title3: 'extra info',
-    hint3: 'seller profile, rego details, anything else'
-  },
-  property: {
-    title2: 'property details',
-    hint1: 'the photo, price, and address',
-    hint2: 'floor plan, strata info, inspection notes',
-    title3: 'extra info',
-    hint3: 'building history, agent details, anything else'
-  },
-  motorcycle: {
-    title2: 'details & specs',
-    hint1: 'the photo, price, and headline',
-    hint2: 'mileage, engine size, service history',
-    title3: 'extra info',
-    hint3: 'seller profile, rego details, modifications'
-  },
-  boat: {
-    title2: 'details & specs',
-    hint1: 'the photo, price, and headline',
-    hint2: 'engine hours, hull type, survey status',
-    title3: 'extra info',
-    hint3: 'trailer details, mooring info, anything else'
-  },
-  watch: {
-    title2: 'details & provenance',
-    hint1: 'the photo, price, and model name',
-    hint2: 'serial number, box & papers, condition',
-    title3: 'extra info',
-    hint3: 'seller history, service records, anything else'
-  },
-  electronics: {
-    title2: 'details & specs',
-    hint1: 'the photo, price, and model',
-    hint2: 'specs, condition, warranty status',
-    title3: 'extra info',
-    hint3: 'seller profile, purchase receipt, anything else'
-  },
-  jewellery: {
-    title2: 'details & certification',
-    hint1: 'the photo, price, and description',
-    hint2: 'certification, carat, metal type, hallmarks',
-    title3: 'extra info',
-    hint3: 'seller credentials, valuation, anything else'
-  },
-  instrument: {
-    title2: 'details & specs',
-    hint1: 'the photo, price, and model',
-    hint2: 'year, condition, serial number',
-    title3: 'extra info',
-    hint3: 'seller profile, sound samples, anything else'
-  },
-  other: {
-    title2: 'details & description',
-    hint1: 'the photo, price, and headline',
-    hint2: 'condition, specs, any fine print',
-    title3: 'extra info',
-    hint3: 'seller profile, receipts, anything else'
-  },
-  default: {
-    title2: 'details & specs',
-    hint1: 'the photo, price, and headline',
-    hint2: 'condition, features, specifications',
-    title3: 'extra info',
-    hint3: 'seller profile, location, anything else'
-  }
+  vehicle: { title2:'details & specs', hint1:'the photo, price, and headline', hint2:'mileage, features, service history', title3:'extra info', hint3:'seller profile, rego details, anything else' },
+  property: { title2:'property details', hint1:'the photo, price, and address', hint2:'floor plan, strata info, inspection notes', title3:'extra info', hint3:'building history, agent details, anything else' },
+  motorcycle: { title2:'details & specs', hint1:'the photo, price, and headline', hint2:'mileage, engine size, service history', title3:'extra info', hint3:'seller profile, rego details, modifications' },
+  boat: { title2:'details & specs', hint1:'the photo, price, and headline', hint2:'engine hours, hull type, survey status', title3:'extra info', hint3:'trailer details, mooring info, anything else' },
+  watch: { title2:'details & provenance', hint1:'the photo, price, and model name', hint2:'serial number, box & papers, condition', title3:'extra info', hint3:'seller history, service records, anything else' },
+  electronics: { title2:'details & specs', hint1:'the photo, price, and model', hint2:'specs, condition, warranty status', title3:'extra info', hint3:'seller profile, purchase receipt, anything else' },
+  jewellery: { title2:'details & certification', hint1:'the photo, price, and description', hint2:'certification, carat, metal type, hallmarks', title3:'extra info', hint3:'seller credentials, valuation, anything else' },
+  instrument: { title2:'details & specs', hint1:'the photo, price, and model', hint2:'year, condition, serial number', title3:'extra info', hint3:'seller profile, sound samples, anything else' },
+  other: { title2:'details & description', hint1:'the photo, price, and headline', hint2:'condition, specs, any fine print', title3:'extra info', hint3:'seller profile, receipts, anything else' },
+  default: { title2:'details & specs', hint1:'the photo, price, and headline', hint2:'condition, features, specifications', title3:'extra info', hint3:'seller profile, location, anything else' }
 };
-
-function updateSlotHints(category) {
-  var hints = slotHints[category] || slotHints['default'];
-  document.getElementById('hint1').textContent = hints.hint1;
-  document.getElementById('title2').textContent = hints.title2;
-  document.getElementById('hint2').textContent = hints.hint2;
-  document.getElementById('title3').textContent = hints.title3;
-  document.getElementById('hint3').textContent = hints.hint3;
+function updateSlotHints(cat) {
+  var h = slotHints[cat] || slotHints['default'];
+  document.getElementById('hint1').textContent = h.hint1;
+  document.getElementById('title2').textContent = h.title2;
+  document.getElementById('hint2').textContent = h.hint2;
+  document.getElementById('title3').textContent = h.title3;
+  document.getElementById('hint3').textContent = h.hint3;
 }
 
 // ============================================================
-// COUNTRY SELECTION
+// COUNTRY
 // ============================================================
 document.querySelectorAll('.country-btn').forEach(function(btn) {
   btn.addEventListener('click', function() {
-    document.querySelectorAll('.country-btn').forEach(function(b) { b.classList.remove('selected'); });
+    document.querySelectorAll('.country-btn').forEach(function(b){ b.classList.remove('selected'); });
     btn.classList.add('selected');
     state.country = { code: btn.dataset.code, name: btn.dataset.name };
-
-    // Clear the "other" input when a button is selected
     document.getElementById('countryOther').value = '';
-
     try { localStorage.setItem('ll_country', JSON.stringify(state.country)); } catch(e) {}
     document.getElementById('badge1').classList.add('done');
     document.getElementById('badge1').textContent = '\u2713';
     updateDots();
   });
 });
-
-// "Other" country input
 document.getElementById('countryOther').addEventListener('input', function() {
   var val = this.value.trim();
   if (val.length >= 2) {
-    document.querySelectorAll('.country-btn').forEach(function(b) { b.classList.remove('selected'); });
+    document.querySelectorAll('.country-btn').forEach(function(b){ b.classList.remove('selected'); });
     state.country = { code: 'OTHER', name: val };
     document.getElementById('badge1').classList.add('done');
     document.getElementById('badge1').textContent = '\u2713';
     updateDots();
   }
 });
-
-// Load saved country
-try {
-  var saved = JSON.parse(localStorage.getItem('ll_country'));
-  if (saved && saved.code !== 'OTHER') {
-    var match = document.querySelector('.country-btn[data-code="' + saved.code + '"]');
-    if (match) { match.click(); }
-  }
-} catch(e) {}
+try { var saved = JSON.parse(localStorage.getItem('ll_country')); if(saved && saved.code !== 'OTHER'){ var m = document.querySelector('.country-btn[data-code="'+saved.code+'"]'); if(m) m.click(); } } catch(e){}
 
 // ============================================================
-// CATEGORY SELECTION
+// CATEGORY
 // ============================================================
 document.querySelectorAll('.cat-option').forEach(function(opt) {
   opt.addEventListener('click', function() {
-    document.querySelectorAll('.cat-option').forEach(function(o) { o.classList.remove('selected'); });
+    document.querySelectorAll('.cat-option').forEach(function(o){ o.classList.remove('selected'); });
     opt.classList.add('selected');
     state.category = opt.dataset.cat;
     document.getElementById('badge2').classList.add('done');
@@ -1447,77 +703,178 @@ document.querySelectorAll('.cat-option').forEach(function(opt) {
 });
 
 // ============================================================
-// MOBILE: ADD MORE SCREENSHOTS
+// MOBILE: ADD MORE
 // ============================================================
-var addMoreBtn = document.getElementById('addMoreBtn');
-addMoreBtn.addEventListener('click', function() {
-  document.querySelectorAll('.extra-slot').forEach(function(slot) {
-    slot.classList.add('revealed');
-  });
-  addMoreBtn.classList.add('hidden');
+document.getElementById('addMoreBtn').addEventListener('click', function() {
+  document.querySelectorAll('.extra-slot').forEach(function(s){ s.classList.add('revealed'); });
+  this.classList.add('hidden');
 });
 
 // ============================================================
-// FILE UPLOAD — 3 separate slots
+// FILE UPLOAD
 // ============================================================
 var generateBtn = document.getElementById('generateBtn');
-
 document.querySelectorAll('.slot-dropzone input[type="file"]').forEach(function(input) {
   input.addEventListener('change', function() {
-    var slotNum = this.dataset.slot;
+    var n = this.dataset.slot;
     if (this.files.length > 0) {
-      var file = this.files[0];
-      if (!file.type.startsWith('image/')) return;
-      if (file.size > 10 * 1024 * 1024) { alert('File too large \u2014 max 10MB'); return; }
-
-      state.slots[slotNum] = file;
+      var f = this.files[0];
+      if (!f.type.startsWith('image/')) return;
+      if (f.size > 10*1024*1024) { alert('File too large — max 10MB'); return; }
+      state.slots[n] = f;
       var reader = new FileReader();
       reader.onload = function(e) {
-        var slot = document.getElementById('slot' + slotNum);
-        var dropzone = slot.querySelector('.slot-dropzone');
-        var preview = slot.querySelector('.slot-preview');
-        preview.querySelector('img').src = e.target.result;
-        dropzone.style.display = 'none';
-        preview.style.display = 'block';
+        var slot = document.getElementById('slot'+n);
+        slot.querySelector('.slot-dropzone').style.display = 'none';
+        var prev = slot.querySelector('.slot-preview');
+        prev.querySelector('img').src = e.target.result;
+        prev.style.display = 'block';
         slot.classList.add('has-file');
         updateGenerateBtn();
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(f);
     }
   });
 });
-
 document.querySelectorAll('.slot-remove').forEach(function(btn) {
   btn.addEventListener('click', function() {
-    var slotNum = this.dataset.slot;
-    state.slots[slotNum] = null;
-    var slot = document.getElementById('slot' + slotNum);
-    var dropzone = slot.querySelector('.slot-dropzone');
-    var preview = slot.querySelector('.slot-preview');
-    var input = dropzone.querySelector('input[type="file"]');
-    input.value = '';
-    dropzone.style.display = 'block';
-    preview.style.display = 'none';
+    var n = this.dataset.slot;
+    state.slots[n] = null;
+    var slot = document.getElementById('slot'+n);
+    slot.querySelector('.slot-dropzone').style.display = 'block';
+    slot.querySelector('.slot-dropzone input').value = '';
+    slot.querySelector('.slot-preview').style.display = 'none';
     slot.classList.remove('has-file');
     updateGenerateBtn();
   });
 });
-
 function updateGenerateBtn() {
-  var hasRequired = state.slots[1] !== null;
-  generateBtn.disabled = !hasRequired;
-  if (hasRequired) {
-    document.getElementById('badge3').classList.add('done');
-    document.getElementById('badge3').textContent = '\u2713';
-  } else {
-    document.getElementById('badge3').classList.remove('done');
-    document.getElementById('badge3').textContent = '3';
-  }
+  var has = state.slots[1] !== null;
+  generateBtn.disabled = !has;
+  if (has) { document.getElementById('badge3').classList.add('done'); document.getElementById('badge3').textContent = '\u2713'; }
+  else { document.getElementById('badge3').classList.remove('done'); document.getElementById('badge3').textContent = '3'; }
   updateDots();
 }
 
-function getUploadedFiles() {
-  return [state.slots[1], state.slots[2], state.slots[3]].filter(Boolean);
+// ============================================================
+// PROGRESS DOTS
+// ============================================================
+function updateDots() {
+  var step = 1;
+  if (state.country) step = 2;
+  if (state.country && state.category) step = 3;
+  document.querySelectorAll('.header-step-dot').forEach(function(d, i) {
+    d.classList.remove('active','done');
+    if (i+1 < step) d.classList.add('done');
+    if (i+1 === step) d.classList.add('active');
+  });
+  document.querySelectorAll('.header-step-label').forEach(function(l, i) {
+    l.classList.remove('active','done');
+    if (i+1 < step) l.classList.add('done');
+    if (i+1 === step) l.classList.add('active');
+  });
+}
+
+// ============================================================
+// V3.1 REPORT RENDERER
+// ============================================================
+function renderReport(data) {
+  var v = data.verdict, h = '';
+
+  // Report topbar
+  h += '<nav class="rpt-topbar"><div class="rpt-logo">LISTING LENS</div><div class="rpt-ts">GENERATED '+fmtDate().toUpperCase()+'</div></nav>';
+
+  // Header
+  h += '<div class="rpt-header"><h1>'+esc(data.title)+'</h1><div class="rpt-meta">';
+  if (data.price) h += '<span class="rpt-tag">'+esc(data.price)+'</span>';
+  if (data.location) h += '<span class="rpt-tag">'+esc(data.location)+'</span>';
+  if (data.category) h += '<span class="rpt-tag">'+esc(data.category)+'</span>';
+  h += '</div></div>';
+
+  // Verdict hero
+  h += '<section class="verdict-hero vh-'+v.level+'">';
+  h += '<div class="v-badge vb-'+v.level+'">'+badgeLabel(v.level)+'</div>';
+  h += '<h2>'+esc(v.heading)+'</h2>';
+  h += '<p>'+esc(v.summary)+'</p></section>';
+
+  // Visual grid
+  var hasSent=false, prosN=0, consN=0, hasRed=false;
+  data.sections.forEach(function(s){
+    if (s.ownerSentiment){ hasSent=true; prosN=(s.ownerSentiment.pros||[]).length; consN=(s.ownerSentiment.cons||[]).length; }
+    if (s.flags) s.flags.forEach(function(f){ if(f.level==='red') hasRed=true; });
+  });
+  var total=prosN+consN||1, posPct=Math.round(prosN/total*100);
+
+  h += '<div class="vis-grid">';
+  h += '<div class="vis-card"><h4>Market Value Position</h4>';
+  h += '<div class="gauge-track"><div class="gauge-range" style="left:20%;width:60%;"></div><div class="gauge-marker" style="left:55%"></div></div>';
+  h += '<div class="gauge-labels"><span>Below market</span><span>Above market</span></div></div>';
+
+  if (hasSent) {
+    h += '<div class="vis-card"><h4>Owner Sentiment</h4>';
+    h += '<div class="sent-minibar"><div class="sent-minibar-pos" style="flex:'+posPct+'"></div><div class="sent-minibar-neg" style="flex:'+(100-posPct)+'"></div></div>';
+    h += '<div class="sent-minilabels"><span>'+posPct+'% POSITIVE</span><span>'+(100-posPct)+'% CONCERNS</span></div></div>';
+  } else {
+    h += '<div class="vis-card"><h4>Safety Status</h4>';
+    if (hasRed) { h += '<div class="safety-value" style="color:var(--red)">POOR</div><div class="safety-sub">Critical findings detected</div>'; }
+    else { h += '<div class="safety-value" style="color:var(--green)">CLEAR</div><div class="safety-sub">No critical issues found</div>'; }
+    h += '</div>';
+  }
+  h += '</div>';
+
+  // Sections
+  data.sections.forEach(function(s) {
+    var title = stripEmoji(s.heading);
+    h += '<div class="sec-title">'+esc(title).toUpperCase()+'</div>';
+
+    if (s.flags) s.flags.forEach(function(f) {
+      h += '<div class="flag-card fc-'+f.level+'"><div class="flag-dot"></div><div><h3>'+esc(f.title)+'</h3><p>'+esc(f.detail)+'</p></div></div>';
+    });
+
+    if (s.ownerSentiment) {
+      var o = s.ownerSentiment;
+      if (o.summary) h += '<div class="sent-summary">'+esc(o.summary)+'</div>';
+      h += '<div class="sent-grid">';
+      if (o.pros && o.pros.length) { h += '<div class="sent-box pros"><h5>What owners love</h5><ul>'; o.pros.forEach(function(p){ h += '<li>'+esc(p)+'</li>'; }); h += '</ul></div>'; }
+      if (o.cons && o.cons.length) { h += '<div class="sent-box cons"><h5>Common complaints</h5><ul>'; o.cons.forEach(function(c){ h += '<li>'+esc(c)+'</li>'; }); h += '</ul></div>'; }
+      h += '</div>';
+    }
+
+    if (s.costs) {
+      h += '<div class="cost-wrap"><table class="cost-tbl">';
+      s.costs.forEach(function(c){ var cls=c.isTotal?' class="cost-total"':''; var tag=c.isTotal?'':costTag(c.label,c.value); h+='<tr'+cls+'><td>'+esc(c.label)+tag+'</td><td>'+esc(c.value)+'</td></tr>'; });
+      h += '</table></div>';
+    }
+
+    if (s.questions && s.questions.length) {
+      if (typeof s.questions[0] === 'object') {
+        h += '<div class="q-grid">'; s.questions.forEach(function(q){ h += '<div class="q-card"><span class="q-cat">'+esc(q.category)+'</span><span class="q-txt">'+esc(q.text)+'</span></div>'; }); h += '</div>';
+      } else { s.questions.forEach(function(q,i){ h += '<div class="q-flat">'+(i+1)+'. '+esc(q)+'</div>'; }); }
+    }
+
+    if (s.checklist) {
+      h += '<div class="cl-wrap">';
+      s.checklist.forEach(function(item){ h += '<div class="cl-item"><div class="cb"></div><span>'+esc(item)+'</span></div>'; });
+      h += '</div>';
+    }
+
+    if (s.text) h += '<div class="rpt-prose">'+esc(s.text)+'</div>';
+
+    if (s.sources) {
+      h += '<ul class="src-list">';
+      s.sources.forEach(function(src){ var u=cleanUrl(src.url); h += '<li>'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(src.label)+'</a>':esc(src.label))+'</li>'; });
+      h += '</ul>';
+    }
+  });
+
+  h += '<div class="rpt-stamp">LISTING LENS \u00B7 '+fmtDate().toUpperCase()+' \u00B7 FOR INFORMATIONAL PURPOSES ONLY</div>';
+
+  document.getElementById('step5').innerHTML = h;
+
+  // Bind checkboxes
+  document.querySelectorAll('#step5 .cb').forEach(function(b) {
+    b.addEventListener('click', function(){ this.classList.toggle('checked'); this.parentElement.classList.toggle('done'); });
+  });
 }
 
 // ============================================================
@@ -1528,140 +885,140 @@ generateBtn.addEventListener('click', function() {
   if (!state.category) { alert('Please select a category first.'); return; }
   if (!state.slots[1]) { alert('Please upload at least the main listing screenshot.'); return; }
 
-  // Show generating card
   var step4 = document.getElementById('step4');
   step4.classList.add('visible');
   step4.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-  // Disable generate button
   generateBtn.disabled = true;
   generateBtn.textContent = 'generating...';
 
-  // Animate through the generation steps
-  var genSteps = ['genStep1', 'genStep2', 'genStep3', 'genStep4'];
-  var currentGenStep = 0;
-
-  function advanceGenStep() {
-    if (currentGenStep > 0) {
-      var prev = document.getElementById(genSteps[currentGenStep - 1]);
-      prev.classList.remove('active');
-      prev.classList.add('done');
-      prev.querySelector('.gen-step-icon').textContent = '\u2713';
-    }
-    if (currentGenStep < genSteps.length) {
-      document.getElementById(genSteps[currentGenStep]).classList.add('active');
-      currentGenStep++;
-    }
+  var genSteps = ['genStep1','genStep2','genStep3','genStep4'];
+  var cur = 0;
+  function advGen() {
+    if (cur > 0) { var p = document.getElementById(genSteps[cur-1]); p.classList.remove('active'); p.classList.add('done'); p.querySelector('.gen-step-icon').textContent = '\u2713'; }
+    if (cur < genSteps.length) { document.getElementById(genSteps[cur]).classList.add('active'); cur++; }
   }
+  setTimeout(function(){ advGen(); }, 2000);
+  setTimeout(function(){ advGen(); }, 5000);
+  setTimeout(function(){ advGen(); }, 8000);
 
-  // Simulate step progression (replace with real API call timing)
-  setTimeout(function() { advanceGenStep(); }, 2000);
-  setTimeout(function() { advanceGenStep(); }, 5000);
-  setTimeout(function() { advanceGenStep(); }, 8000);
-
-  // Show report after "generation" completes
+  // TODO: Replace with real API call
+  // For now, demo with static data after delay
   setTimeout(function() {
-    // Mark last step done
-    var lastStep = document.getElementById(genSteps[genSteps.length - 1]);
-    lastStep.classList.remove('active');
-    lastStep.classList.add('done');
-    lastStep.querySelector('.gen-step-icon').textContent = '\u2713';
+    var last = document.getElementById(genSteps[genSteps.length-1]);
+    last.classList.remove('active'); last.classList.add('done');
+    last.querySelector('.gen-step-icon').textContent = '\u2713';
 
-    // Update header to completed state
     document.getElementById('headerBar').classList.add('completed');
-
-    // Hide generating card, show report
     step4.classList.remove('visible');
 
+    // Render report
+    renderReport(demoReport);
+
     var step5 = document.getElementById('step5');
-    var delivery = document.getElementById('deliveryCard');
     step5.classList.add('visible');
-    delivery.classList.add('visible');
     step5.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    // Demo report sections (replace with real API response)
-    var sectionsEl = document.getElementById('reportSections');
-    var sections = [];
-
-    if (state.category === 'vehicle' || state.category === 'motorcycle') {
-      sections = [
-        { icon: '\uD83D\uDEA8', title: 'Critical Findings', body: 'Your full report will appear here after our AI analyses your listing screenshots. This section covers safety recalls, registration issues, and critical red flags specific to this vehicle.' },
-        { icon: '\uD83D\uDCB0', title: 'Hidden Costs', body: 'Stamp duty, transfer fees, registration, CTP insurance, and ongoing costs that aren\'t in the listing price \u2014 calculated for your state and this specific vehicle.' },
-        { icon: '\uD83D\uDCCA', title: 'Market Analysis', body: 'Comparable listings, recent sales data, price trend analysis, and fair value estimate with confidence range for this make, model, year, and mileage.' },
-        { icon: '\u2753', title: 'Questions to Ask the Seller', body: 'Specific questions tailored to this listing \u2014 based on what we found (and what we couldn\'t verify) \u2014 that you should ask before committing.' },
-        { icon: '\u2696\uFE0F', title: 'Your Rights', body: 'Consumer protection laws, cooling-off periods, warranty obligations, and disclosure requirements in your jurisdiction.' },
-        { icon: '\u2705', title: 'Verdict & Sources', body: 'Overall assessment with a clear recommendation \u2014 plus every source we used, linked so you can verify everything yourself.' }
-      ];
-    } else if (state.category === 'property') {
-      sections = [
-        { icon: '\uD83D\uDEA8', title: 'Critical Findings', body: 'Your full report will appear here after our AI analyses your listing screenshots. This section covers building defects, government orders, planning issues, and critical red flags specific to this property.' },
-        { icon: '\uD83D\uDCB0', title: 'Hidden Costs', body: 'Stamp duty, strata levies, council rates, water rates, and ongoing costs that aren\'t in the listing price \u2014 calculated for your state and this specific property.' },
-        { icon: '\uD83D\uDCCA', title: 'Market Analysis', body: 'Comparable sales, median prices for the area, rental yield estimates, and fair value assessment for this property type and location.' },
-        { icon: '\u2753', title: 'Questions to Ask', body: 'Specific questions tailored to this listing \u2014 covering anything the agent or seller hasn\'t disclosed that they should have.' },
-        { icon: '\u2696\uFE0F', title: 'Your Legal Rights', body: 'Cooling-off periods, strata disclosure obligations, building and pest inspection rights, and what the vendor must legally tell you.' },
-        { icon: '\u2705', title: 'Verdict & Sources', body: 'Overall assessment with a clear recommendation \u2014 plus every government record, database, and source we used, linked for your verification.' }
-      ];
-    } else {
-      // All other categories: watch, boat, electronics, jewellery, instrument
-      var catName = state.category || 'item';
-      sections = [
-        { icon: '\uD83D\uDEA8', title: 'Red Flags & Authenticity', body: 'Your full report will appear here after our AI analyses your listing screenshots. This section covers authenticity concerns, known fakes and counterfeits, condition issues, and anything the listing isn\'t telling you.' },
-        { icon: '\uD83D\uDCB0', title: 'Hidden Costs & True Price', body: 'Import duties, taxes, shipping, insurance, maintenance costs, and anything else that adds to what you\'ll actually pay beyond the listed price.' },
-        { icon: '\uD83D\uDCCA', title: 'Market Analysis', body: 'What this item typically sells for, comparable listings, price history, and whether the asking price is fair, high, or a bargain.' },
-        { icon: '\u2753', title: 'Questions to Ask the Seller', body: 'Specific questions based on what we found in the listing \u2014 designed to uncover anything the seller hasn\'t disclosed.' },
-        { icon: '\uD83D\uDEE1\uFE0F', title: 'Buyer Protection', body: 'Your consumer rights, platform protections, return policies, and what recourse you have if something goes wrong.' },
-        { icon: '\u2705', title: 'Verdict & Sources', body: 'Overall assessment with a clear recommendation \u2014 plus every source we used, linked so you can verify everything yourself.' }
-      ];
-    }
-
-    sectionsEl.innerHTML = sections.map(function(s, i) {
-      return '<div class="report-section' + (i === 0 ? ' open' : '') + '">' +
-        '<div class="report-section-header" onclick="this.parentElement.classList.toggle(\'open\')">' +
-        '<span class="rs-icon">' + s.icon + '</span>' + s.title +
-        '<span class="rs-arrow">\u25BC</span></div>' +
-        '<div class="report-section-body"><p>' + s.body + '</p></div></div>';
-    }).join('');
-
+    // Show action bar
+    document.getElementById('actionBar').classList.add('visible');
+    document.getElementById('abId').textContent = lensId();
   }, 10000);
 });
 
 // ============================================================
-// PROGRESS DOTS
+// ACTION BAR HANDLERS
 // ============================================================
-function updateDots() {
-  var dots = document.querySelectorAll('.header-step-dot');
-  var labels = document.querySelectorAll('.header-step-label');
-  var step = 1;
-  if (state.country) step = 2;
-  if (state.country && state.category) step = 3;
-
-  dots.forEach(function(dot, i) {
-    dot.classList.remove('active', 'done');
-    if (i + 1 < step) dot.classList.add('done');
-    if (i + 1 === step) dot.classList.add('active');
-  });
-  labels.forEach(function(label, i) {
-    label.classList.remove('active', 'done');
-    if (i + 1 < step) label.classList.add('done');
-    if (i + 1 === step) label.classList.add('active');
-  });
-}
+document.getElementById('abPrint').addEventListener('click', function(){ window.print(); });
+document.getElementById('abEmail').addEventListener('click', function(){
+  var o = document.getElementById('emailOverlay');
+  o.style.display = o.style.display === 'block' ? 'none' : 'block';
+  if (o.style.display === 'block') document.getElementById('eoInput').focus();
+});
+document.getElementById('eoSend').addEventListener('click', function(){
+  var e = document.getElementById('eoInput').value.trim();
+  if (!e || !e.includes('@')) { document.getElementById('eoInput').style.borderColor = 'var(--red)'; return; }
+  var b = this; b.textContent = 'sending...'; b.disabled = true;
+  setTimeout(function(){ b.textContent = '\u2713 sent!'; b.style.background = 'var(--green)'; b.style.color = '#fff';
+    setTimeout(function(){ document.getElementById('emailOverlay').style.display = 'none'; }, 800);
+  }, 1500);
+});
+document.addEventListener('click', function(e){
+  var eo = document.getElementById('emailOverlay');
+  if (eo.style.display === 'block' && !eo.contains(e.target) && e.target.id !== 'abEmail') eo.style.display = 'none';
+});
 
 // ============================================================
-// PRODUCTION: Airwallex payment verification
+// DEMO REPORT DATA (V3.1)
 // ============================================================
-// In production, this page should verify the payment intent ID
-// from the URL params (e.g. ?payment_intent=pi_xxx) against
-// Airwallex via a Netlify Function before enabling the dashboard.
-//
-// Example flow:
-// 1. Landing page → Airwallex checkout → redirect to /dashboard?payment_intent=pi_xxx
-// 2. Dashboard loads → calls Netlify Function to verify payment
-// 3. If valid → show dashboard (current state)
-// 4. If invalid → redirect back to landing page
-//
-// For now, the dashboard is accessible directly for development.
-
+var demoReport = {
+  category:'Vehicle Analysis', title:'2015 Jeep Wrangler Unlimited Sport Auto 4x4 MY15', price:'$22,500', location:'NSW \u00B7 Private Sale', country:'Australia',
+  verdict:{ level:'red', heading:'Proceed with Caution', summary:'The price is roughly in line with market for the mileage, but there are several significant concerns. The registration is expiring February 2026, the 3.6L Pentastar at 156,000 km is entering the zone where costly rocker arm and lifter failures become likely, the vehicle falls within the Takata airbag recall range, and visible aftermarket modifications raise insurance and compliance questions. Thorough due diligence is essential.' },
+  sections:[
+    { heading:'Critical findings', flags:[
+      { level:'red', title:'Registration Expiring This Month', detail:'The registration expires February 2026 \u2014 that is right now. It may already be expired. An unregistered vehicle cannot legally be driven. Confirm the exact expiry date and whether it will still be registered when you collect it.' },
+      { level:'red', title:'Takata Airbag Recall \u2014 Check Required', detail:'The 2014-2016 Jeep Wrangler JK is covered by Takata airbag recall PRA 2018/16702. A degraded inflator can rupture in a crash, projecting metal fragments. Verify at ismyairbagsafe.com.au or ask seller for dealer proof.' },
+      { level:'red', title:'3.6L Pentastar at 156,000 km \u2014 High-Risk Mileage', detail:'Documented pattern of rocker arm and lifter failure from 60,000-160,000 km. This vehicle is squarely in that zone. Listen for ticking on cold start. Repair costs $2,400-$6,500.' }
+    ]},
+    { heading:'Additional concerns', flags:[
+      { level:'amber', title:'Registration Plate Withheld \u2014 Cannot Run PPSR', detail:'Listed as "Check with seller." Without plate or VIN you cannot run PPSR for finance, write-off, or stolen flags. Request before committing your time.' },
+      { level:'amber', title:'Visible Aftermarket Modifications', detail:'Photos show aftermarket alloy wheels and what appears to be a bull bar. Undisclosed mods may void insurance claims and affect roadworthiness. Ask for a full list.' },
+      { level:'amber', title:'Additional Recalls \u2014 Clockspring & Emissions', detail:'2015 JK Wranglers have recalls for clockspring assembly fault and emissions PCM reprogramming. Confirm all completed via VIN at vehiclerecalls.gov.au.' },
+      { level:'amber', title:'TIPM, Oil Cooler & Other Known Issues', detail:'Known for: oil cooler housing leaks, TIPM failures ($900-$1,200), brake booster failures, parking brake issues. Jeep-specialist inspection strongly recommended.' }
+    ]},
+    { heading:'Positive findings', flags:[
+      { level:'green', title:'Price Broadly In-Market', detail:'$22,500 sits within the typical private-sale range. CarsGuide values 2015 Wranglers from $12,100 to $31,900 depending on variant and condition.' },
+      { level:'green', title:'Seller ID Verified', detail:'CarSales "ID verified" badge present. Better than anonymous but not a substitute for PPSR checks.' },
+      { level:'green', title:'Soft Top \u2014 Lower Entry Point', detail:'Soft top variant typically prices at the lower end of the Unlimited range, consistent with the ask.' }
+    ]},
+    { heading:'What owners say', ownerSentiment:{
+      summary:'JK Wrangler Unlimited 3.6L owners love the off-road ability and lifestyle factor, but commonly report trade-offs in comfort, fuel economy, and front-end wear.',
+      pros:['Genuinely capable off-road with massive aftermarket support','Removable roof and doors \u2014 experience no other SUV offers','Pentastar 3.6L more reliable than earlier engines when maintained','4-door Unlimited holds stronger resale than 2-door'],
+      cons:['Real-world fuel 13-15 L/100km, worse with lift or bigger tyres','Highway noise and ride noticeably worse than comparable SUVs','Front-end steering/suspension wears frequently at higher km','Interior fit, water sealing, and rattles a consistent complaint']
+    }},
+    { heading:'Hidden costs (NSW estimate)', costs:[
+      { label:'NSW Stamp Duty', value:'~$675' },{ label:'PPSR Check', value:'$2' },
+      { label:'Pre-purchase Inspection (4x4 specialist)', value:'$300 \u2013 $600' },
+      { label:'NSW Registration Renewal', value:'$400 \u2013 $700' },
+      { label:'CTP / Green Slip', value:'$500 \u2013 $900' },
+      { label:'Comprehensive Insurance', value:'$1,200 \u2013 $2,500' },
+      { label:'Fuel (15,000 km \u00D7 11.7 L/100km \u00D7 $2.00/L)', value:'~$3,510/year' },
+      { label:'Servicing (2 \u00D7 $350-$500)', value:'$700 \u2013 $1,000/year' },
+      { label:'Estimated first-year costs beyond purchase price', value:'$7,000 \u2013 $10,000', isTotal:true }
+    ]},
+    { heading:'Questions to ask the seller', questions:[
+      { category:'Registration & Rego Plate', text:'What is the registration plate number and exact expiry date? Will it still be registered at collection?' },
+      { category:'VIN & Recall Status', text:'What is the full VIN? Have all Takata and other recalls been completed? Dealer receipts please.' },
+      { category:'Engine History', text:'Any ticking noise? Have rocker arms, lifters, or camshafts been inspected or replaced? Any oil leaks?' },
+      { category:'Modifications', text:'Full list of aftermarket parts fitted. Original wheels/bumper included? Workshop receipts?' },
+      { category:'Service History', text:'Complete service history? Dealer or independent? When was last oil change?' },
+      { category:'Ownership & Finance', text:'How long owned? Previous owners? Finance owing? Insurance claims or accident history?' },
+      { category:'PPSR & Write-Off', text:'Ever declared a write-off? Ever registered in another state?' },
+      { category:'Reason for Selling', text:'Why selling? Current mechanical or electrical issues?' }
+    ]},
+    { heading:'Pre-purchase checklist', checklist:[
+      'Request VIN and registration plate before attending any inspection',
+      'Run PPSR check ($2 at ppsr.gov.au) for finance, write-off, stolen status',
+      'Check Takata recall at ismyairbagsafe.com.au',
+      'Check all recalls at vehiclerecalls.gov.au using VIN',
+      'Book 4x4 specialist inspection \u2014 request valve train and oil cooler focus',
+      'Cold-start the engine and listen for ticking from either bank',
+      'Verify registration status and expiry \u2014 factor in re-registration cost',
+      'Inspect soft top for tears, window clarity, zipper condition',
+      'Test all electrics \u2014 lights, wipers, horn, fuel pump prime (TIPM check)',
+      'Confirm insurance quote with accurate modification disclosure',
+      'Get seller\'s key claims in writing (text/email) before any payment'
+    ]},
+    { heading:'Your rights (Australia/NSW)', text:'In a private sale, the Australian Consumer Law (ACL) provides limited protections compared to buying from a business. The goods must match their description and the seller must have the legal right to sell. However, consumer guarantees regarding acceptable quality and fitness for purpose generally do not apply to private sales. Your primary protections come from your own due diligence \u2014 PPSR checks, independent inspections, and getting the seller\'s key claims in writing before payment.' },
+    { heading:'Sources used in this report', sources:[
+      { label:'PPSR \u2014 finance, write-off, stolen check ($2)', url:'https://www.ppsr.gov.au' },
+      { label:'Is My Airbag Safe \u2014 Takata recall check', url:'https://www.ismyairbagsafe.com.au' },
+      { label:'ACCC Product Safety \u2014 Jeep JK Takata recall', url:'https://www.productsafety.gov.au/recalls/fca-australia-pty-ltd-jeep-wrangler-jk-my2014-2016' },
+      { label:'Vehicle Recalls Australia \u2014 all recalls by VIN', url:'https://www.vehiclerecalls.gov.au' },
+      { label:'Service NSW \u2014 stamp duty & rego transfer', url:'https://www.service.nsw.gov.au' },
+      { label:'ACCC consumer rights', url:'https://www.accc.gov.au/consumers' },
+      { label:'CarsGuide \u2014 2015 Wrangler valuation', url:'https://www.carsguide.com.au/jeep/wrangler/price/2015' }
+    ]}
+  ]
+};
 </script>
 </body>
 </html>
