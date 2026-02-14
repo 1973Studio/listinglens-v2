@@ -130,7 +130,7 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
 }
 .country-btn:hover { border-color: var(--emerald); background: var(--emerald-pale); }
 .country-btn.selected { border-color: var(--emerald); background: var(--emerald-pale); color: var(--emerald-dark); }
-.country-btn .cb-flag { font-size: 1.2rem; line-height: 1; }
+.country-btn .cb-flag { width: 24px; height: 16px; border-radius: 2px; object-fit: cover; vertical-align: middle; }
 .country-other-wrap { position: relative; max-width: 280px; }
 .country-other-input {
   width: 100%; padding: 0.55rem 0.8rem; border: 1.5px solid var(--gray-100); border-radius: 10px;
@@ -473,15 +473,15 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
       <h2>where are you buying?</h2>
       <p class="step-sub">we'll tailor your report to local laws, taxes, and databases.</p>
       <div class="country-grid" id="countryGrid">
-        <button class="country-btn" data-code="AU" data-name="Australia"><span class="cb-flag">&#127462;&#127482;</span>Australia</button>
-        <button class="country-btn" data-code="JP" data-name="Japan"><span class="cb-flag">&#127471;&#127477;</span>Japan</button>
-        <button class="country-btn" data-code="HK" data-name="Hong Kong"><span class="cb-flag">&#127469;&#127472;</span>Hong Kong</button>
-        <button class="country-btn" data-code="KR" data-name="South Korea"><span class="cb-flag">&#127472;&#127479;</span>S. Korea</button>
-        <button class="country-btn" data-code="NZ" data-name="New Zealand"><span class="cb-flag">&#127475;&#127487;</span>NZ</button>
-        <button class="country-btn" data-code="SG" data-name="Singapore"><span class="cb-flag">&#127480;&#127468;</span>Singapore</button>
-        <button class="country-btn" data-code="US" data-name="United States"><span class="cb-flag">&#127482;&#127480;</span>USA</button>
-        <button class="country-btn" data-code="GB" data-name="United Kingdom"><span class="cb-flag">&#127468;&#127463;</span>UK</button>
-        <button class="country-btn" data-code="CA" data-name="Canada"><span class="cb-flag">&#127464;&#127462;</span>Canada</button>
+        <button class="country-btn" data-code="AU" data-name="Australia"><img class="cb-flag" src="https://flagcdn.com/w40/au.png" alt="AU">Australia</button>
+        <button class="country-btn" data-code="JP" data-name="Japan"><img class="cb-flag" src="https://flagcdn.com/w40/jp.png" alt="JP">Japan</button>
+        <button class="country-btn" data-code="HK" data-name="Hong Kong"><img class="cb-flag" src="https://flagcdn.com/w40/hk.png" alt="HK">Hong Kong</button>
+        <button class="country-btn" data-code="KR" data-name="South Korea"><img class="cb-flag" src="https://flagcdn.com/w40/kr.png" alt="KR">S. Korea</button>
+        <button class="country-btn" data-code="NZ" data-name="New Zealand"><img class="cb-flag" src="https://flagcdn.com/w40/nz.png" alt="NZ">NZ</button>
+        <button class="country-btn" data-code="SG" data-name="Singapore"><img class="cb-flag" src="https://flagcdn.com/w40/sg.png" alt="SG">Singapore</button>
+        <button class="country-btn" data-code="CN" data-name="China"><img class="cb-flag" src="https://flagcdn.com/w40/cn.png" alt="CN">China</button>
+        <button class="country-btn" data-code="GB" data-name="United Kingdom"><img class="cb-flag" src="https://flagcdn.com/w40/gb.png" alt="GB">UK</button>
+        <button class="country-btn" data-code="CA" data-name="Canada"><img class="cb-flag" src="https://flagcdn.com/w40/ca.png" alt="CA">Canada</button>
       </div>
       <div class="country-other-wrap">
         <input type="text" class="country-other-input" id="countryOther" placeholder="or type another country..." autocomplete="off" list="countryList">
@@ -798,28 +798,32 @@ function renderReport(data) {
   h += '<p>'+esc(v.summary)+'</p></section>';
 
   // Visual grid
-  var hasSent=false, prosN=0, consN=0, hasRed=false;
+  var redN=0, amberN=0, greenN=0;
   data.sections.forEach(function(s){
-    if (s.ownerSentiment){ hasSent=true; prosN=(s.ownerSentiment.pros||[]).length; consN=(s.ownerSentiment.cons||[]).length; }
-    if (s.flags) s.flags.forEach(function(f){ if(f.level==='red') hasRed=true; });
+    if (s.flags) s.flags.forEach(function(f){
+      if(f.level==='red') redN++;
+      else if(f.level==='amber') amberN++;
+      else if(f.level==='green') greenN++;
+    });
   });
-  var total=prosN+consN||1, posPct=Math.round(prosN/total*100);
+  var flagTotal = redN + amberN + greenN || 1;
 
   h += '<div class="vis-grid">';
   h += '<div class="vis-card"><h4>Market Value Position</h4>';
   h += '<div class="gauge-track"><div class="gauge-range" style="left:20%;width:60%;"></div><div class="gauge-marker" style="left:55%"></div></div>';
   h += '<div class="gauge-labels"><span>Below market</span><span>Above market</span></div></div>';
 
-  if (hasSent) {
-    h += '<div class="vis-card"><h4>Owner Sentiment</h4>';
-    h += '<div class="sent-minibar"><div class="sent-minibar-pos" style="flex:'+posPct+'"></div><div class="sent-minibar-neg" style="flex:'+(100-posPct)+'"></div></div>';
-    h += '<div class="sent-minilabels"><span>'+posPct+'% POSITIVE</span><span>'+(100-posPct)+'% CONCERNS</span></div></div>';
-  } else {
-    h += '<div class="vis-card"><h4>Safety Status</h4>';
-    if (hasRed) { h += '<div class="safety-value" style="color:var(--red)">POOR</div><div class="safety-sub">Critical findings detected</div>'; }
-    else { h += '<div class="safety-value" style="color:var(--green)">CLEAR</div><div class="safety-sub">No critical issues found</div>'; }
-    h += '</div>';
-  }
+  h += '<div class="vis-card"><h4>Findings Breakdown</h4>';
+  h += '<div style="display:flex;gap:2px;margin-top:12px;">';
+  if(redN) h += '<div style="flex:'+redN+';height:6px;background:var(--red);border-radius:3px 0 0 3px;"></div>';
+  if(amberN) h += '<div style="flex:'+amberN+';height:6px;background:var(--orange);'+((!redN)?'border-radius:3px 0 0 3px;':'')+'"></div>';
+  if(greenN) h += '<div style="flex:'+greenN+';height:6px;background:var(--green);border-radius:0 3px 3px 0;"></div>';
+  h += '</div>';
+  h += '<div style="display:flex;gap:14px;margin-top:10px;font-family:var(--mono);font-size:10px;">';
+  if(redN) h += '<span style="color:var(--red);">'+redN+' CRITICAL</span>';
+  if(amberN) h += '<span style="color:var(--orange);">'+amberN+' CAUTION</span>';
+  if(greenN) h += '<span style="color:var(--green);">'+greenN+' POSITIVE</span>';
+  h += '</div></div>';
   h += '</div>';
 
   // Sections
