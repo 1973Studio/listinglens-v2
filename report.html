@@ -10,9 +10,9 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --surface-raised: #f1f5f9;
+  --bg: #f0f1f3;
+  --surface: #f8f9fa;
+  --surface-raised: #eceef1;
   --border: #e2e8f0;
   --border-strong: #cbd5e1;
   --ink: #0f172a;
@@ -289,14 +289,14 @@ body { margin: 0; min-height: 100vh; }
     <div style="font-size:2.5rem">⚠️</div>
     <h2>something went wrong</h2>
     <p id="errMsg">We couldn't generate your report. Your payment is safe — please try again or contact us.</p>
-    <a href="mailto:help@listinglens.app" class="err-btn">contact us</a>
+    <a href="/cdn-cgi/l/email-protection#650d00091525090c16110c0b0209000b164b041515" class="err-btn">contact us</a>
   </div>
 
   <div class="report" id="rpt"></div>
 
   <div class="data-warn" id="dw"><p><strong>⚠️</strong> Once you leave this page, your report and screenshots are permanently deleted. Save before closing.</p></div>
   <div class="another" id="ar"><a href="/">← Analyse another listing</a></div>
-  <div class="pg-foot"><a href="/privacy">privacy</a><a href="/terms">terms</a><a href="mailto:help@listinglens.app">contact</a></div>
+  <div class="pg-foot"><a href="/privacy">privacy</a><a href="/terms">terms</a><a href="/cdn-cgi/l/email-protection#fe969b928ebe92978d8a979099929b908dd09f8e8e">contact</a></div>
 </div>
 
 <!-- STICKY ACTION BAR -->
@@ -318,7 +318,7 @@ body { margin: 0; min-height: 100vh; }
   <p class="eo-note">we'll send the report and delete your email. <a href="/privacy">privacy promise</a></p>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ============================================================
    LISTING LENS — REPORT V3.1 (White / Professional)
    ============================================================ */
@@ -538,10 +538,4 @@ var demoData={vehicle:{
   var p=new URLSearchParams(window.location.search),demo=p.get('demo');
   if(demo&&demoData[demo]){animLoad(function(){renderReport(demoData[demo]);});return;}
   var rj=sessionStorage.getItem('listinglens_report');
-  if(rj){try{var d=JSON.parse(rj);animLoad(function(){renderReport(d);});sessionStorage.removeItem('listinglens_report');}catch(e){showError('Couldn\'t display report.');}return;}
-  if(p.get('session')){showError('Report generation not yet connected.');return;}
-  window.location.href='/';
-})();
-</script>
-</body>
-</html>
+  if(rj){try{var d=JSON.parse(rj);animLoad(function(){renderReport(d);});sessionStorage.removeItem('listinglens_report');}catch(
