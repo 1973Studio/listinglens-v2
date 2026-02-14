@@ -334,7 +334,7 @@ function animLoad(cb){
   else setTimeout(cb,300);})();
 }
 
-function stripEmoji(s){return(s||'').replace(/^[\u{1F300}-\u{1FAD6}\u{2600}-\u{27BF}\u{FE00}-\u{FEFF}✅⚠️🚨❓⚖️🔗💰👥]+\s*/u,'');}
+function stripEmoji(s){return(s||'').replace(/^[^a-zA-Z0-9]*/,'');}
 function badgeLabel(l){return l==='red'?'High Risk':l==='amber'?'Caution Advised':'Low Risk';}
 function costTag(l,v){var t=(l+' '+v).toLowerCase();if(/stamp|ppsr|inspection|one-off|transfer/i.test(t))return'<span class="ct ct-once">One-off</span>';if(/annual|\/year|renewal|insurance|fuel|servic|ctp|green slip|comprehen/i.test(t))return'<span class="ct ct-yr">Annual</span>';return'';}
 
