@@ -1,14 +1,20 @@
-[[redirects]]
-  from = "/privacy"
-  to = "/terms.html"
-  status = 200
+[build]
+  publish = "."
+  functions = "netlify/functions"
 
-[[redirects]]
-  from = "/terms"
-  to = "/terms.html"
-  status = 200
+[functions]
+  # Generate report needs extra time — Claude API + web search can take 30-60s
+  [functions.generate-report]
+    timeout = 90
 
-[[redirects]]
-  from = "/dashboard"
-  to = "/dashboard.html"
-  status = 200
+  [functions.create-payment-intent]
+    timeout = 15
+
+# Environment variables to set in Netlify Dashboard → Site Settings → Environment Variables:
+#
+# ANTHROPIC_API_KEY        = sk-ant-...  (your Claude API key)
+# AIRWALLEX_CLIENT_ID      = ...         (from Airwallex dashboard → API Keys)
+# AIRWALLEX_API_KEY         = ...         (from Airwallex dashboard → API Keys)
+# AIRWALLEX_ENV             = demo        (set to "prod" when going live)
+#
+# DO NOT commit these values to the repo.
