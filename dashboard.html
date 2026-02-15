@@ -116,6 +116,18 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
 .paid-text span { font-size: 0.75rem; color: var(--emerald-deep); }
 
 /* ============================================================
+   BETA BANNER
+   ============================================================ */
+.card--beta {
+  grid-column: 1 / -1; background: #FFFBEB; border: 1.5px solid #FDE68A;
+  padding: 1rem 1.4rem; display: flex; align-items: center; gap: 0.8rem; animation-delay: 0.03s;
+}
+.beta-icon { width: 36px; height: 36px; border-radius: 10px; background: #F59E0B; color: var(--white); font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.beta-text { flex: 1; }
+.beta-text strong { font-size: 0.88rem; font-weight: 700; color: #92400E; display: block; margin-bottom: 0.1rem; }
+.beta-text span { font-size: 0.75rem; color: #92400E; }
+
+/* ============================================================
    STEP 1 — COUNTRY
    ============================================================ */
 .card--country { grid-column: 1 / -1; display: flex; align-items: flex-start; gap: 1.5rem; animation-delay: 0.06s; }
@@ -210,6 +222,16 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
 .gen-step.done .gen-step-icon { background: var(--emerald-deep); color: var(--white); }
 
 /* ============================================================
+   ERROR STATE
+   ============================================================ */
+.card--error { grid-column: 1 / -1; display: none; text-align: center; padding: 3rem 2rem; background: var(--red-pale); border-color: var(--red-border); }
+.card--error.visible { display: block; }
+.error-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+.error-title { font-size: 1.1rem; font-weight: 700; color: var(--red); margin-bottom: 0.4rem; }
+.error-msg { font-size: 0.88rem; color: var(--slate-500); margin-bottom: 1.2rem; line-height: 1.5; }
+.error-retry { display: inline-block; padding: 0.7rem 1.5rem; border: none; border-radius: 10px; background: var(--slate-900); color: var(--white); font-family: var(--font); font-size: 0.88rem; font-weight: 700; cursor: pointer; }
+
+/* ============================================================
    STEP 5 — FULL V3.1 REPORT
    ============================================================ */
 .card--report { grid-column: 1 / -1; display: none; padding: 0; background: transparent; border: none; }
@@ -250,16 +272,6 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
 @media (max-width: 600px) { .vis-grid { grid-template-columns: 1fr; } }
 .vis-card { background: var(--white); border: 1px solid var(--gray-100); border-radius: 12px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
 .vis-card h4 { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--slate-500); margin-bottom: 12px; }
-.gauge-track { height: 6px; background: var(--snow); border-radius: 3px; position: relative; margin: 16px 0 8px; }
-.gauge-range { height: 100%; border-radius: 3px; position: absolute; background: var(--cyan); opacity: 0.25; }
-.gauge-marker { position: absolute; top: -8px; width: 2px; height: 22px; background: var(--slate-900); }
-.gauge-labels { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 9px; color: var(--slate-500); }
-.sent-minibar { display: flex; gap: 2px; margin-top: 12px; }
-.sent-minibar-pos { height: 6px; background: var(--green); border-radius: 3px 0 0 3px; }
-.sent-minibar-neg { height: 6px; background: var(--red); border-radius: 0 3px 3px 0; }
-.sent-minilabels { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 9px; color: var(--slate-500); margin-top: 6px; }
-.safety-value { font-family: var(--mono); font-size: 20px; font-weight: 700; margin-top: 4px; }
-.safety-sub { font-size: 11px; color: var(--slate-500); margin-top: 2px; }
 
 /* Section titles */
 .sec-title { font-family: var(--mono); font-size: 11px; color: var(--slate-500); letter-spacing: 1.5px; text-transform: uppercase; margin: 32px 0 12px; display: flex; align-items: center; gap: 10px; }
@@ -412,8 +424,8 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
    ============================================================ */
 @media print {
   body { padding: 0; background: #fff; }
-  .topbar, .card--header, .card--paid, .card--country, .card--category-pick,
-  .card--upload, .card--generating, .card--privacy-sm, .card--footer,
+  .topbar, .card--header, .card--paid, .card--beta, .card--country, .card--category-pick,
+  .card--upload, .card--generating, .card--error, .card--privacy-sm, .card--footer,
   .action-bar, .email-overlay { display: none !important; }
   .bento { display: block; }
   .card--report { display: block !important; padding: 16px; }
@@ -457,8 +469,17 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
     <div class="completed-msg">&#10003; report ready &mdash; scroll down to view</div>
   </div>
 
-  <!-- PAYMENT CONFIRMED BANNER -->
-  <div class="card card--paid">
+  <!-- BETA BANNER (shown when BETA_MODE is true) -->
+  <div class="card card--beta" id="betaBanner" style="display:none;">
+    <div class="beta-icon">&#946;</div>
+    <div class="beta-text">
+      <strong>beta testing mode &mdash; no payment required</strong>
+      <span>upload your listing screenshots and generate a real report for free.</span>
+    </div>
+  </div>
+
+  <!-- PAYMENT CONFIRMED BANNER (shown after real payment) -->
+  <div class="card card--paid" id="paidBanner" style="display:none;">
     <div class="paid-icon">&#10003;</div>
     <div class="paid-text">
       <strong>payment confirmed &mdash; $5</strong>
@@ -527,7 +548,7 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
       <div class="cat-option" data-cat="electronics"><span class="cat-icon">💻</span><div class="cat-name">Electronics</div><div class="cat-sub">phone, laptop, camera</div></div>
       <div class="cat-option" data-cat="jewellery"><span class="cat-icon">💍</span><div class="cat-name">Jewellery</div><div class="cat-sub">rings, necklaces, gems</div></div>
       <div class="cat-option" data-cat="instrument"><span class="cat-icon">🎸</span><div class="cat-name">Instrument</div><div class="cat-sub">guitar, piano, drums</div></div>
-      <div class="cat-option" data-cat="other"><span class="cat-icon">🔍</span><div class="cat-name">Something else</div><div class="cat-sub">anything not listed</div></div>
+      <div class="cat-option" data-cat="something-else"><span class="cat-icon">🔍</span><div class="cat-name">Something else</div><div class="cat-sub">anything not listed</div></div>
     </div>
   </div>
 
@@ -572,7 +593,7 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
   <!-- STEP 4: GENERATING -->
   <div class="card card--generating" id="step4">
     <div class="gen-spinner"></div>
-    <div class="gen-status">generating your report...</div>
+    <div class="gen-status" id="genStatusText">generating your report...</div>
     <div class="gen-sub">this usually takes 30&ndash;60 seconds.</div>
     <div class="gen-steps">
       <div class="gen-step active" id="genStep1"><span class="gen-step-icon">1</span><span>reading your screenshots</span></div>
@@ -580,6 +601,14 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
       <div class="gen-step" id="genStep3"><span class="gen-step-icon">3</span><span>analysing hidden costs &amp; red flags</span></div>
       <div class="gen-step" id="genStep4"><span class="gen-step-icon">4</span><span>writing your report</span></div>
     </div>
+  </div>
+
+  <!-- ERROR STATE -->
+  <div class="card card--error" id="stepError">
+    <div class="error-icon">⚠️</div>
+    <div class="error-title" id="errorTitle">Report generation failed</div>
+    <div class="error-msg" id="errorMsg">Something went wrong. Please try again.</div>
+    <button class="error-retry" onclick="location.reload()">Try again</button>
   </div>
 
   <!-- STEP 5: FULL V3.1 REPORT (rendered by JS) -->
@@ -619,17 +648,43 @@ body { margin: 0; padding: 1.2rem; min-height: 100vh; }
 
 <script>
 /* ============================================================
-   LISTING LENS — DASHBOARD + V3.1 REPORT RENDERER
+   LISTING LENS — DASHBOARD + REAL API WIRING
+   ============================================================
+   BETA_MODE: When true, skips payment gate. Set to false for production.
    ============================================================ */
 
-// -- Utility
+var BETA_MODE = true;
+
+// ============================================================
+// UTILITY
+// ============================================================
 function esc(s){ var d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
 function cleanUrl(u){ if(!u)return''; var m=u.match(/\[([^\]]+)\]\(([^)]+)\)/); if(m)return m[2]; return u.replace(/^\[|\]$/g,'').trim(); }
 function fmtDate(){ var d=new Date(), m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return d.getDate()+' '+m[d.getMonth()]+' '+d.getFullYear(); }
 function lensId(){ var c='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',r='LL-'; for(var i=0;i<4;i++)r+=c[Math.floor(Math.random()*36)]; return r+'-'+Date.now().toString(36).toUpperCase().slice(-4); }
 function stripEmoji(s){ return (s||'').replace(/^[^a-zA-Z0-9]*/,''); }
 function badgeLabel(l){ return l==='red'?'High Risk':l==='amber'?'Caution Advised':'Low Risk'; }
-function costTag(l,v){ var t=(l+' '+v).toLowerCase(); if(/stamp|ppsr|inspection|one-off|transfer/i.test(t))return '<span class="ct ct-once">One-off</span>'; if(/annual|\/year|renewal|insurance|fuel|servic|ctp|green slip|comprehen/i.test(t))return '<span class="ct ct-yr">Annual</span>'; return ''; }
+function costTag(l,v){ var t=(l+' '+v).toLowerCase(); if(/stamp|ppsr|inspection|one-off|transfer|survey|valuation|authentication/i.test(t))return '<span class="ct ct-once">One-off</span>'; if(/annual|\/year|renewal|insurance|fuel|servic|ctp|green slip|comprehen|strata|council|water|maintenance/i.test(t))return '<span class="ct ct-yr">Annual</span>'; return ''; }
+
+// ============================================================
+// PAYMENT GATE
+// ============================================================
+(function() {
+  if (BETA_MODE) {
+    document.getElementById('betaBanner').style.display = 'flex';
+    return; // skip payment check
+  }
+  // Check for payment confirmation
+  var params = new URLSearchParams(window.location.search);
+  var paymentData = null;
+  try { paymentData = JSON.parse(sessionStorage.getItem('ll_payment')); } catch(e) {}
+  if (params.get('payment') === 'success' && paymentData && paymentData.intentId) {
+    document.getElementById('paidBanner').style.display = 'flex';
+  } else {
+    // No valid payment — redirect to checkout
+    window.location.href = '/checkout';
+  }
+})();
 
 // ============================================================
 // STATE
@@ -648,7 +703,7 @@ var slotHints = {
   electronics: { title2:'details & specs', hint1:'the photo, price, and model', hint2:'specs, condition, warranty status', title3:'extra info', hint3:'seller profile, purchase receipt, anything else' },
   jewellery: { title2:'details & certification', hint1:'the photo, price, and description', hint2:'certification, carat, metal type, hallmarks', title3:'extra info', hint3:'seller credentials, valuation, anything else' },
   instrument: { title2:'details & specs', hint1:'the photo, price, and model', hint2:'year, condition, serial number', title3:'extra info', hint3:'seller profile, sound samples, anything else' },
-  other: { title2:'details & description', hint1:'the photo, price, and headline', hint2:'condition, specs, any fine print', title3:'extra info', hint3:'seller profile, receipts, anything else' },
+  'something-else': { title2:'details & description', hint1:'the photo, price, and headline', hint2:'condition, specs, any fine print', title3:'extra info', hint3:'seller profile, receipts, anything else' },
   default: { title2:'details & specs', hint1:'the photo, price, and headline', hint2:'condition, features, specifications', title3:'extra info', hint3:'seller profile, location, anything else' }
 };
 function updateSlotHints(cat) {
@@ -669,7 +724,6 @@ document.querySelectorAll('.country-btn').forEach(function(btn) {
     btn.classList.add('selected');
     state.country = { code: btn.dataset.code, name: btn.dataset.name };
     document.getElementById('countryOther').value = '';
-    try { localStorage.setItem('ll_country', JSON.stringify(state.country)); } catch(e) {}
     document.getElementById('badge1').classList.add('done');
     document.getElementById('badge1').textContent = '\u2713';
     updateDots();
@@ -685,7 +739,6 @@ document.getElementById('countryOther').addEventListener('input', function() {
     updateDots();
   }
 });
-try { var saved = JSON.parse(localStorage.getItem('ll_country')); if(saved && saved.code !== 'OTHER'){ var m = document.querySelector('.country-btn[data-code="'+saved.code+'"]'); if(m) m.click(); } } catch(e){}
 
 // ============================================================
 // CATEGORY
@@ -776,6 +829,26 @@ function updateDots() {
 }
 
 // ============================================================
+// CONVERT FILE TO BASE64
+// ============================================================
+function fileToBase64(file) {
+  return new Promise(function(resolve, reject) {
+    var reader = new FileReader();
+    reader.onload = function() {
+      // result is "data:image/png;base64,AAAA..."
+      var dataUrl = reader.result;
+      var parts = dataUrl.split(',');
+      var meta = parts[0]; // "data:image/png;base64"
+      var base64 = parts[1];
+      var mediaType = meta.match(/data:([^;]+)/)[1] || 'image/png';
+      resolve({ data: base64, mediaType: mediaType });
+    };
+    reader.onerror = function() { reject(new Error('Failed to read file')); };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ============================================================
 // V3.1 REPORT RENDERER
 // ============================================================
 function renderReport(data) {
@@ -797,7 +870,7 @@ function renderReport(data) {
   h += '<h2>'+esc(v.heading)+'</h2>';
   h += '<p>'+esc(v.summary)+'</p></section>';
 
-  // Visual grid
+  // Visual grid — findings breakdown
   var redN=0, amberN=0, greenN=0;
   data.sections.forEach(function(s){
     if (s.flags) s.flags.forEach(function(f){
@@ -806,12 +879,11 @@ function renderReport(data) {
       else if(f.level==='green') greenN++;
     });
   });
-  var flagTotal = redN + amberN + greenN || 1;
 
   h += '<div class="vis-grid">';
-  h += '<div class="vis-card"><h4>Market Value Position</h4>';
-  h += '<div class="gauge-track"><div class="gauge-range" style="left:20%;width:60%;"></div><div class="gauge-marker" style="left:55%"></div></div>';
-  h += '<div class="gauge-labels"><span>Below market</span><span>Above market</span></div></div>';
+  h += '<div class="vis-card"><h4>Verdict</h4>';
+  h += '<div style="font-size:20px;font-weight:700;margin-top:4px;">'+esc(v.icon||'')+' '+badgeLabel(v.level)+'</div>';
+  h += '<div style="font-size:11px;color:var(--slate-500);margin-top:4px;">'+esc(v.heading)+'</div></div>';
 
   h += '<div class="vis-card"><h4>Findings Breakdown</h4>';
   h += '<div style="display:flex;gap:2px;margin-top:12px;">';
@@ -882,41 +954,111 @@ function renderReport(data) {
 }
 
 // ============================================================
-// GENERATE REPORT
+// PROGRESS ANIMATION
 // ============================================================
-generateBtn.addEventListener('click', function() {
+var genStepIds = ['genStep1','genStep2','genStep3','genStep4'];
+var genTimer = null;
+
+function startGenProgress() {
+  var cur = 0;
+  function advance() {
+    if (cur > 0) {
+      var p = document.getElementById(genStepIds[cur-1]);
+      p.classList.remove('active'); p.classList.add('done');
+      p.querySelector('.gen-step-icon').textContent = '\u2713';
+    }
+    if (cur < genStepIds.length) {
+      document.getElementById(genStepIds[cur]).classList.add('active');
+      cur++;
+    }
+  }
+  advance(); // step 1 immediately
+  genTimer = setInterval(function() {
+    if (cur < genStepIds.length) advance();
+    else clearInterval(genTimer);
+  }, 8000);
+}
+
+function completeGenProgress() {
+  if (genTimer) clearInterval(genTimer);
+  genStepIds.forEach(function(id) {
+    var el = document.getElementById(id);
+    el.classList.remove('active'); el.classList.add('done');
+    el.querySelector('.gen-step-icon').textContent = '\u2713';
+  });
+}
+
+// ============================================================
+// GENERATE REPORT — REAL API CALL
+// ============================================================
+generateBtn.addEventListener('click', async function() {
   if (!state.country) { alert('Please select your country first.'); return; }
   if (!state.category) { alert('Please select a category first.'); return; }
   if (!state.slots[1]) { alert('Please upload at least the main listing screenshot.'); return; }
 
+  // Show generating state
   var step4 = document.getElementById('step4');
   step4.classList.add('visible');
   step4.scrollIntoView({ behavior: 'smooth', block: 'start' });
   generateBtn.disabled = true;
   generateBtn.textContent = 'generating...';
 
-  var genSteps = ['genStep1','genStep2','genStep3','genStep4'];
-  var cur = 0;
-  function advGen() {
-    if (cur > 0) { var p = document.getElementById(genSteps[cur-1]); p.classList.remove('active'); p.classList.add('done'); p.querySelector('.gen-step-icon').textContent = '\u2713'; }
-    if (cur < genSteps.length) { document.getElementById(genSteps[cur]).classList.add('active'); cur++; }
-  }
-  setTimeout(function(){ advGen(); }, 2000);
-  setTimeout(function(){ advGen(); }, 5000);
-  setTimeout(function(){ advGen(); }, 8000);
+  // Start progress animation
+  startGenProgress();
 
-  // TODO: Replace with real API call
-  // For now, demo with static data after delay
-  setTimeout(function() {
-    var last = document.getElementById(genSteps[genSteps.length-1]);
-    last.classList.remove('active'); last.classList.add('done');
-    last.querySelector('.gen-step-icon').textContent = '\u2713';
+  try {
+    // Convert screenshots to base64
+    var screenshots = [];
+    for (var i = 1; i <= 3; i++) {
+      if (state.slots[i]) {
+        var b64 = await fileToBase64(state.slots[i]);
+        screenshots.push(b64);
+      }
+    }
+
+    console.log('Sending ' + screenshots.length + ' screenshot(s) to API...');
+    console.log('Country: ' + state.country.name + ', Category: ' + state.category);
+
+    // Get payment intent ID if available
+    var paymentIntentId = null;
+    try {
+      var pd = JSON.parse(sessionStorage.getItem('ll_payment'));
+      if (pd) paymentIntentId = pd.intentId;
+    } catch(e) {}
+
+    // Call the real API
+    var response = await fetch('/api/generate-report', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        screenshots: screenshots,
+        country: state.country.name,
+        category: state.category,
+        paymentIntentId: paymentIntentId
+      })
+    });
+
+    if (!response.ok) {
+      var errData = {};
+      try { errData = await response.json(); } catch(e) {}
+      throw new Error(errData.error || 'Report generation failed (HTTP ' + response.status + ')');
+    }
+
+    var result = await response.json();
+
+    if (!result.success || !result.report) {
+      throw new Error('No report data returned');
+    }
+
+    console.log('Report generated successfully!', result.meta);
+
+    // Complete progress, show report
+    completeGenProgress();
 
     document.getElementById('headerBar').classList.add('completed');
     step4.classList.remove('visible');
 
-    // Render report
-    renderReport(demoReport);
+    renderReport(result.report);
 
     var step5 = document.getElementById('step5');
     step5.classList.add('visible');
@@ -925,7 +1067,22 @@ generateBtn.addEventListener('click', function() {
     // Show action bar
     document.getElementById('actionBar').classList.add('visible');
     document.getElementById('abId').textContent = lensId();
-  }, 10000);
+
+  } catch (err) {
+    console.error('Report generation error:', err);
+
+    completeGenProgress();
+    step4.classList.remove('visible');
+
+    // Show error state
+    document.getElementById('errorTitle').textContent = 'Report generation failed';
+    document.getElementById('errorMsg').textContent = err.message || 'Something went wrong. Please try again.';
+    document.getElementById('stepError').classList.add('visible');
+    document.getElementById('stepError').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    generateBtn.disabled = false;
+    generateBtn.textContent = 'generate my report';
+  }
 });
 
 // ============================================================
@@ -949,80 +1106,6 @@ document.addEventListener('click', function(e){
   var eo = document.getElementById('emailOverlay');
   if (eo.style.display === 'block' && !eo.contains(e.target) && e.target.id !== 'abEmail') eo.style.display = 'none';
 });
-
-// ============================================================
-// DEMO REPORT DATA (V3.1)
-// ============================================================
-var demoReport = {
-  category:'Vehicle Analysis', title:'2015 Jeep Wrangler Unlimited Sport Auto 4x4 MY15', price:'$22,500', location:'NSW \u00B7 Private Sale', country:'Australia',
-  verdict:{ level:'red', heading:'Proceed with Caution', summary:'The price is roughly in line with market for the mileage, but there are several significant concerns. The registration is expiring February 2026, the 3.6L Pentastar at 156,000 km is entering the zone where costly rocker arm and lifter failures become likely, the vehicle falls within the Takata airbag recall range, and visible aftermarket modifications raise insurance and compliance questions. Thorough due diligence is essential.' },
-  sections:[
-    { heading:'Critical findings', flags:[
-      { level:'red', title:'Registration Expiring This Month', detail:'The registration expires February 2026 \u2014 that is right now. It may already be expired. An unregistered vehicle cannot legally be driven. Confirm the exact expiry date and whether it will still be registered when you collect it.' },
-      { level:'red', title:'Takata Airbag Recall \u2014 Check Required', detail:'The 2014-2016 Jeep Wrangler JK is covered by Takata airbag recall PRA 2018/16702. A degraded inflator can rupture in a crash, projecting metal fragments. Verify at ismyairbagsafe.com.au or ask seller for dealer proof.' },
-      { level:'red', title:'3.6L Pentastar at 156,000 km \u2014 High-Risk Mileage', detail:'Documented pattern of rocker arm and lifter failure from 60,000-160,000 km. This vehicle is squarely in that zone. Listen for ticking on cold start. Repair costs $2,400-$6,500.' }
-    ]},
-    { heading:'Additional concerns', flags:[
-      { level:'amber', title:'Registration Plate Withheld \u2014 Cannot Run PPSR', detail:'Listed as "Check with seller." Without plate or VIN you cannot run PPSR for finance, write-off, or stolen flags. Request before committing your time.' },
-      { level:'amber', title:'Visible Aftermarket Modifications', detail:'Photos show aftermarket alloy wheels and what appears to be a bull bar. Undisclosed mods may void insurance claims and affect roadworthiness. Ask for a full list.' },
-      { level:'amber', title:'Additional Recalls \u2014 Clockspring & Emissions', detail:'2015 JK Wranglers have recalls for clockspring assembly fault and emissions PCM reprogramming. Confirm all completed via VIN at vehiclerecalls.gov.au.' },
-      { level:'amber', title:'TIPM, Oil Cooler & Other Known Issues', detail:'Known for: oil cooler housing leaks, TIPM failures ($900-$1,200), brake booster failures, parking brake issues. Jeep-specialist inspection strongly recommended.' }
-    ]},
-    { heading:'Positive findings', flags:[
-      { level:'green', title:'Price Broadly In-Market', detail:'$22,500 sits within the typical private-sale range. CarsGuide values 2015 Wranglers from $12,100 to $31,900 depending on variant and condition.' },
-      { level:'green', title:'Seller ID Verified', detail:'CarSales "ID verified" badge present. Better than anonymous but not a substitute for PPSR checks.' },
-      { level:'green', title:'Soft Top \u2014 Lower Entry Point', detail:'Soft top variant typically prices at the lower end of the Unlimited range, consistent with the ask.' }
-    ]},
-    { heading:'What owners say', ownerSentiment:{
-      summary:'JK Wrangler Unlimited 3.6L owners love the off-road ability and lifestyle factor, but commonly report trade-offs in comfort, fuel economy, and front-end wear.',
-      pros:['Genuinely capable off-road with massive aftermarket support','Removable roof and doors \u2014 experience no other SUV offers','Pentastar 3.6L more reliable than earlier engines when maintained','4-door Unlimited holds stronger resale than 2-door'],
-      cons:['Real-world fuel 13-15 L/100km, worse with lift or bigger tyres','Highway noise and ride noticeably worse than comparable SUVs','Front-end steering/suspension wears frequently at higher km','Interior fit, water sealing, and rattles a consistent complaint']
-    }},
-    { heading:'Hidden costs (NSW estimate)', costs:[
-      { label:'NSW Stamp Duty', value:'~$675' },{ label:'PPSR Check', value:'$2' },
-      { label:'Pre-purchase Inspection (4x4 specialist)', value:'$300 \u2013 $600' },
-      { label:'NSW Registration Renewal', value:'$400 \u2013 $700' },
-      { label:'CTP / Green Slip', value:'$500 \u2013 $900' },
-      { label:'Comprehensive Insurance', value:'$1,200 \u2013 $2,500' },
-      { label:'Fuel (15,000 km \u00D7 11.7 L/100km \u00D7 $2.00/L)', value:'~$3,510/year' },
-      { label:'Servicing (2 \u00D7 $350-$500)', value:'$700 \u2013 $1,000/year' },
-      { label:'Estimated first-year costs beyond purchase price', value:'$7,000 \u2013 $10,000', isTotal:true }
-    ]},
-    { heading:'Questions to ask the seller', questions:[
-      { category:'Registration & Rego Plate', text:'What is the registration plate number and exact expiry date? Will it still be registered at collection?' },
-      { category:'VIN & Recall Status', text:'What is the full VIN? Have all Takata and other recalls been completed? Dealer receipts please.' },
-      { category:'Engine History', text:'Any ticking noise? Have rocker arms, lifters, or camshafts been inspected or replaced? Any oil leaks?' },
-      { category:'Modifications', text:'Full list of aftermarket parts fitted. Original wheels/bumper included? Workshop receipts?' },
-      { category:'Service History', text:'Complete service history? Dealer or independent? When was last oil change?' },
-      { category:'Ownership & Finance', text:'How long owned? Previous owners? Finance owing? Insurance claims or accident history?' },
-      { category:'PPSR & Write-Off', text:'Ever declared a write-off? Ever registered in another state?' },
-      { category:'Reason for Selling', text:'Why selling? Current mechanical or electrical issues?' }
-    ]},
-    { heading:'Pre-purchase checklist', checklist:[
-      'Request VIN and registration plate before attending any inspection',
-      'Run PPSR check ($2 at ppsr.gov.au) for finance, write-off, stolen status',
-      'Check Takata recall at ismyairbagsafe.com.au',
-      'Check all recalls at vehiclerecalls.gov.au using VIN',
-      'Book 4x4 specialist inspection \u2014 request valve train and oil cooler focus',
-      'Cold-start the engine and listen for ticking from either bank',
-      'Verify registration status and expiry \u2014 factor in re-registration cost',
-      'Inspect soft top for tears, window clarity, zipper condition',
-      'Test all electrics \u2014 lights, wipers, horn, fuel pump prime (TIPM check)',
-      'Confirm insurance quote with accurate modification disclosure',
-      'Get seller\'s key claims in writing (text/email) before any payment'
-    ]},
-    { heading:'Your rights (Australia/NSW)', text:'In a private sale, the Australian Consumer Law (ACL) provides limited protections compared to buying from a business. The goods must match their description and the seller must have the legal right to sell. However, consumer guarantees regarding acceptable quality and fitness for purpose generally do not apply to private sales. Your primary protections come from your own due diligence \u2014 PPSR checks, independent inspections, and getting the seller\'s key claims in writing before payment.' },
-    { heading:'Sources used in this report', sources:[
-      { label:'PPSR \u2014 finance, write-off, stolen check ($2)', url:'https://www.ppsr.gov.au' },
-      { label:'Is My Airbag Safe \u2014 Takata recall check', url:'https://www.ismyairbagsafe.com.au' },
-      { label:'ACCC Product Safety \u2014 Jeep JK Takata recall', url:'https://www.productsafety.gov.au/recalls/fca-australia-pty-ltd-jeep-wrangler-jk-my2014-2016' },
-      { label:'Vehicle Recalls Australia \u2014 all recalls by VIN', url:'https://www.vehiclerecalls.gov.au' },
-      { label:'Service NSW \u2014 stamp duty & rego transfer', url:'https://www.service.nsw.gov.au' },
-      { label:'ACCC consumer rights', url:'https://www.accc.gov.au/consumers' },
-      { label:'CarsGuide \u2014 2015 Wrangler valuation', url:'https://www.carsguide.com.au/jeep/wrangler/price/2015' }
-    ]}
-  ]
-};
 </script>
 </body>
 </html>
