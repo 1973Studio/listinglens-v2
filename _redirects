@@ -1,0 +1,12 @@
+# API routes → Netlify Functions
+/api/create-payment-intent  /.netlify/functions/create-payment-intent  200
+/api/generate-report         /.netlify/functions/generate-report         200
+
+# Clean URLs → HTML files
+/dashboard    /listinglens-dashboard.html    200
+/checkout     /listinglens-checkout.html     200
+/terms        /listinglens-terms.html        200
+/privacy      /listinglens-privacy.html      200
+
+# SPA fallback for the main page
+/*            /listinglens-bento.html        200
