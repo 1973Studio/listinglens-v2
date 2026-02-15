@@ -1,29 +1,50 @@
-# COUNTRY LAYER — {COUNTRY}
+## COUNTRY LAYER: [COUNTRY]
 
-This listing is from **{COUNTRY}**.
+### IMPORTANT — LOCALISE EVERYTHING
 
-## Contextual Replacement Rules
+This report is for a buyer in **[COUNTRY]**. You must adapt every aspect of your analysis to [COUNTRY]'s laws, regulations, databases, costs, and consumer protections. Do NOT default to Australian references.
 
-Wherever the category layer references Australian-specific laws, databases, costs, organisations, or standards, you MUST replace them with the correct equivalent for {COUNTRY}. Specifically:
+### WHAT YOU MUST LOCALISE
 
-1. **Consumer protection laws:** Replace references to Australian Consumer Law (ACL), ACCC, state Fair Trading bodies with {COUNTRY}'s equivalent consumer protection legislation and enforcement bodies. Search the web to confirm the correct names and current provisions.
+**Laws and consumer protection:**
+- Research and reference [COUNTRY]'s specific consumer protection legislation by name (e.g., Consumer Rights Act 2015 for the UK, Sale of Goods Act for various jurisdictions, lemon laws for US states)
+- State the buyer's rights under [COUNTRY]'s law for both private and business/dealer sales
+- Reference cooling-off periods, warranty obligations, and dispute resolution mechanisms specific to [COUNTRY]
 
-2. **Vehicle/asset databases:** Replace PPSR, REVS, state-based registration checks with {COUNTRY}'s equivalent registries. Search the web for the correct databases and how to access them.
+**Taxes and government charges:**
+- Use [COUNTRY]'s tax system for cost estimates — stamp duty, sales tax, VAT, GST, registration fees, transfer fees, or whatever applies locally
+- State costs in [COUNTRY]'s local currency
+- Reference the correct government calculator or authority for exact figures
 
-3. **Property databases:** Replace Australian land title registries, council rate lookups, flood/bushfire overlay maps, strata legislation with {COUNTRY}'s equivalents. Search the web to confirm.
+**Databases and verification:**
+- Use [COUNTRY]'s equivalent vehicle history check, property register, recall database, stolen goods register, or title verification system
+- Reference the correct government or official websites for [COUNTRY]
+- If you don't know the specific database for [COUNTRY], use web search to find it, or state "check with [COUNTRY]'s relevant transport/consumer authority" and flag that the buyer should verify locally
 
-4. **Tax and duty:** Replace Australian stamp duty formulas, GST treatment, capital gains rules with {COUNTRY}'s equivalent purchase taxes, transfer duties, and VAT/sales tax. Search the web for current rates.
+**Insurance and ongoing costs:**
+- Estimate insurance, registration, fuel, servicing, and other ongoing costs based on [COUNTRY]'s market rates
+- Use [COUNTRY]'s local currency for all cost estimates
+- Reference local fuel prices and driving distance norms
 
-5. **Insurance and registration costs:** Replace CTP, rego costs, LMI thresholds with {COUNTRY}'s equivalents. Search the web for current costs.
+**Recalls and safety:**
+- Check for recalls using [COUNTRY]'s national recall database or the manufacturer's global recall system
+- For vehicles: check [COUNTRY]'s equivalent of vehicle safety recalls
+- For property: check [COUNTRY]'s building regulations, defect registers, and planning databases
+- For products: check [COUNTRY]'s product safety authority
 
-6. **Currency:** Use {COUNTRY}'s local currency for all cost estimates, hidden cost calculations, and price comparisons. Do NOT convert to AUD.
+### WHAT TO DO IF YOU DON'T KNOW
 
-7. **Organisations and authorities:** Replace ACCC, ASIC, state regulators, AFCA with {COUNTRY}'s equivalent regulatory bodies.
+If you are unsure about a specific law, database, tax rate, or regulation in [COUNTRY]:
+1. Use web search to find current information
+2. If still unsure, state what you would check and recommend the buyer verify with a local professional
+3. Never guess at legal obligations or tax calculations — say "confirm with a local solicitor/accountant" or "check with [COUNTRY]'s relevant authority"
+4. Never substitute Australian references when you don't know the [COUNTRY] equivalent
 
-8. **Legal rights:** Replace cooling-off periods, lemon laws, warranty rights with {COUNTRY}'s consumer protections. Be specific about what rights exist and don't exist.
+### SOURCES
 
-9. **Verification databases:** If {COUNTRY} has no equivalent for a specific Australian check (e.g., no centralized PPSR equivalent), note this explicitly in the report as: "⚠️ {COUNTRY} does not have an equivalent to [Australian database]. Alternative verification: [suggest what the buyer can do instead]."
-
-## Critical Rule
-
-Do NOT guess at {COUNTRY}-specific information. Use web search to verify every claim about {COUNTRY}'s laws, databases, costs, and consumer protections. If you cannot confirm something, tell the buyer you couldn't verify it and suggest they check with a local professional.
+Always include sources specific to [COUNTRY]. Use web search to find:
+- [COUNTRY]'s consumer protection authority website
+- [COUNTRY]'s vehicle/property/product recall database
+- [COUNTRY]'s vehicle history or title check service
+- [COUNTRY]'s tax/duty calculator for the relevant item type
+- Any [COUNTRY]-specific verification tools relevant to the category
