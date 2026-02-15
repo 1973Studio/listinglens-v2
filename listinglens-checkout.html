@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listing Lens — Checkout</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <!-- Airwallex Components SDK -->
+  <script src="https://static.airwallex.com/components/sdk/v1/index.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --card: #111111;
+      --card-border: #1a1a1a;
+      --emerald: #10b981;
+      --emerald-dim: rgba(16, 185, 129, 0.15);
+      --text: #e0e0e0;
+      --text-dim: #888;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --radius: 16px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .checkout-container {
+      width: 100%;
+      max-width: 520px;
+    }
+
+    /* ── Logo & Header ── */
+    .checkout-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .checkout-header a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .logo svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .logo span {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .logo .lens {
+      color: var(--emerald);
+    }
+
+    .checkout-header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .checkout-header p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* ── Order Summary Card ── */
+    .order-summary {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .order-summary h2 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
+
+    .order-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+    }
+
+    .order-line:not(:last-child) {
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .order-item-name {
+      font-weight: 500;
+    }
+
+    .order-item-detail {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .order-item-price {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--emerald);
+    }
+
+    .order-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      margin-top: 8px;
+      border-top: 2px solid var(--card-border);
+    }
+
+    .order-total-label {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .order-total-amount {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--emerald);
+    }
+
+    /* ── Payment Card ── */
+    .payment-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+      min-height: 200px;
+    }
+
+    .payment-card h2 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
+
+    #dropIn {
+      min-height: 150px;
+    }
+
+    /* ── States ── */
+    .state-loading,
+    .state-success,
+    .state-error {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .state-loading.active,
+    .state-success.active,
+    .state-error.active {
+      display: block;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--card-border);
+      border-top-color: var(--emerald);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .state-loading p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+    }
+
+    .state-success .success-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--emerald-dim);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .state-success .success-icon svg {
+      width: 32px;
+      height: 32px;
+      color: var(--emerald);
+    }
+
+    .state-success h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .state-success p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    .state-error .error-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(239, 68, 68, 0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .state-error .error-icon svg {
+      width: 32px;
+      height: 32px;
+      color: var(--red);
+    }
+
+    .state-error h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .state-error p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-emerald {
+      background: var(--emerald);
+      color: #000;
+    }
+
+    .btn-emerald:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--card-border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--text-dim);
+    }
+
+    /* ── Trust Row ── */
+    .trust-row {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .trust-item svg {
+      width: 14px;
+      height: 14px;
+      color: var(--emerald);
+    }
+
+    /* ── Footer ── */
+    .checkout-footer {
+      text-align: center;
+      padding-top: 16px;
+    }
+
+    .checkout-footer a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.8rem;
+      margin: 0 12px;
+    }
+
+    .checkout-footer a:hover {
+      color: var(--emerald);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .checkout-header h1 { font-size: 1.25rem; }
+      .order-summary, .payment-card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="checkout-container">
+
+    <!-- Header -->
+    <div class="checkout-header">
+      <a href="/">
+        <div class="logo">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="42" cy="42" r="28" stroke="#10b981" stroke-width="7" fill="none"/>
+            <line x1="62" y1="62" x2="88" y2="88" stroke="#10b981" stroke-width="7" stroke-linecap="round"/>
+          </svg>
+          <span>Listing<span class="lens">Lens</span></span>
+        </div>
+      </a>
+      <h1>Complete your purchase</h1>
+      <p>One report. One payment. No subscriptions.</p>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="order-summary" id="orderSummary">
+      <h2>Order Summary</h2>
+      <div class="order-line">
+        <div>
+          <div class="order-item-name">Buyer Intelligence Report</div>
+          <div class="order-item-detail" id="orderCategory">Loading...</div>
+        </div>
+        <div class="order-item-price" id="orderPrice">—</div>
+      </div>
+      <div class="order-total">
+        <span class="order-total-label">Total</span>
+        <span class="order-total-amount" id="orderTotal">—</span>
+      </div>
+    </div>
+
+    <!-- Payment Form -->
+    <div class="payment-card" id="paymentCard">
+      <h2>Payment Details</h2>
+      <!-- Airwallex loading state -->
+      <div class="state-loading active" id="paymentLoading">
+        <div class="spinner"></div>
+        <p>Setting up secure payment...</p>
+      </div>
+      <!-- Airwallex Drop-in mounts here -->
+      <div id="dropIn"></div>
+    </div>
+
+    <!-- Trust Signals -->
+    <div class="trust-row">
+      <div class="trust-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Secure payment
+      </div>
+      <div class="trust-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        PCI-DSS compliant
+      </div>
+      <div class="trust-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Powered by Airwallex
+      </div>
+    </div>
+
+    <!-- Success State -->
+    <div class="state-success" id="stateSuccess">
+      <div class="success-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>Payment successful</h2>
+      <p>Redirecting you to the dashboard...</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="state-error" id="stateError">
+      <div class="error-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+      </div>
+      <h2>Payment failed</h2>
+      <p id="errorMessage">Something went wrong. Please try again.</p>
+      <button class="btn btn-outline" onclick="location.reload()">Try again</button>
+    </div>
+
+    <!-- Footer -->
+    <div class="checkout-footer">
+      <a href="/terms">Terms of Service</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/">Back to home</a>
+    </div>
+  </div>
+
+  <script>
+    (async () => {
+      // ── Read params from URL ──
+      // The landing page links here as: /checkout?country=Australia&category=vehicle
+      const params = new URLSearchParams(window.location.search);
+      const country = params.get('country') || 'Australia';
+      const category = params.get('category') || 'vehicle';
+
+      // Display-friendly category name
+      const categoryLabels = {
+        'vehicle': '🚗 Vehicle Analysis',
+        'property': '🏠 Property Analysis',
+        'motorcycle': '🏍️ Motorcycle Analysis',
+        'boat': '⛵ Boat Analysis',
+        'watch': '⌚ Watch Analysis',
+        'electronics': '📱 Electronics Analysis',
+        'jewellery': '💎 Jewellery Analysis',
+        'instrument': '🎸 Instrument Analysis',
+        'something-else': '🔍 Item Analysis',
+      };
+
+      document.getElementById('orderCategory').textContent =
+        categoryLabels[category] || '🔍 Item Analysis';
+
+      // ── Step 1: Create PaymentIntent via backend ──
+      let intentData;
+      try {
+        const res = await fetch('/api/create-payment-intent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ country, category }),
+        });
+
+        if (!res.ok) throw new Error('Payment setup failed');
+        intentData = await res.json();
+
+        // Update price display
+        document.getElementById('orderPrice').textContent = intentData.displayAmount;
+        document.getElementById('orderTotal').textContent = intentData.displayAmount;
+
+      } catch (err) {
+        console.error('PaymentIntent creation failed:', err);
+        document.getElementById('paymentLoading').classList.remove('active');
+        document.getElementById('paymentCard').style.display = 'none';
+        document.getElementById('stateError').classList.add('active');
+        document.getElementById('errorMessage').textContent =
+          'Could not set up payment. Please try again or contact hello@listinglens.app';
+        return;
+      }
+
+      // ── Step 2: Initialize Airwallex SDK ──
+      try {
+        const airwallexEnv = window.location.hostname === 'listinglens.app' ? 'prod' : 'demo';
+
+        await window.AirwallexComponentsSDK.init({
+          env: airwallexEnv,
+          enabledElements: ['payments'],
+        });
+
+        // ── Step 3: Create & mount Drop-in Element ──
+        const element = await window.AirwallexComponentsSDK.createElement('dropIn', {
+          intent_id: intentData.intentId,
+          client_secret: intentData.clientSecret,
+          currency: intentData.currency,
+          // Emerald brand colour
+          theme: {
+            palette: {
+              primary: '#10b981',
+            },
+          },
+          // Apple Pay / Google Pay (optional — only works if enabled on Airwallex account)
+          applePayRequestOptions: {
+            countryCode: 'AU',
+          },
+          googlePayRequestOptions: {
+            countryCode: 'AU',
+          },
+        });
+
+        element.mount('dropIn');
+
+        // ── Step 4: Handle events ──
+        element.on('ready', () => {
+          // Hide loading spinner, Airwallex form is visible
+          document.getElementById('paymentLoading').classList.remove('active');
+        });
+
+        element.on('success', (event) => {
+          // Payment successful — hide payment form, show success, redirect to dashboard
+          document.getElementById('paymentCard').style.display = 'none';
+          document.getElementById('orderSummary').style.display = 'none';
+          document.getElementById('stateSuccess').classList.add('active');
+
+          // Store payment confirmation in sessionStorage for the dashboard
+          sessionStorage.setItem('ll_payment', JSON.stringify({
+            intentId: intentData.intentId,
+            country: country,
+            category: category,
+            paidAt: new Date().toISOString(),
+          }));
+
+          // Redirect to dashboard after a moment
+          setTimeout(() => {
+            window.location.href = `/dashboard?payment=success&intent=${intentData.intentId}`;
+          }, 1500);
+        });
+
+        element.on('error', (event) => {
+          console.error('Airwallex payment error:', event.detail);
+          // Don't hide the form — let user retry
+          // Only show error state for fatal errors
+          if (event.detail && event.detail.message) {
+            // Show inline error — Airwallex handles most errors in its own UI
+          }
+        });
+
+      } catch (err) {
+        console.error('Airwallex init failed:', err);
+        document.getElementById('paymentLoading').classList.remove('active');
+        document.getElementById('paymentCard').style.display = 'none';
+        document.getElementById('stateError').classList.add('active');
+        document.getElementById('errorMessage').textContent =
+          'Payment system unavailable. Please try again later.';
+      }
+    })();
+  </script>
+</body>
+</html>
